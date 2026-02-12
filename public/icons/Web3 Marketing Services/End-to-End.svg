@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="45" zoomAndPan="magnify" viewBox="0 0 33.75 33.749998" height="45" preserveAspectRatio="xMidYMid meet" version="1.0">
+  <defs>
+    <clipPath id="8f2b71060c">
+      <path d="M 4.382812 3 L 9 3 L 9 7 L 4.382812 7 Z M 4.382812 3 " clip-rule="nonzero"/>
+    </clipPath>
+    <clipPath id="911ea7b814">
+      <path d="M 11 27 L 15 27 L 15 30.402344 L 11 30.402344 Z M 11 27 " clip-rule="nonzero"/>
+    </clipPath>
+    <clipPath id="155eeaf1c3">
+      <path d="M 25 27 L 28.953125 27 L 28.953125 30.402344 L 25 30.402344 Z M 25 27 " clip-rule="nonzero"/>
+    </clipPath>
+  </defs>
+  
+  <!-- Connection line -->
+  <path fill="#F4CC6F" d="M 15.441406 28.53125 C 15.46875 28.679688 15.480469 28.832031 15.480469 28.984375 C 15.480469 29.140625 15.46875 29.292969 15.441406 29.441406 L 24.910156 29.441406 C 24.886719 29.292969 24.871094 29.140625 24.871094 28.984375 C 24.871094 28.832031 24.886719 28.679688 24.910156 28.53125 Z M 15.441406 28.53125 " fill-opacity="1" fill-rule="nonzero"/>
+  
+  <!-- Left circle -->
+  <g clip-path="url(#8f2b71060c)">
+    <circle cx="6.5" cy="5" r="2" fill="#F4CC6F"/>
+  </g>
+  
+  <!-- Right circle -->
+  <g clip-path="url(#155eeaf1c3)">
+    <circle cx="27" cy="28.7" r="2" fill="#F4CC6F"/>
+  </g>
+  
+  <!-- Center gear/cog -->
+  <circle cx="17" cy="17" r="8" fill="none" stroke="#F4CC6F" stroke-width="2"/>
+  <circle cx="17" cy="17" r="4" fill="#F4CC6F"/>
+  
+  <!-- Gear teeth -->
+  <rect x="15.5" y="7" width="3" height="4" fill="#F4CC6F"/>
+  <rect x="15.5" y="22" width="3" height="4" fill="#F4CC6F"/>
+  <rect x="7" y="15.5" width="4" height="3" fill="#F4CC6F"/>
+  <rect x="22" y="15.5" width="4" height="3" fill="#F4CC6F"/>
+  
+  <!-- Connection arrows -->
+  <path d="M 9 5 L 13 13" stroke="#F4CC6F" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <path d="M 21 21 L 25 28" stroke="#F4CC6F" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Arrow marker -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#F4CC6F"/>
+    </marker>
+  </defs>
+</svg>

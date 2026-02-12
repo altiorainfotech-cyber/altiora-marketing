@@ -1,0 +1,353 @@
+/* Digital Marketing Component Styles */
+
+/* Typography */
+.heroTitle {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 1.05;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .heroTitle {
+    font-size: clamp(2.4rem, 7vw, 3.3rem);
+  }
+}
+
+.sectionHeading {
+  font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+  font-weight: 700;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.sectionDescription {
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 46rem;
+  margin: 0 auto;
+  line-height: 1.75;
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  text-align: center;
+}
+
+.overviewTitle {
+  color: #f4cc6f;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+/* Disable all hover effects on animation */
+.animation-container,
+.animation-container *,
+.animation-container svg,
+.animation-container svg * {
+  pointer-events: none !important;
+  transition: none !important;
+  transform: none !important;
+}
+
+.animation-container:hover,
+.animation-container *:hover,
+.animation-container svg:hover,
+.animation-container svg *:hover {
+  transform: none !important;
+  scale: none !important;
+  transition: none !important;
+  animation-play-state: running !important;
+}
+
+/* Service Cards */
+.service-card {
+  background: linear-gradient(145deg, #1a1a3a, #2a2a4a);
+  border: 2px solid rgba(124, 105, 239, 0.3);
+  border-radius: 20px;
+  padding: 2rem;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card:hover {
+  transform: translateY(-10px);
+  border-color: #7c69ef;
+  box-shadow: 0 15px 35px rgba(124, 105, 239, 0.3);
+  background: linear-gradient(145deg, #1a1a3a, #2a2a4a);
+}
+
+.service-card:hover svg {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
+/* Enhanced Service Cards */
+.serviceCardEnhanced {
+  background: linear-gradient(145deg, rgba(26, 26, 58, 0.95), rgba(42, 42, 74, 0.95));
+  border: 1px solid rgba(124, 105, 239, 0.2);
+  border-radius: 24px;
+  padding: 2rem;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.serviceCardEnhanced::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  padding: 2px;
+  background: linear-gradient(135deg, transparent, rgba(124, 105, 239, 0.4), transparent);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.serviceCardEnhanced:hover {
+  transform: translateY(-15px) scale(1.02);
+  border-color: rgba(124, 105, 239, 0.6);
+  box-shadow:
+    0 20px 60px rgba(124, 105, 239, 0.4),
+    0 0 80px rgba(124, 105, 239, 0.2),
+    inset 0 0 60px rgba(124, 105, 239, 0.1);
+  background: linear-gradient(145deg, rgba(26, 26, 58, 1), rgba(42, 42, 74, 1));
+}
+
+.serviceCardEnhanced:hover::before {
+  opacity: 1;
+}
+
+/* Animated Border Effect */
+.animatedBorder {
+  position: absolute;
+  inset: -2px;
+  border-radius: 24px;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.serviceCardEnhanced:hover .animatedBorder {
+  opacity: 0.4;
+  animation: rotate-border 3s linear infinite;
+}
+
+@keyframes rotate-border {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Hover Glow Effect */
+.hoverGlow {
+  position: absolute;
+  inset: -50%;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  filter: blur(60px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.serviceCardEnhanced:hover .hoverGlow {
+  opacity: 0.6;
+  animation: pulse-glow-intense 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow-intense {
+
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+}
+
+/* Sparkle Effect */
+.sparkleEffect {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.serviceCardEnhanced:hover .sparkleEffect {
+  opacity: 1;
+}
+
+/* Workflow Cards */
+.workflow-card {
+  background: linear-gradient(145deg, rgba(26, 26, 58, 0.9), rgba(42, 42, 74, 0.9));
+  border: 1px solid rgba(124, 105, 239, 0.2);
+  border-radius: 24px;
+  padding: 2rem;
+  transition: all 0.4s ease;
+  position: relative;
+  backdrop-filter: blur(10px);
+}
+
+.workflow-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(124, 105, 239, 0.5);
+  box-shadow: 0 20px 40px rgba(124, 105, 239, 0.2);
+}
+
+/* Outcome Cards */
+.outcome-card {
+  background: linear-gradient(145deg, rgba(26, 26, 58, 0.8), rgba(42, 42, 74, 0.8));
+  border: 1px solid rgba(124, 105, 239, 0.2);
+  border-radius: 20px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.outcome-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(124, 105, 239, 0.4);
+  box-shadow: 0 15px 30px rgba(124, 105, 239, 0.2);
+}
+
+/* CTA Section */
+.cta-section {
+  position: relative;
+  border-radius: 28px;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(124, 105, 239, 0.2), rgba(236, 72, 153, 0.2));
+  border: 1px solid rgba(124, 105, 239, 0.3);
+}
+
+.cta-glow {
+  position: absolute;
+  inset: -25%;
+  background: radial-gradient(circle at 30% 35%, rgba(124, 105, 239, 0.3), transparent 60%),
+    radial-gradient(circle at 72% 65%, rgba(236, 72, 153, 0.3), transparent 65%);
+  filter: blur(140px);
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+/* Animated Counter */
+.stat-value {
+  font-size: clamp(1.7rem, 2.4vw, 2.2rem);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #7c69ef, #EC4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.stat-label {
+  margin-top: 0.4rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(226, 232, 240, 0.65);
+}
+
+/* Floating Stars Animation */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px) scale(1);
+    opacity: 0.3;
+  }
+
+  50% {
+    transform: translateY(-20px) scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+.floating-star {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Pulse Animation */
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Gradient Text - Gold (for hero heading) */
+.gradientText {
+  background: linear-gradient(135deg, #f4cc6f, #e6b85c, #f4cc6f);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 200%;
+  animation: gradient-shift 5s ease infinite;
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: linear-gradient(135deg, #7c69ef, #EC4899, #3B82F6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 200%;
+  animation: gradient-shift 5s ease infinite;
+}
+
+@keyframes gradient-shift {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+
+  .service-card,
+  .workflow-card,
+  .outcome-card {
+    padding: 1.5rem;
+  }
+}

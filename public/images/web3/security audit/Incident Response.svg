@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="45" zoomAndPan="magnify" viewBox="0 0 33.75 33.749998" height="45" preserveAspectRatio="xMidYMid meet" version="1.0">
+  <defs>
+    <clipPath id="incident-response-clip">
+      <path d="M 2 2 L 32 2 L 32 32 L 2 32 Z M 2 2 " clip-rule="nonzero"/>
+    </clipPath>
+  </defs>
+  
+  <!-- Emergency Alert Circle -->
+  <g clip-path="url(#incident-response-clip)">
+    <circle cx="16.875" cy="16.875" r="14" fill="#c4942e" opacity="0.2"/>
+    <circle cx="16.875" cy="16.875" r="11" fill="none" stroke="#c4942e" stroke-width="1.5"/>
+  </g>
+  
+  <!-- Central Shield with Cross -->
+  <path fill="#c4942e" d="M 16.875 6 C 16.875 6 12 7.5 12 12 L 12 18 C 12 22.5 16.875 26 16.875 26 C 16.875 26 21.75 22.5 21.75 18 L 21.75 12 C 21.75 7.5 16.875 6 16.875 6 Z M 16.875 8.5 C 19.5 9 20.25 10 20.25 12 L 20.25 18 C 20.25 20.8 17.8 23.2 16.875 23.8 C 15.95 23.2 13.5 20.8 13.5 18 L 13.5 12 C 13.5 10 14.25 9 16.875 8.5 Z" fill-opacity="1" fill-rule="nonzero"/>
+  
+  <!-- Emergency Cross Symbol -->
+  <path fill="#c4942e" d="M 15.375 11 L 18.375 11 L 18.375 15 L 22.375 15 L 22.375 18 L 18.375 18 L 18.375 22 L 15.375 22 L 15.375 18 L 11.375 18 L 11.375 15 L 15.375 15 Z" fill-opacity="1" fill-rule="nonzero"/>
+  
+  <!-- Alert Indicators -->
+  <circle cx="8" cy="8" r="2" fill="#c4942e" opacity="0.8">
+    <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="25.75" cy="8" r="2" fill="#c4942e" opacity="0.8">
+    <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="8" cy="25.75" r="2" fill="#c4942e" opacity="0.8">
+    <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite" begin="0.5s"/>
+  </circle>
+  <circle cx="25.75" cy="25.75" r="2" fill="#c4942e" opacity="0.8">
+    <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite" begin="0.5s"/>
+  </circle>
+  
+  <!-- Response Arrows -->
+  <path fill="#c4942e" d="M 4 16.875 L 8 14.875 L 8 18.875 Z" fill-opacity="0.7"/>
+  <path fill="#c4942e" d="M 29.75 16.875 L 25.75 14.875 L 25.75 18.875 Z" fill-opacity="0.7"/>
+  <path fill="#c4942e" d="M 16.875 4 L 14.875 8 L 18.875 8 Z" fill-opacity="0.7"/>
+  <path fill="#c4942e" d="M 16.875 29.75 L 14.875 25.75 L 18.875 25.75 Z" fill-opacity="0.7"/>
+</svg>

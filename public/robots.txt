@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Sitemap: https://altiorainfotech.com/sitemap.xml
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /

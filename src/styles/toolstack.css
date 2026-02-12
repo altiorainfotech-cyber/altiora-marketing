@@ -1,0 +1,163 @@
+:root { --brand: #F4CC6F; }
+
+/* Tabs container indicator */
+.ts-tabs .ts-indicator {
+  position: absolute;
+  bottom: 0;
+  height: 3px;
+  border-radius: 9999px;
+  background: linear-gradient(
+    90deg,
+    var(--brand, #F4CC6F),
+    #ffe6b3,
+    color-mix(in oklab, var(--brand, #F4CC6F) 80%, transparent)
+  );
+  filter: blur(0.5px);
+  transition: transform 300ms ease-out, width 300ms ease-out;
+  pointer-events: none;
+}
+
+/* Tab button (base) */
+.ts-tab {
+  position: relative;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.625rem;
+  font-size: 0.8125rem;
+  color: oklch(0.708 0 0 / 0.7);
+  transition: color 160ms ease;
+  outline: none;
+  --mx: 50%;
+  --my: 50%;
+  -webkit-tap-highlight-color: transparent;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+@media (min-width: 640px) {
+  .ts-tab {
+    padding: 0.5rem 0.75rem;
+    font-size: clamp(0.9rem, 1vw, 1rem);
+    line-height: normal;
+  }
+}
+
+/* Soft radial glow pseudo */
+.ts-tab::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 0.5rem;
+  opacity: 0;
+  transition: opacity 180ms ease;
+  background: radial-gradient(
+    240px circle at var(--mx) var(--my),
+    color-mix(in oklab, var(--brand, #F4CC6F) 40%, transparent),
+    transparent 45%
+  );
+  pointer-events: none;
+}
+
+/* Active underline */
+.ts-tab-underline {
+  position: absolute;
+  left: 50%;
+  bottom: -6px;
+  width: 3rem;
+  height: 3px;
+  transform: translateX(-50%);
+  border-radius: 9999px;
+  background: color-mix(in oklab, var(--brand, #F4CC6F) 90%, transparent);
+}
+
+/* Ripple ink (hidden by default) */
+.ts-ink {
+  position: absolute;
+  left: var(--rx, 50%);
+  top: var(--ry, 50%);
+  width: 0; height: 0;
+  border-radius: 9999px;
+  background: color-mix(in oklab, var(--brand, #F4CC6F) 30%, transparent);
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  transition: width 500ms ease-out, height 500ms ease-out, opacity 500ms ease-out;
+}
+
+/* Active tab text */
+.ts-tab--active { color: var(--brand, #F4CC6F); }
+
+/* Tool tile */
+.ts-tile {
+  perspective: 800px;
+  transition: transform 160ms ease, border-color 160ms ease, box-shadow 200ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Glow overlay */
+.ts-tile-glow {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Logo wrap: smaller on mobile, bigger on ≥640px */
+.ts-logo-wrap {
+  position: relative;
+  width: 3.5rem; height: 3.5rem; /* mobile-friendly */
+}
+@media (min-width: 640px) {
+  .ts-logo-wrap { width: 5rem; height: 5rem; }
+}
+.ts-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  margin: auto;
+  filter: invert(1) opacity(0.9);
+  transition: opacity 160ms ease, filter 200ms ease, transform 200ms ease;
+}
+
+/* DESKTOP-ONLY HOVERS */
+@media (hover: hover) and (pointer: fine) {
+  .ts-tab:hover { color: white; }
+  .ts-tab:hover::before { opacity: 1; }
+
+  .ts-ink { display: none !important; }
+  .ts-tab.ts-ripple > .ts-ink { width: 0 !important; height: 0 !important; opacity: 0 !important; }
+
+  .ts-tile:hover {
+    transform: scale(1.03);
+    border-color: color-mix(in oklab, var(--brand, #F4CC6F) 50%, transparent);
+    box-shadow: 0 12px 40px rgba(244, 204, 111, 0.25);
+  }
+  .ts-tile:hover .ts-tile-glow { opacity: 0; }
+
+  .ts-tile:hover .ts-logo {
+    opacity: 1;
+    filter: drop-shadow(0 8px 24px rgba(244, 204, 111, 0.45)) invert(1);
+    transform: translateY(-2px) rotateX(8deg) rotateY(-6deg);
+  }
+}
+
+/* TOUCH / NO-HOVER */
+@media (hover: none), (pointer: coarse) {
+  .ts-tab:hover { color: inherit !important; }
+  .ts-tab::before { opacity: 0 !important; }
+  .ts-ink { display: none !important; }
+
+  .ts-tile,
+  .ts-tile:hover {
+    transform: none !important;
+    border-color: inherit !important;
+    box-shadow: none !important;
+  }
+  .ts-tile .ts-logo {
+    opacity: 1;
+    filter: invert(1) opacity(0.9);
+    transform: none !important;
+  }
+}

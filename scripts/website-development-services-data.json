@@ -1,0 +1,18 @@
+{
+  "serviceType": "website-development-services",
+  "hasCustomLayout": true,
+  "seoMetadata": {
+    "title": "Website Development Services | Custom Web Development - Altiora Infotech",
+    "description": "Expert website development services for businesses of all sizes. Custom web development, responsive design, and modern web solutions to boost your online presence."
+  },
+  "customData": {
+    "heroSection": {
+      "backgroundImage": "/images/web2/website-development-hero.png",
+      "subtitle": "Professional Website Development Services",
+      "title": "Custom Websites That Drive\nBusiness Growth",
+      "description": "Transform your digital presence with high-performance, scalable websites built for results.",
+      "ctaText": "Start Your Project",
+      "ctaLink": "https://calendly.com/altiorainfotech/30min"
+    }
+  }
+}

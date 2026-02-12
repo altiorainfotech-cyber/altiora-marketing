@@ -1,0 +1,134 @@
+// src/app/service/page.tsx
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import Header from "@/assets/Header";
+import Footer from "@/assets/Footer";
+
+type Service = {
+  id: string;
+  title: string;
+  desc: string;
+  image: string;
+  href: string; // can be external
+};
+//hi
+const services: Service[] = [
+    { 
+    id: "svc-digital-marketing",
+    title: "Digital Marketing",
+    desc: "Data-driven marketing strategies, SEO optimization, and growth campaigns that drive engagement and conversions.",
+    image: "https://pub-00cafda969bc42d5aac5365b6609f526.r2.dev/marketing-video.mp4",
+    href: "/services/digital-marketing",
+  },
+  {
+    id: "svc-web3",
+    title: "Web3 Solutions",
+    desc: "Smart contracts, dApps, NFTs, and blockchain-based ecosystems that empower users and build trust.",
+    image: "https://pub-00cafda969bc42d5aac5365b6609f526.r2.dev/blockchain-technology_esgq4m.mp4",
+    href: "/services/web3",
+  },
+  {
+    id: "svc-ai",
+    title: "Artificial Intelligence",
+    desc: "LLM apps, chatbots, predictive models, and workflow automation that transform raw data into value.",
+    image: "https://pub-00cafda969bc42d5aac5365b6609f526.r2.dev/AI-futuristic_l6g2e4.mp4",
+    href: "/services/ai-ml",
+  },
+  {
+    id: "svc-web2",
+    title: "Web 2.0 Engineering",
+    desc: "High-performing websites, SaaS platforms, and mobile apps built with scalable cloud infrastructure.",
+    image: "https://pub-00cafda969bc42d5aac5365b6609f526.r2.dev/cyber-code-world_wwwlaz.mp4",
+    href: "/services/web2",
+  }
+];
+
+function ServiceCard({ svc }: { svc: Service }) {
+  return (
+    <Link
+      href={svc.href}
+      prefetch={true} // internal pages — prefetch for better UX
+      className="group block rounded-2xl border border-white/15 bg-white/[0.06] hover:bg-white/[0.1] overflow-hidden shadow-lg hover:shadow-[0_8px_30px_rgba(44,86,221,0.4)] transition focus:outline-none focus:ring-2 focus:ring-[#2c56dd]"
+    >
+      {/* video */}
+      <div className="relative h-48 sm:h-56">
+        <video
+          src={svc.image}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-full h-full object-cover brightness-90 group-hover:brightness-100 transition"
+        />
+        <span className="absolute top-3 right-3 text-xs font-medium rounded-full border border-white/20 bg-black/60 px-3 py-1 text-white">
+          Explore →
+        </span>
+      </div>
+
+      {/* content */}
+      <div className="p-5">
+        <h3 className="font-semibold text-lg text-white group-hover:text-[#7aa2ff] transition">
+          {svc.title}
+        </h3>
+        <p className="mt-2 text-sm text-white/80 leading-relaxed">{svc.desc}</p>
+      </div>
+    </Link>
+  );
+}
+
+export default function ServicesPage() {
+  return (
+    <div className="min-h-screen flex flex-col bg-[#010c22] text-[#F8FBFB]">
+      {/* Global header */}
+      <Header />
+
+      {/* HERO */}
+      <section className="relative h-[40vh] sm:h-[44vh] md:h-[48vh]">
+        <Image
+          src="/images/about/services.jpg"
+          alt="Altiora Infotech Services"
+          fill
+          priority
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#000929]/70 via-[#0a133b]/70 to-[#050510]/80" />
+        <div className="relative z-10 h-full w-full flex items-center justify-center text-center px-6">
+          <div className="max-w-4xl">
+            <p className="uppercase tracking-[0.22em] text-xs sm:text-[13px] text-white/80">
+              Services
+            </p>
+            <h1 className="mt-3 text-3xl sm:text-5xl font-bold tracking-tight drop-shadow">
+              Our Services
+            </h1>
+            <p className="mt-4 text-white/85 text-base sm:text-lg leading-relaxed">
+              We build Web3, AI, and Web 2.0 products end-to-end — strategy, design, engineering, and growth.
+            </p>
+          </div>
+        </div>
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+      </section>
+
+      <main
+        className="flex-grow px-4 py-16 text-white"
+        style={{
+          background:
+            "linear-gradient(180deg, #1a1f5a 0%, #0a133b 50%, #050510 100%)",
+        }}
+      >
+        <div className="mx-auto max-w-7xl">
+          {/* services grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {services.map((svc) => (
+              <ServiceCard key={svc.id} svc={svc} />
+            ))}
+          </div>
+        </div>
+      </main>
+
+      {/* Global footer */}
+      <Footer />
+    </div>
+  );
+}

@@ -1,0 +1,77 @@
+// /src/data/blog.ts
+export type BlogPost = {
+  id: string;
+  title: string;
+  href: string;
+  image: string;     // public/ path or remote URL configured in next.config.js
+  category: string;
+  date: string;      // ISO date, e.g. "2025-08-12"
+};
+
+export const blogPosts: BlogPost[] = [
+{
+  id: "nano-banana-2025-001",
+  title: "“Gemini’s ‘Nano Banana’: When Fun Meets the Future of Creative AI”",
+  href: "/blog/gemini-nano-banana",
+  image: "/images/blog/nano-banana.jpg.png", // points to src/images/blog/nano-banana.jpg
+  category: "AI",
+  date: "2025-09-12",
+},
+
+  {
+    id: "mobile-trends-2025-002",
+    title: "Top Mobile App Development Trends to Watch in 2025",
+    href: "/blog/mobile-app-trends-2025",
+    image: "/images/blog/2.png",
+    category: "Mobile",
+    date: "2025-09-05",
+  },
+  {
+    id: "ai-ml-2030-003",
+    title: "5 Everyday Things You’re Doing Now That AI & Machine Learning Will Do Better by 2030",
+    href: "/blog/ai-ml-2030-everyday-things",
+    image: "/images/blog/3.png",
+    category: "AI",
+    date: "2025-08-14",
+  },
+  {
+    id: "digital-success-004",
+    title: "The Future of Digital Success: How to Build a Website That Works for You",
+    href: "/blog/future-of-digital-success-website-that-works",
+    image: "/images/blog/4.png",
+    category: "Digital",
+    date: "2025-08-14",
+  },
+  {
+    id: "hyperautomation-005",
+    title: "Hyperautomation with AI & ML: The Future of Business Efficiency",
+    href: "/blog/hyperautomation-ai-ml",
+    image: "/images/blog/5.png",
+    category: "Automation",
+    date: "2025-07-20",
+  },
+  {
+    id: "ai-workflows-smb-006",
+    title: "How AI-Powered Workflows Automation Can Automate Business Processes for Small Enterprises",
+    href: "/blog/ai-workflows-small-enterprises",
+    image: "/images/blog/6.png",
+    category: "AI",
+    date: "2025-06-28",
+  },
+  {
+    id: "ai-ux-ui-007",
+    title: "Designing UX/UI for AI-Centric Applications: Best Practices & Case Studies",
+    href: "/blog/ux-ui-for-ai-apps",
+    image: "/images/blog/7.png",
+    category: "Design",
+    date: "2025-06-18",
+  },
+  {
+    id: "ai-ml-agency-chd-008",
+    title: "Why Altiora Infotech Is the Best AI/ML Agency in Chandigarh",
+    href: "/blog/best-ai-ml-agency-chandigarh",
+    image: "/images/blog/8.png",
+    category: "Company",
+    date: "2024-05-10",
+  },
+];

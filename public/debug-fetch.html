@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Fetch</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; max-width: 800px; margin: 0 auto; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; }
+        .info { background-color: #d1ecf1; border-color: #bee5eb; }
+        button { padding: 10px 15px; margin: 5px; cursor: pointer; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 3px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>Fetch API Debug Tool</h1>
+    
+    <div class="test-section info">
+        <h3>Environment Info</h3>
+        <p><strong>Current URL:</strong> <span id="currentUrl"></span></p>
+        <p><strong>User Agent:</strong> <span id="userAgent"></span></p>
+        <p><strong>Fetch API Available:</strong> <span id="fetchAvailable"></span></p>
+    </div>
+
+    <div class="test-section">
+        <h3>Test 1: Basic Fetch Test</h3>
+        <button onclick="testBasicFetch()">Test Basic Fetch</button>
+        <div id="basicFetchResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>Test 2: Upload API Test</h3>
+        <button onclick="testUploadAPI()">Test Upload API</button>
+        <div id="uploadAPIResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>Test 3: Network Connectivity</h3>
+        <button onclick="testNetworkConnectivity()">Test Network</button>
+        <div id="networkResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>Console Logs</h3>
+        <div id="consoleLogs"></div>
+    </div>
+
+    <script>
+        // Initialize page
+        document.getElementById('currentUrl').textContent = window.location.href;
+        document.getElementById('userAgent').textContent = navigator.userAgent;
+        document.getElementById('fetchAvailable').textContent = typeof fetch !== 'undefined' ? 'Yes' : 'No';
+
+        // Console log capture
+        const originalLog = console.log;
+        const originalError = console.error;
+        const logContainer = document.getElementById('consoleLogs');
+
+        function addLog(type, message) {
+            const logDiv = document.createElement('div');
+            logDiv.innerHTML = `<strong>[${type}]</strong> ${message}`;
+            logDiv.style.color = type === 'ERROR' ? 'red' : type === 'WARN' ? 'orange' : 'black';
+            logContainer.appendChild(logDiv);
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            addLog('LOG', args.join(' '));
+        };
+
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            addLog('ERROR', args.join(' '));
+        };
+
+        async function testBasicFetch() {
+            const resultDiv = document.getElementById('basicFetchResult');
+            resultDiv.innerHTML = '<p>Testing basic fetch...</p>';
+            
+            try {
+                console.log('🧪 Testing basic fetch to /api/contact/upload');
+                
+                const response = await fetch('/api/contact/upload', {
+                    method: 'OPTIONS'
+                });
+                
+                console.log('✅ Basic fetch response:', response.status, response.statusText);
+                
+                resultDiv.innerHTML = `
+                    <div class="success">
+                        <h4>✅ Basic Fetch Success</h4>
+                        <p><strong>Status:</strong> ${response.status} ${response.statusText}</p>
+                        <p><strong>Headers:</strong></p>
+                        <pre>${JSON.stringify(Object.fromEntries(response.headers.entries()), null, 2)}</pre>
+                    </div>
+                `;
+            } catch (error) {
+                console.error('❌ Basic fetch failed:', error);
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <h4>❌ Basic Fetch Failed</h4>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                        <p><strong>Stack:</strong></p>
+                        <pre>${error.stack}</pre>
+                    </div>
+                `;
+            }
+        }
+
+        async function testUploadAPI() {
+            const resultDiv = document.getElementById('uploadAPIResult');
+            resultDiv.innerHTML = '<p>Testing upload API...</p>';
+            
+            try {
+                console.log('🧪 Testing upload API POST request');
+                
+                const requestBody = {
+                    fileName: 'debug-test.pdf',
+                    fileSize: 1024,
+                    mimeType: 'application/pdf',
+                    senderName: 'Debug Test User'
+                };
+                
+                console.log('📤 Request body:', requestBody);
+                
+                const response = await fetch('/api/contact/upload', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+                
+                console.log('📡 Upload API response status:', response.status);
+                console.log('📡 Upload API response headers:', Object.fromEntries(response.headers.entries()));
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('✅ Upload API result:', result);
+                    
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            <h4>✅ Upload API Success</h4>
+                            <p><strong>Status:</strong> ${response.status}</p>
+                            <p><strong>File Name:</strong> ${result.fileName}</p>
+                            <p><strong>Public URL:</strong> <a href="${result.publicUrl}" target="_blank">${result.publicUrl}</a></p>
+                            <p><strong>Full Response:</strong></p>
+                            <pre>${JSON.stringify(result, null, 2)}</pre>
+                        </div>
+                    `;
+                } else {
+                    const errorText = await response.text();
+                    console.error('❌ Upload API error:', errorText);
+                    
+                    resultDiv.innerHTML = `
+                        <div class="error">
+                            <h4>❌ Upload API Failed</h4>
+                            <p><strong>Status:</strong> ${response.status}</p>
+                            <p><strong>Error:</strong> ${errorText}</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('❌ Upload API test failed:', error);
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <h4>❌ Upload API Test Failed</h4>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                        <p><strong>Stack:</strong></p>
+                        <pre>${error.stack}</pre>
+                    </div>
+                `;
+            }
+        }
+
+        async function testNetworkConnectivity() {
+            const resultDiv = document.getElementById('networkResult');
+            resultDiv.innerHTML = '<p>Testing network connectivity...</p>';
+            
+            const tests = [
+                { name: 'Self (same origin)', url: window.location.origin },
+                { name: 'Google', url: 'https://www.google.com' },
+                { name: 'JSONPlaceholder API', url: 'https://jsonplaceholder.typicode.com/posts/1' }
+            ];
+            
+            let results = [];
+            
+            for (const test of tests) {
+                try {
+                    console.log(`🌐 Testing connectivity to ${test.name}: ${test.url}`);
+                    
+                    const startTime = Date.now();
+                    const response = await fetch(test.url, { 
+                        method: 'HEAD',
+                        mode: test.url.includes(window.location.origin) ? 'same-origin' : 'no-cors'
+                    });
+                    const endTime = Date.now();
+                    
+                    results.push({
+                        name: test.name,
+                        status: 'Success',
+                        time: `${endTime - startTime}ms`,
+                        details: `Status: ${response.status}`
+                    });
+                } catch (error) {
+                    results.push({
+                        name: test.name,
+                        status: 'Failed',
+                        time: 'N/A',
+                        details: error.message
+                    });
+                }
+            }
+            
+            const resultsHTML = results.map(result => `
+                <div class="${result.status === 'Success' ? 'success' : 'error'}" style="margin: 5px 0; padding: 10px;">
+                    <strong>${result.name}:</strong> ${result.status} (${result.time}) - ${result.details}
+                </div>
+            `).join('');
+            
+            resultDiv.innerHTML = `
+                <h4>Network Connectivity Results</h4>
+                ${resultsHTML}
+            `;
+        }
+
+        // Auto-run basic tests on page load
+        window.addEventListener('load', () => {
+            console.log('🚀 Debug page loaded, running initial tests...');
+            setTimeout(testBasicFetch, 1000);
+        });
+    </script>
+</body>
+</html>

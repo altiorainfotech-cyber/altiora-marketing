@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .container { max-width: 600px; margin: 0 auto; }
+        .upload-area { border: 2px dashed #ccc; padding: 20px; text-align: center; margin: 20px 0; }
+        .file-list { margin: 20px 0; }
+        .file-item { padding: 10px; border: 1px solid #ddd; margin: 5px 0; }
+        .success { color: green; }
+        .error { color: red; }
+        .uploading { color: blue; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>File Upload Test</h1>
+        
+        <div>
+            <label>First Name: <input type="text" id="firstName" value="Test" /></label><br><br>
+            <label>Last Name: <input type="text" id="lastName" value="User" /></label><br><br>
+        </div>
+        
+        <div class="upload-area" id="uploadArea">
+            <p>Click to select files or drag and drop</p>
+            <input type="file" id="fileInput" multiple style="display: none;" />
+        </div>
+        
+        <div class="file-list" id="fileList"></div>
+        
+        <button onclick="testAPI()">Test API Connection</button>
+    </div>
+
+    <script>
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const fileList = document.getElementById('fileList');
+        
+        uploadArea.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', handleFiles);
+        
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.backgroundColor = '#f0f0f0';
+        });
+        
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.backgroundColor = '';
+        });
+        
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.backgroundColor = '';
+            handleFiles({ target: { files: e.dataTransfer.files } });
+        });
+        
+        async function handleFiles(event) {
+            const files = event.target.files;
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            
+            for (let file of files) {
+                await uploadFile(file, firstName, lastName);
+            }
+        }
+        
+        async function uploadFile(file, firstName, lastName) {
+            const fileId = Math.random().toString(36).substr(2, 9);
+            const senderName = `${firstName} ${lastName}`.trim();
+            
+            // Add file to UI
+            const fileDiv = document.createElement('div');
+            fileDiv.className = 'file-item uploading';
+            fileDiv.id = fileId;
+            fileDiv.innerHTML = `<strong>${file.name}</strong> (${formatFileSize(file.size)}) - Uploading...`;
+            fileList.appendChild(fileDiv);
+            
+            try {
+                console.log('🔄 Starting upload for:', file.name);
+                
+                // Get presigned URL
+                const uploadResponse = await fetch('/api/contact/upload', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        fileName: file.name,
+                        fileSize: file.size,
+                        mimeType: file.type,
+                        senderName: senderName
+                    }),
+                });
+                
+                if (!uploadResponse.ok) {
+                    const errorData = await uploadResponse.json();
+                    throw new Error(errorData.error || 'Failed to get upload URL');
+                }
+                
+                const { uploadEndpoint, fileName, publicUrl, uploadToken } = await uploadResponse.json();
+                console.log('✅ Got upload endpoint');
+                
+                // Upload file via server
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('uploadToken', uploadToken);
+                
+                const uploadFileResponse = await fetch(uploadEndpoint, {
+                    method: 'POST',
+                    body: formData,
+                });
+                
+                if (!uploadFileResponse.ok) {
+                    const errorData = await uploadFileResponse.json();
+                    throw new Error(errorData.error || 'Failed to upload file');
+                }
+                
+                // Update UI
+                fileDiv.className = 'file-item success';
+                fileDiv.innerHTML = `<strong>${file.name}</strong> (${formatFileSize(file.size)}) - ✅ Uploaded successfully<br>
+                    <small>Stored as: ${fileName}</small><br>
+                    <small>Format: contact_us/ID_Name/Date/randomId_filename</small><br>
+                    <small><a href="${publicUrl}" target="_blank">View file</a></small>`;
+                
+                console.log('🎉 File uploaded successfully:', fileName);
+                
+            } catch (error) {
+                console.error('❌ Upload failed:', error);
+                fileDiv.className = 'file-item error';
+                fileDiv.innerHTML = `<strong>${file.name}</strong> (${formatFileSize(file.size)}) - ❌ Error: ${error.message}`;
+            }
+        }
+        
+        async function testAPI() {
+            try {
+                console.log('🧪 Testing API...');
+                const response = await fetch('/api/contact/upload', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        fileName: 'test.pdf',
+                        fileSize: 1024,
+                        mimeType: 'application/pdf',
+                        senderName: 'Test User'
+                    })
+                });
+                
+                const result = await response.json();
+                console.log('✅ API test result:', result);
+                alert('API test successful! Check console for details.');
+            } catch (error) {
+                console.error('❌ API test failed:', error);
+                alert(`API test failed: ${error.message}`);
+            }
+        }
+        
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+    </script>
+</body>
+</html>

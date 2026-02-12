@@ -1,0 +1,622 @@
+'use client';
+
+import React, { type ComponentType } from "react";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import {
+  Search,
+  TrendingUp,
+  Target,
+  Megaphone,
+  Share2,
+  DollarSign,
+  LineChart,
+  Users,
+  Zap,
+  CheckCircle,
+  BarChart3,
+  Eye,
+  Activity,
+  ArrowRight
+} from "lucide-react";
+
+import Header from "@/assets/Header";
+import Footer from "@/assets/Footer";
+
+// Icon mapping
+const iconMap: Record<string, ComponentType<{ className?: string; size?: string | number }>> = {
+  Search,
+  TrendingUp,
+  Target,
+  Megaphone,
+  Share2,
+  DollarSign,
+  LineChart,
+  Users,
+  Zap,
+  CheckCircle,
+  BarChart3,
+  Eye,
+  Activity
+};
+
+// Default fallback data
+const defaultDigitalMarketingServices = [
+  {
+    title: "Digital Marketing Strategy",
+    description: "Comprehensive digital marketing planning and execution tailored to your business goals",
+    link: "/services/digital-marketing/strategy",
+    metric: "300%",
+    metricLabel: "Average ROI improvement",
+    icon: "Target",
+    iconName: "DMS",
+    color: "#7c69ef",
+    gradient: "from-purple-500 to-purple-600",
+  },
+  {
+    title: "Search Engine Optimization (SEO)",
+    description: "Boost organic visibility and rankings with data-driven SEO strategies",
+    link: "/services/digital-marketing/seo",
+    metric: "150%",
+    metricLabel: "Average traffic increase",
+    icon: "Search",
+    iconName: "SEO",
+    color: "#10B981",
+    gradient: "from-green-500 to-green-600",
+  },
+  {
+    title: "Search Engine Marketing (SEM)",
+    description: "Targeted paid search campaigns that drive qualified leads and conversions",
+    link: "/services/digital-marketing/sem",
+    metric: "5x",
+    metricLabel: "Average ROAS",
+    icon: "TrendingUp",
+    iconName: "SEM",
+    color: "#F59E0B",
+    gradient: "from-orange-500 to-orange-600",
+  },
+  {
+    title: "Pay-Per-Click Advertising (PPC)",
+    description: "High-performing PPC campaigns across Google, Bing, and social platforms",
+    link: "/services/digital-marketing/ppc",
+    metric: "40%",
+    metricLabel: "Lower cost per acquisition",
+    icon: "DollarSign",
+    iconName: "PPC",
+    color: "#8B5CF6",
+    gradient: "from-purple-500 to-purple-600",
+  },
+  {
+    title: "Social Media Marketing (SMM)",
+    description: "Build brand awareness and engage your audience across all social platforms",
+    link: "/services/digital-marketing/smm",
+    metric: "200%",
+    metricLabel: "Engagement rate increase",
+    icon: "Share2",
+    iconName: "SMM",
+    color: "#EF4444",
+    gradient: "from-red-500 to-red-600",
+  },
+  {
+    title: "Social Media Advertising",
+    description: "Targeted social ad campaigns that convert followers into customers",
+    link: "/services/digital-marketing/social-ads",
+    metric: "3.5x",
+    metricLabel: "Average conversion lift",
+    icon: "Megaphone",
+    iconName: "SMA",
+    color: "#06B6D4",
+    gradient: "from-cyan-500 to-cyan-600",
+  },
+];
+
+const defaultWorkflowSteps = [
+  {
+    icon: "Target",
+    title: "Discovery & Strategy",
+    description: "Deep dive into your business goals, target audience, and competitive landscape",
+    details: [
+      "Business objectives analysis",
+      "Target audience research",
+      "Competitor analysis",
+      "Channel strategy development"
+    ]
+  },
+  {
+    icon: "LineChart",
+    title: "Planning & Setup",
+    description: "Create comprehensive marketing plans and set up tracking infrastructure",
+    details: [
+      "Campaign planning",
+      "Analytics setup",
+      "Conversion tracking",
+      "KPI definition"
+    ]
+  },
+  {
+    icon: "Zap",
+    title: "Execution & Launch",
+    description: "Launch campaigns across selected channels with optimized content",
+    details: [
+      "Content creation",
+      "Campaign launch",
+      "A/B testing",
+      "Performance monitoring"
+    ]
+  },
+  {
+    icon: "Activity",
+    title: "Optimize & Scale",
+    description: "Continuous optimization based on data insights to maximize ROI",
+    details: [
+      "Performance analysis",
+      "Campaign optimization",
+      "Budget reallocation",
+      "Scaling successful campaigns"
+    ]
+  }
+];
+
+const defaultOutcomes = [
+  {
+    icon: "TrendingUp",
+    title: "Increased Visibility",
+    description: "Dominate search results and social feeds with strategic digital presence",
+    emoji: "📈"
+  },
+  {
+    icon: "Users",
+    title: "Qualified Leads",
+    description: "Attract and convert high-quality leads that match your ideal customer profile",
+    emoji: "🎯"
+  },
+  {
+    icon: "BarChart3",
+    title: "Measurable ROI",
+    description: "Track every dollar spent with comprehensive analytics and reporting",
+    emoji: "💰"
+  },
+  {
+    icon: "Zap",
+    title: "Brand Authority",
+    description: "Build trust and credibility in your industry through consistent marketing",
+    emoji: "⚡"
+  }
+];
+
+const defaultWhyAltioraItems = [
+  {
+    icon: "Target",
+    title: "Data-Driven Approach",
+    stat: "98%",
+    statLabel: "Campaign success rate",
+    description: "We use advanced analytics and A/B testing to ensure every campaign delivers results",
+    color: "#7c69ef"
+  },
+  {
+    icon: "Users",
+    title: "Industry Expertise",
+    stat: "50+",
+    statLabel: "Industries served",
+    description: "From SaaS to e-commerce, we understand what works in your specific market",
+    color: "#10B981"
+  },
+  {
+    icon: "BarChart3",
+    title: "Transparent Reporting",
+    stat: "24/7",
+    statLabel: "Real-time dashboards",
+    description: "Access comprehensive performance data anytime with our client portals",
+    color: "#F59E0B"
+  },
+  {
+    icon: "CheckCircle",
+    title: "Full-Service Team",
+    stat: "15+",
+    statLabel: "Years experience",
+    description: "Our team of specialists covers every aspect of digital marketing",
+    color: "#8B5CF6"
+  }
+];
+
+interface DigitalMarketingClientPageProps {
+  pageData?: any;
+}
+
+export default function DigitalMarketingClientPage({ pageData }: DigitalMarketingClientPageProps) {
+  // Extract data from pageData or use defaults
+  const heroSection = pageData?.heroSection || {
+    badge: "Digital Marketing Excellence",
+    title: "Transform Your Business with",
+    highlightText: "Digital Marketing",
+    description: "Drive growth, engagement, and revenue with data-driven digital marketing strategies tailored to your business goals.",
+    primaryCTA: {
+      text: "Get Started",
+      link: "/contact"
+    },
+    secondaryCTA: {
+      text: "View Case Studies",
+      link: "/case-studies"
+    }
+  };
+
+  const servicesSection = pageData?.servicesSection || {
+    title: "Our",
+    highlightText: "Digital Marketing Services",
+    description: "Comprehensive digital marketing solutions designed to maximize your online presence and ROI",
+    services: defaultDigitalMarketingServices
+  };
+
+  const howWeWorkSection = pageData?.howWeWorkSection || {
+    title: "How We",
+    highlightText: "Drive Results",
+    description: "Our proven process ensures consistent, measurable success for every client",
+    steps: defaultWorkflowSteps
+  };
+
+  const outcomesSection = pageData?.outcomesSection || {
+    title: "Expected",
+    highlightText: "Outcomes",
+    description: "The measurable impact you can expect from our digital marketing services",
+    outcomes: defaultOutcomes
+  };
+
+  const whyAltioraSection = pageData?.whyAltioraSection || {
+    title: "Why Choose",
+    highlightText: "Altiora",
+    description: "Partner with a team that's committed to your success",
+    items: defaultWhyAltioraItems
+  };
+
+  const ctaSection = pageData?.ctaSection || {
+    icon: "Megaphone",
+    title: "Ready to Scale Your Digital Presence?",
+    description: "Let's create a custom digital marketing strategy that drives real results for your business.",
+    primaryCTA: {
+      text: "Schedule a Consultation",
+      link: "/contact",
+      icon: "Target"
+    },
+    secondaryCTA: {
+      text: "View Our Work",
+      link: "/portfolio",
+      icon: "Eye"
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex flex-col bg-[#010c22] text-[#F8FBFB]">
+      <Header />
+
+      {/* Hero Section */}
+      <section className="relative isolate overflow-hidden px-6 pt-32 pb-20 sm:pt-40 sm:pb-24">
+        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#0b0d2a] to-[#010c22]" />
+        <div className="absolute inset-0 -z-10 opacity-20">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl animate-blob" />
+          <div className="absolute top-40 right-10 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000" />
+          <div className="absolute bottom-20 left-1/2 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000" />
+        </div>
+
+        <div className="relative z-10 max-w-6xl mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="space-y-6"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-purple-500/30 bg-purple-500/10 backdrop-blur-sm">
+              <span className="text-xs uppercase tracking-wider text-purple-300">{heroSection.badge}</span>
+            </div>
+
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight">
+              {heroSection.title}{" "}
+              <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
+                {heroSection.highlightText}
+              </span>
+            </h1>
+
+            <p className="max-w-3xl mx-auto text-lg sm:text-xl text-gray-300">
+              {heroSection.description}
+            </p>
+
+            <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
+              <Link
+                href={heroSection.primaryCTA.link}
+                className="group inline-flex items-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-semibold transition-all duration-300 shadow-lg shadow-purple-500/25 hover:shadow-xl hover:shadow-purple-500/40 hover:scale-105"
+              >
+                {heroSection.primaryCTA.text}
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <Link
+                href={heroSection.secondaryCTA.link}
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-full border border-purple-500/50 hover:border-purple-400 text-purple-300 hover:text-purple-200 font-semibold transition-all duration-300 hover:bg-purple-500/10"
+              >
+                {heroSection.secondaryCTA.text}
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Services Section */}
+      <section className="py-20 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+              {servicesSection.title}{" "}
+              <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                {servicesSection.highlightText}
+              </span>
+            </h2>
+            <p className="text-lg text-gray-400 max-w-3xl mx-auto">
+              {servicesSection.description}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {servicesSection.services.map((service: any, index: number) => {
+              const IconComponent = typeof service.icon === 'string'
+                ? iconMap[service.icon] || Target
+                : service.icon;
+
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                >
+                  <Link
+                    href={service.link}
+                    className="group block h-full p-6 rounded-2xl bg-gradient-to-br from-[#0b0d2a] to-[#0a0c1f] border border-white/10 hover:border-purple-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/20 hover:-translate-y-1"
+                  >
+                    <div
+                      className="inline-flex items-center justify-center w-14 h-14 rounded-xl mb-4"
+                      style={{ backgroundColor: `${service.color}20` }}
+                    >
+                      <IconComponent className="w-7 h-7" style={{ color: service.color }} />
+                    </div>
+
+                    <h3 className="text-xl font-bold mb-3 group-hover:text-purple-400 transition-colors">
+                      {service.title}
+                    </h3>
+
+                    <p className="text-gray-400 mb-6 line-clamp-3">
+                      {service.description}
+                    </p>
+
+                    <div className="pt-4 border-t border-white/10">
+                      <div className="text-2xl font-bold" style={{ color: service.color }}>
+                        {service.metric}
+                      </div>
+                      <div className="text-xs text-gray-500 uppercase tracking-wide mt-1">
+                        {service.metricLabel}
+                      </div>
+                    </div>
+                  </Link>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* How We Work Section */}
+      <section className="py-20 px-6 bg-[#0a0c1f]/50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+              {howWeWorkSection.title}{" "}
+              <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                {howWeWorkSection.highlightText}
+              </span>
+            </h2>
+            <p className="text-lg text-gray-400 max-w-3xl mx-auto">
+              {howWeWorkSection.description}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {howWeWorkSection.steps.map((step: any, index: number) => {
+              const IconComponent = typeof step.icon === 'string'
+                ? iconMap[step.icon] || Target
+                : step.icon;
+
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="relative p-6 rounded-2xl bg-gradient-to-br from-[#0b0d2a] to-[#0a0c1f] border border-white/10 hover:border-purple-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/20"
+                >
+                  <div className="absolute top-4 right-4 w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-sm font-bold text-white">
+                    {index + 1}
+                  </div>
+
+                  <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-purple-500/20 mb-4">
+                    <IconComponent className="w-7 h-7 text-purple-400" />
+                  </div>
+
+                  <h3 className="text-xl font-bold mb-3">
+                    {step.title}
+                  </h3>
+
+                  <p className="text-gray-400 mb-4">
+                    {step.description}
+                  </p>
+
+                  {step.details && (
+                    <ul className="space-y-2">
+                      {step.details.map((detail: string, i: number) => (
+                        <li key={i} className="text-sm text-gray-500 flex items-start gap-2">
+                          <ArrowRight className="w-4 h-4 text-purple-400 mt-0.5 flex-shrink-0" />
+                          <span>{detail}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Outcomes Section */}
+      <section className="py-20 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+              {outcomesSection.title}{" "}
+              <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                {outcomesSection.highlightText}
+              </span>
+            </h2>
+            <p className="text-lg text-gray-400 max-w-3xl mx-auto">
+              {outcomesSection.description}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {outcomesSection.outcomes.map((outcome: any, index: number) => {
+              const IconComponent = typeof outcome.icon === 'string'
+                ? iconMap[outcome.icon] || CheckCircle
+                : outcome.icon;
+
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="p-6 rounded-2xl bg-gradient-to-br from-[#0b0d2a] to-[#0a0c1f] border border-white/10 hover:border-purple-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/20 text-center"
+                >
+                  <div className="text-5xl mb-4">{outcome.emoji}</div>
+
+                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-purple-500/20 mb-4">
+                    <IconComponent className="w-6 h-6 text-purple-400" />
+                  </div>
+
+                  <h3 className="text-xl font-bold mb-3">
+                    {outcome.title}
+                  </h3>
+
+                  <p className="text-gray-400">
+                    {outcome.description}
+                  </p>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Why Altiora Section */}
+      <section className="py-20 px-6 bg-[#0a0c1f]/50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+              {whyAltioraSection.title}{" "}
+              <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                {whyAltioraSection.highlightText}
+              </span>
+            </h2>
+            <p className="text-lg text-gray-400 max-w-3xl mx-auto">
+              {whyAltioraSection.description}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {whyAltioraSection.items.map((item: any, index: number) => {
+              const IconComponent = typeof item.icon === 'string'
+                ? iconMap[item.icon] || CheckCircle
+                : item.icon;
+
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="p-6 rounded-2xl bg-gradient-to-br from-[#0b0d2a] to-[#0a0c1f] border border-white/10 hover:border-purple-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/20"
+                >
+                  <div
+                    className="inline-flex items-center justify-center w-14 h-14 rounded-xl mb-4"
+                    style={{ backgroundColor: `${item.color}20` }}
+                  >
+                    <IconComponent className="w-7 h-7" style={{ color: item.color }} />
+                  </div>
+
+                  <h3 className="text-xl font-bold mb-3">
+                    {item.title}
+                  </h3>
+
+                  <div className="mb-4">
+                    <div className="text-3xl font-bold" style={{ color: item.color }}>
+                      {item.stat}
+                    </div>
+                    <div className="text-xs text-gray-500 uppercase tracking-wide mt-1">
+                      {item.statLabel}
+                    </div>
+                  </div>
+
+                  <p className="text-gray-400">
+                    {item.description}
+                  </p>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 px-6">
+        <div className="max-w-5xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-purple-600 via-pink-600 to-blue-600 p-12 text-center"
+          >
+            <div className="absolute inset-0 bg-black/20" />
+
+            <div className="relative z-10 space-y-6">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white">
+                {ctaSection.title}
+              </h2>
+
+              <p className="text-lg text-white/90 max-w-2xl mx-auto">
+                {ctaSection.description}
+              </p>
+
+              <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
+                <Link
+                  href={ctaSection.primaryCTA.link}
+                  className="group inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-purple-600 hover:bg-gray-100 font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+                >
+                  {ctaSection.primaryCTA.text}
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Link>
+                <Link
+                  href={ctaSection.secondaryCTA.link}
+                  className="inline-flex items-center gap-2 px-8 py-4 rounded-full border-2 border-white text-white hover:bg-white/10 font-semibold transition-all duration-300"
+                >
+                  {ctaSection.secondaryCTA.text}
+                </Link>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  );
+}
