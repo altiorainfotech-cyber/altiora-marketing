@@ -69,7 +69,7 @@ const defaultDigitalMarketingServices = [
       "TikTok Ads",
       "Targeted ad campaigns for brand growth"
     ],
-    link: "/social-media-advertising",
+    link: "/services/social-media-advertising",
     metric: "",
     metricLabel: "",
     icon: "Megaphone",
@@ -86,7 +86,7 @@ const defaultDigitalMarketingServices = [
       "Local SEO ranking boost",
       "Long-term organic traffic growth"
     ],
-    link: "/seo",
+    link: "/services/seo",
     metric: "",
     metricLabel: "",
     icon: "Search",
@@ -103,7 +103,7 @@ const defaultDigitalMarketingServices = [
       "Content writing support",
       "Photos & video integration"
     ],
-    link: "/web-design",
+    link: "/services/web-design",
     metric: "",
     metricLabel: "",
     icon: "Monitor",
@@ -120,7 +120,7 @@ const defaultDigitalMarketingServices = [
       "Audience engagement strategy",
       "Brand loyalty improvement"
     ],
-    link: "/social-media-management",
+    link: "/services/social-media-management",
     metric: "",
     metricLabel: "",
     icon: "Share2",
@@ -996,7 +996,7 @@ export default function DigitalMarketingClientPage({ pageData }: DigitalMarketin
                 <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/90 max-w-3xl mx-auto mb-6 sm:mb-8 md:mb-10 leading-relaxed">
                   If you're ready to scale your business with strategic, performance-driven digital marketing, Altiora Infotech is here to help. Let's turn your online presence into a powerful growth engine.
                   <br /><br />
-                  📩 Contact us today to discuss your goals and discover how our <Link href="/digital-marketing-strategy" className="text-[#f4cc6f] hover:text-[#e6b85c] underline transition-colors">digital marketing services </Link> can help your business grow smarter and faster.
+                  📩 Contact us today to discuss your goals and discover how our <Link href="/services/digital-marketing-strategy" className="text-[#f4cc6f] hover:text-[#e6b85c] underline transition-colors">digital marketing services </Link> can help your business grow smarter and faster.
                 </p>
 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
