@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 // import { getImageUrl } from "@/lib/cloudinary";
 
 const socials = [
@@ -55,32 +55,29 @@ const socials = [
 
 const columns = [
   {
-    title: "Products",
-    links: ["Altiora Core", "Payments & Billing", "Identity & Auth", "Observability"],
-  },
-  {
     title: "Services",
-    links: ["Web3 & Blockchain", "AI & Data", "Web 2.0"],
+    links: ["Digital Marketing", "SEO", "PPC"],
   },
   {
     title: "Company",
-    links: ["About", "Careers", "Contact", "FAQ"],
+    links: ["About", "Contact"],
   },
   {
-    title: "Resources",
-    links: ["Testimonials", "Blog", "Pitch Deck", "Playbook"],
+    title: "We are available In",
+    links: [],
+    hasDropdown: true,
   },
 ];
 
 const tickerItems = [
-  "Account Abstraction (ERC-4337)",
-  "ZK Proofs",
-  "Smart Wallets",
-  "L2 Rollups",
-  "LLM Agents",
-  "RAG Pipelines",
-  "Realtime AI",
-  "Edge Functions",
+  "SEO Optimization",
+  "PPC Campaigns",
+  "Social Media Marketing",
+  "Content Strategy",
+  "Web Design",
+  "Brand Identity",
+  "Email Marketing",
+  "Analytics & Reporting",
 ];
 
 // Map normalized labels → hrefs
@@ -94,10 +91,12 @@ const LINK_MAP: Record<string, string> = {
   faq: "/faq",
   "pitch deck": "https://altiorainfotech.com/pitch-deck",
   playbook: "https://altiorainfotech.com/playbook",
-  "web3 & blockchain": "/services/web3",
-  "ai & data": "/services/ai-ml",
-  "web 2.0": "/services/web2",
-  "mobile & web": "/services/web2",
+  "digital marketing": "/services/digital-marketing",
+  "seo": "/services/seo",
+  "ppc": "/services/ppc",
+  "social media management": "/services/social-media-management",
+  "web design": "/services/web-design",
+  "branding": "/services/branding",
 };
 
 // normalize labels before lookup
@@ -106,6 +105,24 @@ const hrefFor = (raw: string) => LINK_MAP[raw.trim().toLowerCase()] ?? null;
 export default function Footer() {
   const year = useMemo(() => new Date().getFullYear(), []);
   const ticker = useMemo(() => [...tickerItems, ...tickerItems], []);
+  const [canadaOpen, setCanadaOpen] = useState(false);
+  const [usaOpen, setUsaOpen] = useState(false);
+
+  const canadaLocations = [
+    { name: "Vancouver", href: "/services/digital-marketing-company-in-vancouver" },
+    { name: "Surrey", href: "/surrey-marketing-company" },
+    { name: "Abbotsford", href: "/abbotsford-marketing-company" },
+    { name: "Calgary", href: "/calgary-marketing-company" },
+    { name: "Burnaby", href: "/services/digital-marketing-company-in-burnaby" },
+    { name: "Richmond", href: "/services/digital-marketing-company-in-richmond" },
+    { name: "Langley", href: "/services/digital-marketing-company-in-langley" },
+    { name: "Kerrville", href: "/kerrville-marketing-company" },
+    { name: "Indigenous", href: "/indigenous-marketing-company" },
+  ];
+
+  const usaLocations: { name: string; href: string }[] = [
+    // USA locations will be added in the future
+  ];
 
   return (
     <footer className="mt-auto bg-black text-gray-300 z-10 relative">
@@ -137,8 +154,9 @@ export default function Footer() {
               </Link>
 
               <p className="mt-2 text-sm text-white/70">
-                Engineering modern experiences across Web, Mobile, AI, and Blockchain.
-                We design for trust, scale, and measurable impact.
+                A Subsidiary of Altiora Infotech.
+                <br />
+                Engineering modern experiences across Web, Mobile, AI, and Blockchain — designed for trust, scale, and impact.
               </p>
 
               <div className="mt-4 flex items-center gap-3">
@@ -159,36 +177,101 @@ export default function Footer() {
             </div>
 
             {/* columns */}
-            <div className="md:col-span-7 grid grid-cols-2 sm:grid-cols-4 gap-6">
+            <div className="md:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-6">
               {columns.map((col) => (
                 <div key={col.title}>
                   <div className="text-sm font-semibold text-white">{col.title}</div>
-                  <ul className="mt-3 space-y-2">
-                    {col.links.map((label) => {
-                      const href = hrefFor(label);
-                      return (
-                        <li key={label}>
-                          {href ? (
-                            <Link
-                              href={href}
-                              className="text-sm text-gray-300 hover:text-white transition"
-                            >
-                              {label}
-                            </Link>
-                          ) : (
-                            <span
-                              role="link"
-                              aria-disabled="true"
-                              className="text-sm text-gray-400/80 select-none cursor-default"
-                              title="Coming soon"
-                            >
-                              {label}
-                            </span>
-                          )}
-                        </li>
-                      );
-                    })}
-                  </ul>
+                  {col.hasDropdown ? (
+                    <div className="mt-3 space-y-2">
+                      {/* Canada Dropdown */}
+                      <div>
+                        <button
+                          onClick={() => setCanadaOpen(!canadaOpen)}
+                          className="text-sm text-gray-300 hover:text-white transition flex items-center gap-1"
+                        >
+                          Canada
+                          <svg
+                            className={`w-3 h-3 transition-transform ${canadaOpen ? 'rotate-180' : ''}`}
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                          </svg>
+                        </button>
+                        {canadaOpen && (
+                          <ul className="mt-2 ml-3 grid grid-cols-2 gap-x-4 gap-y-1">
+                            {canadaLocations.map((loc) => (
+                              <li key={loc.name}>
+                                <Link
+                                  href={loc.href}
+                                  className="text-xs text-gray-400 hover:text-white transition"
+                                >
+                                  {loc.name}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                      {/* USA Dropdown */}
+                      <div>
+                        <button
+                          onClick={() => setUsaOpen(!usaOpen)}
+                          className="text-sm text-gray-300 hover:text-white transition flex items-center gap-1"
+                        >
+                          USA
+                          <svg
+                            className={`w-3 h-3 transition-transform ${usaOpen ? 'rotate-180' : ''}`}
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                          </svg>
+                        </button>
+                        {usaOpen && (
+                          <ul className="mt-2 ml-3 space-y-1">
+                            {usaLocations.map((loc) => (
+                              <li key={loc.name}>
+                                <Link
+                                  href={loc.href}
+                                  className="text-xs text-gray-400 hover:text-white transition"
+                                >
+                                  {loc.name}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    </div>
+                  ) : (
+                    <ul className="mt-3 space-y-2">
+                      {col.links.map((label) => {
+                        const href = hrefFor(label);
+                        return (
+                          <li key={label}>
+                            {href ? (
+                              <Link
+                                href={href}
+                                className="text-sm text-gray-300 hover:text-white transition"
+                              >
+                                {label}
+                              </Link>
+                            ) : (
+                              <span
+                                role="link"
+                                aria-disabled="true"
+                                className="text-sm text-gray-400/80 select-none cursor-default"
+                                title="Coming soon"
+                              >
+                                {label}
+                              </span>
+                            )}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
                 </div>
               ))}
             </div>

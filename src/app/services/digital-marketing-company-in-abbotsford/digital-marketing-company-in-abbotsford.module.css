@@ -1,0 +1,129 @@
+/* Abbotsford Marketing Company Styles */
+
+/* Typography */
+.heroTitle {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 1.05;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .heroTitle {
+    font-size: clamp(2.4rem, 7vw, 3.3rem);
+  }
+}
+
+.sectionHeading {
+  font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+  font-weight: 700;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.sectionDescription {
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 46rem;
+  margin: 0 auto;
+  line-height: 1.75;
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  text-align: center;
+}
+
+.overviewTitle {
+  color: #f4cc6f;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Gradient Text */
+.gradientText {
+  background: linear-gradient(135deg, #f4cc6f, #e6b85c, #f4cc6f);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 200%;
+  animation: gradient-shift 5s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Service Cards */
+.serviceCardEnhanced {
+  background: linear-gradient(145deg, rgba(26, 26, 58, 0.95), rgba(42, 42, 74, 0.95));
+  border: 1px solid rgba(244, 204, 111, 0.2);
+  border-radius: 24px;
+  padding: 2rem;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.serviceCardEnhanced::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  padding: 2px;
+  background: linear-gradient(135deg, transparent, rgba(244, 204, 111, 0.4), transparent);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.serviceCardEnhanced:hover {
+  transform: translateY(-15px) scale(1.02);
+  border-color: rgba(244, 204, 111, 0.6);
+  box-shadow:
+    0 20px 60px rgba(244, 204, 111, 0.15),
+    0 0 80px rgba(244, 204, 111, 0.08),
+    inset 0 0 60px rgba(244, 204, 111, 0.05);
+  background: linear-gradient(145deg, rgba(26, 26, 58, 1), rgba(42, 42, 74, 1));
+}
+
+.serviceCardEnhanced:hover::before {
+  opacity: 1;
+}
+
+/* Stat Card */
+.statCard {
+  background: linear-gradient(145deg, rgba(26, 26, 58, 0.95), rgba(42, 42, 74, 0.95));
+  border: 1px solid rgba(244, 204, 111, 0.15);
+  border-radius: 24px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+}
+
+.statCard:hover {
+  transform: translateY(-8px);
+  border-color: rgba(244, 204, 111, 0.4);
+  box-shadow: 0 15px 40px rgba(244, 204, 111, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .serviceCardEnhanced {
+    padding: 1.5rem;
+  }
+  .overviewTitle {
+    font-size: 16px;
+    letter-spacing: 0.2em;
+  }
+}

@@ -8,6 +8,14 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title,
     description,
+    alternates: {
+      canonical: 'https://altiorainfotech.com/services/digital-marketing-company-in-vancouver',
+    },
+    robots: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large' as const,
+    },
     openGraph: {
       title,
       description,

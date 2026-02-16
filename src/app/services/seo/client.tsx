@@ -8,53 +8,130 @@ import Footer from "@/assets/Footer";
 import {
   Globe,
   CheckCircle,
-  TrendingUp,
-  BarChart3,
-  Target,
-  Search,
-  MousePointer,
+  Server,
+  Layers,
   Eye,
-  DollarSign,
+  Users,
+  Search,
+  Shield,
+  CreditCard,
+  ShoppingCart,
+  TrendingUp,
+  Package,
+  BarChart3,
+  Megaphone,
+  Target,
+  Share2,
+  Heart,
+  MessageCircle,
+  Play,
+  Camera,
+  Zap,
+  FileText,
+  Link as LinkIcon,
+  Settings,
+  Monitor,
   ArrowRight,
   Star,
   Clock,
-  Zap,
-  Settings,
-  FileText,
-  Monitor,
-  Shield
+  Calendar
 } from "lucide-react";
 import {
   FaRocket,
   FaEye,
-  FaChartLine,
-  FaBullseye,
-  FaCog,
+  FaCode,
+  FaShieldAlt,
+  FaNetworkWired,
+  FaTools,
   FaHandshake,
   FaGoogle,
-  FaSearch,
-  FaAd,
+  FaYahoo,
+  FaChartLine,
   FaKeyboard,
-  FaCalculator,
-  FaUsers
+  FaCog
 } from "react-icons/fa";
 
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "motion/react";
 import { useInView } from "react-intersection-observer";
-import styles from "../services/digital-marketing/dm.module.css";
+import styles from "../digital-marketing/dm.module.css";
 import ServiceCard from "@/components/ServiceCard";
 import ProcessTimeline from "@/components/ProcessTimeline";
 
-// SEM Metrics Dashboard Component
-const SEMDashboard = () => {
+const ServicesHoverEffect = ({
+  items,
+  className,
+}: {
+  items: {
+    title: string;
+    description: string;
+    icon: React.ReactNode;
+    link: string;
+  }[];
+  className?: string;
+}) => {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  return (
+    <div
+      className={cn(
+        "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6",
+        className
+      )}
+    >
+      {items.map((item, idx) => (
+        <Link
+          href={item?.link}
+          key={idx}
+          className="relative group block p-2 h-full w-full"
+          onMouseEnter={() => setHoveredIndex(idx)}
+          onMouseLeave={() => setHoveredIndex(null)}
+        >
+          <AnimatePresence>
+            {hoveredIndex === idx && (
+              <motion.span
+                className="absolute inset-0 h-full w-full bg-gray-300 block rounded-3xl max-w-full"
+                layoutId="hoverBackground"
+                initial={{ opacity: 0 }}
+                animate={{
+                  opacity: 1,
+                  transition: { duration: 0.15 },
+                }}
+                exit={{
+                  opacity: 0,
+                  transition: { duration: 0.15, delay: 0.2 },
+                }}
+              />
+            )}
+          </AnimatePresence>
+          <div className="rounded-2xl h-full w-full p-6 overflow-hidden bg-gradient-to-br from-[#0B0D2A] to-[#0B0D2A] border border-transparent group-hover:border-[#F4CC6F]/50 relative z-20">
+            <div className="relative z-50">
+              <div className="mb-6 text-[#F4CC6F]">
+                {item.icon}
+              </div>
+              <h4 className="text-xl font-bold mb-3 text-white tracking-wide">
+                {item.title}
+              </h4>
+              <p className="text-base sm:text-lg md:text-xl text-white/80 tracking-wide leading-relaxed">
+                {item.description}
+              </p>
+            </div>
+          </div>
+        </Link>
+      ))}
+    </div>
+  );
+};
+
+// SEO Metrics Dashboard Component
+const SEODashboard = () => {
   const [activeMetric, setActiveMetric] = useState(0);
 
   const metrics = [
-    { label: "Search Visibility", value: "89%", change: "+156%", color: "text-green-400", icon: Eye },
-    { label: "Click-Through Rate", value: "12.4%", change: "+89%", color: "text-blue-400", icon: MousePointer },
-    { label: "Conversion Rate", value: "8.9%", change: "+234%", color: "text-purple-400", icon: Target },
-    { label: "Cost Per Lead", value: "$23", change: "-45%", color: "text-yellow-400", icon: DollarSign }
+    { label: "Organic Traffic", value: "145K", change: "+67%", color: "text-green-400", icon: TrendingUp },
+    { label: "Keywords Ranking", value: "2,340", change: "+89%", color: "text-blue-400", icon: Search },
+    { label: "Page 1 Rankings", value: "456", change: "+123%", color: "text-purple-400", icon: Star },
+    { label: "Domain Authority", value: "78", change: "+34%", color: "text-yellow-400", icon: Shield }
   ];
 
   useEffect(() => {
@@ -71,8 +148,8 @@ const SEMDashboard = () => {
           <BarChart3 className="w-6 h-6 text-white" />
         </div>
         <div>
-          <h3 className="text-xl font-bold text-white">SEM Performance</h3>
-          <p className="text-white/60 text-sm">Real-time search marketing metrics</p>
+          <h3 className="text-xl font-bold text-white">SEO Performance</h3>
+          <p className="text-white/60 text-sm">Real-time organic growth metrics</p>
         </div>
       </div>
 
@@ -100,8 +177,8 @@ const SEMDashboard = () => {
   );
 };
 
-// SEM Strategy Card Component
-const SEMStrategyCard = ({ strategy, className }: { strategy: any; className?: string }) => {
+// SEO Strategy Card Component
+const SEOStrategyCard = ({ strategy, className }: { strategy: any; className?: string }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -163,20 +240,67 @@ const SEMStrategyCard = ({ strategy, className }: { strategy: any; className?: s
   );
 };
 
-export default function SearchEngineMarketingClient() {
+// SEO Results Showcase Component
+const SEOResultsShowcase = ({ result, delay = 0 }: { result: any; delay?: number }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay }}
+      className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:border-white/20 transition-all duration-300"
+    >
+      {/* Result Header */}
+      <div className="flex items-center gap-3 mb-4">
+        <div className={`w-12 h-12 rounded-full ${result.industryColor} flex items-center justify-center`}>
+          <result.industryIcon className="w-6 h-6 text-white" />
+        </div>
+        <div>
+          <div className="text-white font-semibold">{result.industry}</div>
+          <div className="text-white/60 text-sm">{result.duration}</div>
+        </div>
+      </div>
+
+      {/* Key Metrics */}
+      <div className="grid grid-cols-2 gap-4 mb-4">
+        <div className="text-center p-3 bg-white/5 rounded-xl">
+          <div className="text-2xl font-bold text-green-400">{result.trafficGrowth}</div>
+          <div className="text-xs text-white/60">Traffic Growth</div>
+        </div>
+        <div className="text-center p-3 bg-white/5 rounded-xl">
+          <div className="text-2xl font-bold text-blue-400">{result.rankingImprovement}</div>
+          <div className="text-xs text-white/60">Ranking Boost</div>
+        </div>
+      </div>
+
+      {/* Challenge & Solution */}
+      <div className="space-y-3">
+        <div>
+          <h4 className="text-white font-semibold text-sm mb-1">Challenge:</h4>
+          <p className="text-white/80 text-sm">{result.challenge}</p>
+        </div>
+        <div>
+          <h4 className="text-white font-semibold text-sm mb-1">Solution:</h4>
+          <p className="text-white/80 text-sm">{result.solution}</p>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+export default function SEOClient() {
   const { ref: overviewRef, inView: overviewInView } = useInView({
     threshold: 0.1,
     triggerOnce: true,
   });
 
-  // SEM Strategies Data
-  const semStrategies = [
+  // SEO Strategies Data
+  const seoStrategies = [
     {
-      name: "Organic Search (SEO)",
-      highlightedName: "Organic Search <span class='text-[#f4cc6f]'>(SEO)</span>",
-      icon: Search,
-      description: "Comprehensive SEO strategies to improve organic rankings and drive sustainable long-term traffic growth.",
-      impact: "+234%",
+      name: "Technical SEO",
+      highlightedName: "Technical <span class='text-[#f4cc6f]'>SEO</span>",
+      icon: Settings,
+      description: "Optimize site architecture, speed, and crawlability for search engines and better user experience.",
+      impact: "+89%",
       timeframe: "3-6 months",
       borderColor: "border-gray-500/30",
       bgGradient: "bg-gradient-to-br from-gray-800/20 to-gray-700/20",
@@ -184,154 +308,188 @@ export default function SearchEngineMarketingClient() {
       iconColor: "text-white",
       textColor: "text-gray-300",
       hoverGradient: "bg-gradient-to-br from-gray-600 to-gray-700",
-      features: ["Keyword Optimization", "Technical SEO", "Content Strategy", "Link Building", "Schema Markup", "Core Web Vitals"]
+      features: ["Site Speed Optimization", "Mobile Responsiveness", "Schema Markup", "Core Web Vitals", "XML Sitemaps", "Robots.txt Optimization"]
     },
     {
-      name: "Paid Search (PPC)",
-      highlightedName: "Paid Search <span class='text-[#f4cc6f]'>(PPC)</span>",
-      icon: DollarSign,
-      description: "Strategic paid search campaigns for immediate visibility and targeted traffic with optimized ROI.",
-      impact: "+189%",
-      timeframe: "1-2 weeks",
+      name: "Content Strategy",
+      highlightedName: "Content <span class='text-[#f4cc6f]'>Strategy</span>",
+      icon: FileText,
+      description: "Create high-quality, SEO-optimized content that ranks well and engages your target audience.",
+      impact: "+156%",
+      timeframe: "4-8 months",
       borderColor: "border-gray-500/30",
       bgGradient: "bg-gradient-to-br from-gray-800/20 to-gray-700/20",
       iconBg: "bg-gradient-to-br from-gray-600 to-gray-700",
       iconColor: "text-white",
       textColor: "text-gray-300",
       hoverGradient: "bg-gradient-to-br from-gray-600 to-gray-700",
-      features: ["Google Ads", "Bing Ads", "Shopping Campaigns", "Display Advertising", "Performance Max", "Local Campaigns"]
+      features: ["Keyword Research", "Topic Clusters", "Content Optimization", "Semantic SEO", "Content Audits", "Featured Snippets"]
     },
     {
-      name: "Local Search Marketing",
-      highlightedName: "Local Search <span class='text-[#f4cc6f]'>Marketing</span>",
+      name: "Link Building",
+      highlightedName: "Link <span class='text-[#f4cc6f]'>Building</span>",
+      icon: LinkIcon,
+      description: "Build high-quality backlinks and domain authority through strategic outreach and digital PR.",
+      impact: "+234%",
+      timeframe: "6-12 months",
+      borderColor: "border-gray-500/30",
+      bgGradient: "bg-gradient-to-br from-gray-800/20 to-gray-700/20",
+      iconBg: "bg-gradient-to-br from-gray-600 to-gray-700",
+      iconColor: "text-white",
+      textColor: "text-gray-300",
+      hoverGradient: "bg-gradient-to-br from-gray-600 to-gray-700",
+      features: ["Digital PR Campaigns", "Guest Posting", "Resource Link Building", "Broken Link Building", "HARO Outreach", "Competitor Analysis"]
+    },
+    {
+      name: "Local SEO",
+      highlightedName: "Local <span class='text-[#f4cc6f]'>SEO</span>",
       icon: Globe,
       description: "Dominate local search results with optimized Google My Business and location-based strategies.",
-      impact: "+156%",
-      timeframe: "2-4 weeks",
+      impact: "+178%",
+      timeframe: "2-4 months",
       borderColor: "border-gray-500/30",
       bgGradient: "bg-gradient-to-br from-gray-800/20 to-gray-700/20",
       iconBg: "bg-gradient-to-br from-gray-600 to-gray-700",
       iconColor: "text-white",
       textColor: "text-gray-300",
       hoverGradient: "bg-gradient-to-br from-gray-600 to-gray-700",
-      features: ["Google My Business", "Local Citations", "Review Management", "Map Pack Optimization", "Local Schema", "NAP Consistency"]
+      features: ["Google My Business", "Local Citations", "Review Management", "Location Pages", "Local Schema", "NAP Consistency"]
+    }
+  ];
+
+  // Sample SEO Results
+  const seoResults = [
+    {
+      industry: "E-commerce",
+      industryIcon: ShoppingCart,
+      industryColor: "bg-gradient-to-br from-blue-500 to-purple-500",
+      duration: "8 months",
+      trafficGrowth: "+245%",
+      rankingImprovement: "+189%",
+      challenge: "Low organic visibility for product categories and poor technical SEO foundation.",
+      solution: "Comprehensive technical audit, category page optimization, and strategic content creation."
     },
     {
-      name: "Search Analytics & Optimization",
-      highlightedName: "Search Analytics & <span class='text-[#f4cc6f]'>Optimization</span>",
-      icon: BarChart3,
-      description: "Advanced analytics and continuous optimization for maximum search performance and ROI.",
-      impact: "+278%",
-      timeframe: "Ongoing",
-      borderColor: "border-gray-500/30",
-      bgGradient: "bg-gradient-to-br from-gray-800/20 to-gray-700/20",
-      iconBg: "bg-gradient-to-br from-gray-600 to-gray-700",
-      iconColor: "text-white",
-      textColor: "text-gray-300",
-      hoverGradient: "bg-gradient-to-br from-gray-600 to-gray-700",
-      features: ["Performance Tracking", "Conversion Optimization", "A/B Testing", "ROI Analysis", "Competitor Analysis", "Attribution Modeling"]
+      industry: "SaaS",
+      industryIcon: Monitor,
+      industryColor: "bg-gradient-to-br from-green-500 to-blue-500",
+      duration: "6 months",
+      trafficGrowth: "+167%",
+      rankingImprovement: "+134%",
+      challenge: "Competitive keywords with low domain authority and limited content strategy.",
+      solution: "Topic cluster strategy, technical SEO improvements, and strategic link building campaign."
+    },
+    {
+      industry: "Healthcare",
+      industryIcon: Heart,
+      industryColor: "bg-gradient-to-br from-red-500 to-pink-500",
+      duration: "10 months",
+      trafficGrowth: "+198%",
+      rankingImprovement: "+156%",
+      challenge: "YMYL content requirements and local competition in multiple markets.",
+      solution: "E-A-T optimization, local SEO strategy, and authoritative content development."
     }
   ];
 
   const services = [
     {
-      title: "Search Engine Optimization (SEO)",
-      description: "Comprehensive SEO strategies to improve organic rankings and drive sustainable traffic growth.",
-      icon: <FaSearch className="w-12 h-12" />,
-      link: "/contact"
-    },
-    {
-      title: "Pay-Per-Click Advertising (PPC)",
-      description: "Strategic paid search campaigns across Google Ads, Bing Ads, and other search platforms.",
-      icon: <FaAd className="w-12 h-12" />,
-      link: "/contact"
-    },
-    {
       title: "Keyword Research & Strategy",
-      description: "Comprehensive keyword analysis and search intent mapping for maximum search visibility.",
+      description: "Comprehensive keyword analysis, search intent mapping, and competitive keyword gap analysis.",
       icon: <FaKeyboard className="w-12 h-12" />,
       link: "/contact"
     },
     {
-      title: "Local Search Marketing",
-      description: "Dominate local search results with optimized Google My Business and location-based strategies.",
-      icon: <Globe className="w-12 h-12" />,
+      title: "On-Page SEO Optimization",
+      description: "Title tags, meta descriptions, header optimization, internal linking, and content optimization.",
+      icon: <FileText className="w-12 h-12" />,
       link: "/contact"
     },
     {
-      title: "Search Analytics & Reporting",
-      description: "Advanced search performance tracking, conversion analysis, and comprehensive ROI reporting.",
-      icon: <BarChart3 className="w-12 h-12" />,
-      link: "/contact"
-    },
-    {
-      title: "Conversion Rate Optimization",
-      description: "Landing page optimization and conversion funnel improvement for maximum search ROI.",
-      icon: <Target className="w-12 h-12" />,
-      link: "/contact"
-    },
-    {
-      title: "Technical Search Optimization",
-      description: "Technical SEO audits, site speed optimization, and search engine crawlability improvements.",
+      title: "Technical SEO Audits",
+      description: "Site speed optimization, mobile responsiveness, crawlability, and Core Web Vitals improvement.",
       icon: <Settings className="w-12 h-12" />,
       link: "/contact"
     },
     {
-      title: "Search Competitor Analysis",
-      description: "Comprehensive competitive analysis and search market intelligence for strategic advantage.",
-      icon: <Eye className="w-12 h-12" />,
+      title: "Content SEO Strategy",
+      description: "SEO-optimized content creation, topic clusters, and semantic keyword integration.",
+      icon: <FileText className="w-12 h-12" />,
       link: "/contact"
     },
     {
-      title: "Search Strategy Consulting",
-      description: "Strategic search marketing consulting and comprehensive search visibility planning.",
-      icon: <FaBullseye className="w-12 h-12" />,
+      title: "Link Building & Authority",
+      description: "High-quality backlink acquisition, digital PR, and domain authority improvement strategies.",
+      icon: <LinkIcon className="w-12 h-12" />,
+      link: "/contact"
+    },
+    {
+      title: "Local SEO Optimization",
+      description: "Google My Business optimization, local citations, and location-based search visibility.",
+      icon: <Globe className="w-12 h-12" />,
+      link: "/contact"
+    },
+    {
+      title: "E-commerce SEO",
+      description: "Product page optimization, category structure, schema markup, and shopping feed optimization.",
+      icon: <ShoppingCart className="w-12 h-12" />,
+      link: "/contact"
+    },
+    {
+      title: "SEO Analytics & Reporting",
+      description: "Comprehensive tracking, ranking monitoring, traffic analysis, and ROI measurement.",
+      icon: <BarChart3 className="w-12 h-12" />,
+      link: "/contact"
+    },
+    {
+      title: "SEO Competitor Analysis",
+      description: "Competitive landscape analysis, gap identification, and strategic positioning insights.",
+      icon: <Target className="w-12 h-12" />,
       link: "/contact"
     }
   ];
 
   const mobileServices = [
     {
-      title: "SEO Services",
-      icon: <FaSearch className="w-8 h-8 text-[#f4cc6f]" />
-    },
-    {
-      title: "PPC Advertising",
-      icon: <FaAd className="w-8 h-8 text-[#f4cc6f]" />
-    },
-    {
       title: "Keyword Research",
       icon: <FaKeyboard className="w-8 h-8 text-[#f4cc6f]" />
     },
     {
-      title: "Local Search",
-      icon: <Globe className="w-8 h-8 text-[#f4cc6f]" />
-    },
-    {
-      title: "Search Analytics",
-      icon: <BarChart3 className="w-8 h-8 text-[#f4cc6f]" />
-    },
-    {
-      title: "Conversion Optimization",
-      icon: <Target className="w-8 h-8 text-[#f4cc6f]" />
+      title: "On-Page SEO",
+      icon: <FileText className="w-8 h-8 text-[#f4cc6f]" />
     },
     {
       title: "Technical SEO",
       icon: <Settings className="w-8 h-8 text-[#f4cc6f]" />
     },
     {
-      title: "Competitor Analysis",
-      icon: <Eye className="w-8 h-8 text-[#f4cc6f]" />
+      title: "Content Strategy",
+      icon: <FileText className="w-8 h-8 text-[#f4cc6f]" />
+    },
+    {
+      title: "Link Building",
+      icon: <LinkIcon className="w-8 h-8 text-[#f4cc6f]" />
+    },
+    {
+      title: "Local SEO",
+      icon: <Globe className="w-8 h-8 text-[#f4cc6f]" />
+    },
+    {
+      title: "E-commerce SEO",
+      icon: <ShoppingCart className="w-8 h-8 text-[#f4cc6f]" />
+    },
+    {
+      title: "SEO Analytics",
+      icon: <BarChart3 className="w-8 h-8 text-[#f4cc6f]" />
     }
   ];
 
   const whyChoosePoints = [
-    "Integrated SEO and PPC strategies for maximum search visibility and performance",
-    "Advanced keyword research and competitive analysis for strategic market advantage",
-    "Data-driven optimization with comprehensive analytics and performance tracking",
-    "Local search expertise for businesses targeting geographic markets",
-    "Technical SEO mastery with focus on site performance and user experience",
-    "Transparent reporting with detailed insights and actionable recommendations",
+    "Proven track record of improving organic rankings and traffic growth",
+    "White-hat SEO techniques that comply with Google's latest guidelines",
+    "Comprehensive technical SEO audits and implementation strategies",
+    "Data-driven approach with detailed analytics and performance tracking",
+    "Industry-specific SEO expertise across various business verticals",
+    "Ongoing optimization and adaptation to algorithm changes",
   ];
 
   return (
@@ -343,12 +501,12 @@ export default function SearchEngineMarketingClient() {
         background: "radial-gradient(85% 60% at 28% 8%, rgba(76,131,255,.25), rgba(0,0,0,0))"
       }}>
         <div className="absolute inset-0" style={{ animation: "float 6s ease-in-out infinite", transformStyle: "preserve-3d" }}>
-          <Image src="https://pub-00cafda969bc42d5aac5365b6609f526.r2.dev/web2/custom-web-application-development-hero.jpg" alt="Search Engine Marketing" fill priority className="object-cover" />
+          <Image src="/images/agentic-ai/Predictive Analytics and Automation-1.png" alt="SEO Services" fill priority className="object-cover" />
         </div>
 
         {/* Floating Elements */}
         <div className="absolute top-20 left-10 w-20 h-20 bg-gradient-to-br from-green-400/20 to-blue-500/20 rounded-full blur-xl animate-pulse" />
-        <div className="absolute bottom-32 right-16 w-32 h-32 bg-gradient-to-br from-purple-400/15 to-pink-500/15 rounded-full blur-2xl animate-bounce" style={{ animationDuration: '3s' }} />
+        <div className="absolute bottom-32 right-16 w-32 h-32 bg-gradient-to-br from-purple-400/15 to-cyan-500/15 rounded-full blur-2xl animate-bounce" style={{ animationDuration: '3s' }} />
         <div className="absolute top-1/2 right-10 w-16 h-16 bg-gradient-to-br from-orange-400/20 to-red-500/20 rounded-full blur-lg animate-ping" style={{ animationDuration: '4s' }} />
 
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8 w-full">
@@ -360,12 +518,12 @@ export default function SearchEngineMarketingClient() {
                   ALTIORA INFOTECH
                 </span>
                 <h1 className="font-semibold tracking-tight text-4xl leading-[1.05] sm:text-5xl md:text-6xl lg:text-7xl text-white">
-                  Search Engine Marketing
+                  SEO Services
                   <br />
-                  <span className="text-[#f4cc6f]">SEM Services</span>
+                  <span className="text-[#f4cc6f]">Search Engine Optimization</span>
                 </h1>
                 <p className="text-xl sm:text-2xl text-white/90">
-                  Dominate search results with integrated SEO and PPC strategies for maximum visibility.
+                  Boost your organic visibility and rankings with data-driven SEO strategies.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 md:gap-4 pt-4">
                   <Link href="/contact" className="inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold bg-gradient-to-r from-[#f4cc6f] to-[#e6b85c] text-[#010c22] hover:shadow-lg hover:shadow-[#f4cc6f]/25 focus:shadow-lg focus:shadow-[#f4cc6f]/25 focus:outline-none focus:ring-2 focus:ring-[#f4cc6f]/50 transition-all duration-300 transform hover:scale-105 focus:scale-105">
@@ -378,6 +536,8 @@ export default function SearchEngineMarketingClient() {
           </div>
         </div>
       </section>
+
+
 
       {/* Overview Section */}
       <section
@@ -406,10 +566,10 @@ export default function SearchEngineMarketingClient() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={overviewInView ? { opacity: 1, scale: 1 } : {}}
                 transition={{ duration: 1, delay: 0.3 }}
-                className="max-w-5xl mx-auto pt-[5px] px-8 pb-8 sm:px-12 sm:pb-12 md:px-14 md:pb-14 rounded-[40px] border border-white/5 bg-white/[0.02] backdrop-blur-xl shadow-[0_20px_50px_rgba(244,204,111,0.05)] relative overflow-hidden"
+                className="max-w-5xl mx-auto py-8 px-8 sm:py-12 sm:px-12 md:py-14 md:px-14 rounded-[40px] border border-white/5 bg-white/[0.02] backdrop-blur-xl shadow-[0_20px_50px_rgba(244,204,111,0.05)] relative overflow-hidden"
               >
                 <p className={`${styles.sectionDescription} !max-w-none relative z-10 !text-white/90`}>
-                  Win customer attention at the exact moment they’re searching for solutions that match your business. Our Search Engine Marketing helps you appear instantly on top of search results and capture high-intent traffic ready to convert. At Altiora Infotech, we combine smart bidding, precise keyword targeting, and continuous optimization to maximize ROI. From lead generation to revenue growth, we build SEM campaigns designed for predictable, scalable performance.
+                  Build long-term online visibility that attracts customers even when you’re not running ads. Our SEO and Search Engine Optimization services help your business rank higher, drive qualified organic traffic, and generate consistent leads. At Altiora Infotech, we combine technical expertise, content strategy, and data-driven optimization to maximize search performance. We focus on sustainable rankings, stronger website authority, and measurable long-term business growth.
                 </p>
 
                 {/* Subtle inner light effect */}
@@ -423,43 +583,43 @@ export default function SearchEngineMarketingClient() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-4xl bg-[#f4cc6f]/5 blur-[120px] rounded-full pointer-events-none z-0" />
       </section>
 
-      {/* SEM Strategies Showcase */}
+      {/* SEO Strategies Showcase */}
       <section className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
-              Search Marketing Strategies That <span className="text-[#f4cc6f]">Dominate</span>
+              SEO Strategies That <span className="text-[#f4cc6f]">Drive Results</span>
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed">
-              Comprehensive search engine marketing approaches for maximum visibility and conversions.
+              Comprehensive SEO approaches tailored to your business goals and industry requirements.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {semStrategies.map((strategy, index) => (
-              <SEMStrategyCard key={index} strategy={strategy} />
+            {seoStrategies.map((strategy, index) => (
+              <SEOStrategyCard key={index} strategy={strategy} />
             ))}
           </div>
         </div>
       </section>
 
-      {/* SEM Performance Dashboard */}
+      {/* SEO Performance Dashboard */}
       <section className="py-20 px-6 bg-[#010b22]/50">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
-                Real-Time SEM <span className="text-[#f4cc6f]">Performance</span>
+                Real-Time SEO <span className="text-[#f4cc6f]">Performance</span>
               </h2>
               <p className="text-base sm:text-lg md:text-xl text-white/80 mb-8 leading-relaxed">
-                Track your search marketing success with our comprehensive analytics dashboard. Monitor rankings, traffic, and conversions across all search channels.
+                Track your organic growth with our comprehensive SEO analytics dashboard. Monitor rankings, traffic, and conversions across all your target keywords in real-time.
               </p>
               <div className="space-y-4">
                 {[
-                  "Integrated SEO and PPC performance tracking across all search engines",
-                  "Real-time keyword ranking monitoring and search visibility analysis",
-                  "Advanced conversion tracking and attribution modeling for search traffic",
-                  "Comprehensive competitor analysis and market share insights"
+                  "Live keyword ranking tracking across all search engines",
+                  "Organic traffic growth and user behavior analytics",
+                  "Competitor analysis and market share insights",
+                  "Technical SEO health monitoring and alerts"
                 ].map((feature, index) => (
                   <div key={index} className="flex items-center gap-3">
                     <CheckCircle className="w-5 h-5 text-[#f4cc6f]" />
@@ -469,25 +629,56 @@ export default function SearchEngineMarketingClient() {
               </div>
             </div>
             <div>
-              <SEMDashboard />
+              <SEODashboard />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Services Section */}
+      {/* SEO Results Showcase */}
+      <section className="py-20 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
+              Proven SEO <span className="text-[#f4cc6f]">Success Stories</span>
+            </h2>
+            <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed">
+              Real results from our SEO campaigns across different industries and business models.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {seoResults.map((result, index) => (
+              <SEOResultsShowcase key={index} result={result} delay={index * 0.2} />
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-[#f4cc6f] to-[#e6b85c] text-[#010c22] font-semibold hover:shadow-lg hover:shadow-[#f4cc6f]/25 transition-all duration-300 transform hover:scale-105"
+            >
+              <Search className="w-5 h-5" />
+              Get Your SEO Strategy
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section - Redesigned for SEO */}
       <section className="py-20 px-6 bg-[#010b22]/50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white text-center">
-              Our Search Engine Marketing Services
+              Our SEO <span className="text-[#f4cc6f]">Services</span>
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed">
-              Comprehensive SEM solutions designed to dominate search results and maximize your online visibility.
+              Comprehensive SEO solutions designed to improve your search visibility and drive organic growth.
             </p>
           </div>
 
-          {/* Desktop Layout */}
+          {/* Desktop Layout - New ServiceCard Design */}
           <div className="hidden md:block">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {services.map((service, index) => (
@@ -502,14 +693,14 @@ export default function SearchEngineMarketingClient() {
             </div>
           </div>
 
-          {/* Mobile Layout */}
+          {/* Mobile Layout - Simple 1-column Grid */}
           <div className="block md:hidden">
             <div className="grid grid-cols-1 gap-4">
               {mobileServices.map((service, index) => (
                 <ServiceCard
                   key={index}
                   title={service.title}
-                  description="Comprehensive search marketing solution"
+                  description="Comprehensive SEO solution for organic growth"
                   icon={service.icon}
                   link="/contact"
                 />
@@ -519,21 +710,21 @@ export default function SearchEngineMarketingClient() {
         </div>
       </section>
 
-      {/* Why Choose Our SEM Services */}
+      {/* Why Choose Our SEO - Redesigned */}
       <section className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
-              Why Choose Our <span className="text-[#f4cc6f]">SEM Services?</span>
+              Why Choose Our <span className="text-[#f4cc6f]">SEO Services?</span>
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed">
-              We combine SEO expertise with PPC mastery to deliver integrated search strategies that maximize visibility and ROI.
+              We combine technical expertise with proven strategies to deliver SEO results that drive sustainable organic growth.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {whyChoosePoints.map((point, index) => {
-              const icons = [Search, FaKeyboard, BarChart3, Globe, Settings, Clock];
+              const icons = [TrendingUp, Shield, Settings, BarChart3, Globe, Clock];
               const Icon = icons[index];
 
               return (
@@ -549,7 +740,7 @@ export default function SearchEngineMarketingClient() {
 
                     <div className="relative z-10 flex-1 flex flex-col">
                       <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-gray-600 to-gray-700 flex items-center justify-center mb-4">
-                        <Icon className="w-7 h-7 text-white" />
+                        <Icon className="w-7 h-7 text-[#f4cc6f]" />
                       </div>
 
                       <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed group-hover:text-white transition-colors duration-300 flex-1">
@@ -564,51 +755,51 @@ export default function SearchEngineMarketingClient() {
         </div>
       </section>
 
-      {/* SEM Process Timeline */}
+      {/* SEO Process - New Timeline Design */}
       <ProcessTimeline
-        title="Our Search Engine Marketing Process"
-        subtitle="A comprehensive approach that combines SEO and PPC strategies for maximum search visibility and performance."
+        title="Our SEO <span class='text-[#f4cc6f]'>Process</span>"
+        subtitle="A strategic approach that transforms your website into a search engine magnet and organic traffic generator."
         steps={[
           {
             step: "01",
-            title: "Search Audit & Analysis",
-            description: "Comprehensive search presence analysis, keyword research, and competitive intelligence for strategic foundation.",
+            title: "SEO Audit & Analysis",
+            description: "Comprehensive website analysis, technical SEO assessment, and competitive landscape evaluation to identify opportunities.",
             icon: Search,
             color: "from-blue-500 to-cyan-500"
           },
           {
             step: "02",
-            title: "Integrated Strategy Development",
-            description: "Development of comprehensive SEM strategy combining SEO and PPC for maximum search visibility and ROI.",
+            title: "Keyword Research & Strategy",
+            description: "In-depth keyword analysis, search intent mapping, and content gap identification for maximum organic potential.",
             icon: Target,
             color: "from-green-500 to-emerald-500"
           },
           {
             step: "03",
-            title: "SEO Implementation",
-            description: "Technical SEO optimization, content strategy execution, and organic ranking improvement initiatives.",
+            title: "Technical SEO Implementation",
+            description: "Site structure optimization, speed improvements, mobile responsiveness, and technical issue resolution.",
             icon: Settings,
             color: "from-purple-500 to-pink-500"
           },
           {
             step: "04",
-            title: "PPC Campaign Launch",
-            description: "Strategic paid search campaign setup, ad creation, and bid management for immediate visibility.",
-            icon: DollarSign,
+            title: "Content Optimization",
+            description: "On-page optimization, content creation, semantic keyword integration, and user experience enhancement.",
+            icon: FileText,
             color: "from-yellow-500 to-orange-500"
           },
           {
             step: "05",
-            title: "Performance Monitoring",
-            description: "Real-time search performance tracking, ranking monitoring, and conversion analysis across all channels.",
-            icon: BarChart3,
+            title: "Link Building & Authority",
+            description: "Strategic link acquisition, digital PR campaigns, and domain authority building initiatives.",
+            icon: LinkIcon,
             color: "from-red-500 to-pink-500"
           },
           {
             step: "06",
-            title: "Optimization & Scaling",
-            description: "Continuous optimization, strategic scaling, and performance enhancement for sustained search dominance.",
-            icon: TrendingUp,
+            title: "Monitoring & Optimization",
+            description: "Performance tracking, ranking monitoring, and continuous optimization for sustained organic growth.",
+            icon: BarChart3,
             color: "from-indigo-500 to-purple-500"
           }
         ]}
@@ -619,25 +810,25 @@ export default function SearchEngineMarketingClient() {
         <div className="max-w-6xl mx-auto w-full">
           <div className="text-center mb-8">
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
-              Why Work With Altiora Infotech?
+              Why Work With Altiora <span className="text-[#f4cc6f]">Infotech?</span>
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed">
-              Partner with search marketing experts who deliver integrated SEO and PPC strategies for maximum search visibility and ROI.
+              Partner with SEO experts who deliver sustainable organic growth and measurable results.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
             {[
-              { text: "Integrated Expertise – Comprehensive knowledge of both SEO and PPC strategies for maximum search engine visibility and performance.", icon: FaSearch },
-              { text: "Advanced Analytics – Sophisticated tracking and attribution modeling to measure and optimize search marketing ROI across all channels.", icon: FaChartLine },
-              { text: "Technical Mastery – Deep technical SEO knowledge combined with advanced PPC campaign management for superior results.", icon: FaCog },
-              { text: "Competitive Intelligence – Thorough competitor analysis and market research to identify opportunities and strategic advantages.", icon: FaEye },
-              { text: "Scalable Strategies – Proven methodologies for scaling successful search campaigns while maintaining efficiency and performance.", icon: FaRocket },
-              { text: "Continuous Optimization – Ongoing monitoring, testing, and refinement to adapt to algorithm changes and market dynamics.", icon: FaHandshake }
+              { text: "Proven Results – Track record of improving organic rankings and driving qualified traffic growth.", icon: FaChartLine },
+              { text: "White-Hat Techniques – Ethical SEO practices that comply with search engine guidelines and algorithm updates.", icon: FaShieldAlt },
+              { text: "Technical Expertise – Advanced technical SEO knowledge and implementation capabilities across all platforms.", icon: FaCog },
+              { text: "Data-Driven Approach – Analytics-based strategies with measurable results and comprehensive ROI tracking.", icon: FaCode },
+              { text: "Industry Experience – Deep understanding of SEO across various business verticals and market segments.", icon: FaNetworkWired },
+              { text: "Ongoing Support – Continuous optimization and adaptation to algorithm changes and market trends.", icon: FaHandshake }
             ].map((benefit, index) => {
               const Icon = benefit.icon;
-              const colors = ['from-green-500 to-emerald-500', 'from-blue-500 to-cyan-500', 'from-purple-500 to-pink-500', 'from-orange-500 to-red-500', 'from-yellow-500 to-orange-500', 'from-indigo-500 to-purple-500'];
-              const titles = ['Integrated', 'Advanced', 'Technical', 'Competitive', 'Scalable', 'Continuous'];
-              const subtitles = ['Expertise', 'Analytics', 'Mastery', 'Intelligence', 'Strategies', 'Optimization'];
+              const colors = ['from-green-500 to-emerald-500', 'from-blue-500 to-cyan-500', 'from-purple-500 to-pink-500', 'from-red-500 to-orange-500', 'from-yellow-500 to-orange-500', 'from-teal-500 to-cyan-500'];
+              const titles = ['Proven', 'White-Hat', 'Technical', 'Data-Driven', 'Industry', 'Ongoing'];
+              const subtitles = ['Results', 'Techniques', 'Expertise', 'Approach', 'Experience', 'Support'];
               return (
                 <div key={index} className="group relative cursor-pointer">
                   <div className="relative rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm p-4 md:p-6 transition-all duration-500 hover:bg-white/[0.08] hover:border-white/20 hover:shadow-2xl hover:-translate-y-2">
@@ -670,7 +861,7 @@ export default function SearchEngineMarketingClient() {
         <div className="max-w-6xl mx-auto w-full">
           <div className="relative p-6 sm:p-8 md:p-12 text-center rounded-2xl md:rounded-3xl border border-white/20 backdrop-blur-sm overflow-hidden">
             <div className="absolute inset-0">
-              <Image src="https://pub-00cafda969bc42d5aac5365b6609f526.r2.dev/web2/custom-web-application-development-cta.jpg" alt="Search Engine Marketing" fill className="object-cover rounded-3xl" />
+              <Image src="/images/agentic-ai/cta/Predictive-cta.png" alt="SEO Services" fill className="object-cover rounded-3xl" />
             </div>
             <div className="absolute inset-0 bg-gradient-to-br from-[#010c22]/95 via-[#0a1038]/85 to-[#010c22]/95" />
             <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 via-blue-500/10 to-purple-500/10" />
@@ -682,10 +873,10 @@ export default function SearchEngineMarketingClient() {
                 Ready to Dominate Search Results?
               </h3>
               <p className="text-white/90 max-w-3xl mx-auto text-base sm:text-lg mb-6 md:mb-8">
-                Transform your search presence into a powerful lead generation engine. At Altiora Infotech, we combine SEO expertise with PPC mastery to deliver integrated search strategies that maximize visibility and drive qualified traffic.
+                Transform your website's search visibility with our comprehensive SEO services. At Altiora Infotech, we combine technical expertise with proven strategies to deliver sustainable organic growth and improved search rankings.
               </p>
               <p className="text-white/90 max-w-3xl mx-auto text-base sm:text-lg mb-8">
-                Ready to accelerate your search success? Share your business goals and current search challenges, and we&apos;ll create a comprehensive SEM strategy: keyword opportunities, competitive analysis, integrated SEO/PPC plan, and a roadmap to search dominance.
+                Ready to climb the search rankings? Share your website and goals, and we&apos;ll provide a comprehensive SEO strategy: technical audit findings, keyword opportunities, content recommendations, and a roadmap to search success.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
                 <Link
@@ -695,14 +886,14 @@ export default function SearchEngineMarketingClient() {
                   className="inline-flex items-center justify-center rounded-full px-8 py-4 font-semibold bg-gradient-to-r from-[#f4cc6f] to-[#e6b85c] text-[#010c22] hover:shadow-lg hover:shadow-[#f4cc6f]/25 focus:shadow-lg focus:shadow-[#f4cc6f]/25 focus:outline-none focus:ring-2 focus:ring-[#f4cc6f]/50 transition-all duration-300 transform hover:scale-105 focus:scale-105"
                 >
                   <FaRocket className="mr-2 w-5 h-5" />
-                  Book SEM Consultation
+                  Book SEO Audit
                 </Link>
                 <Link
                   href="/contact"
                   className="inline-flex items-center justify-center rounded-full px-8 py-4 font-semibold border border-white/30 bg-white/[0.08] backdrop-blur-sm text-white hover:bg-white/[0.12] focus:bg-white/[0.12] focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-300"
                 >
                   <FaEye className="mr-2 w-5 h-5" />
-                  Get SEM Quote
+                  Get SEO Quote
                 </Link>
               </div>
             </div>
@@ -717,6 +908,6 @@ export default function SearchEngineMarketingClient() {
           50%{ transform: translateY(-20px) rotateX(5deg) rotateY(5deg);} 
         }
       `}</style>
-    </div>
+    </div >
   );
 }

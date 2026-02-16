@@ -15,15 +15,14 @@ const NAV: NavItem[] = [
 ];
 
 const SERVICES: NavItem[] = [
-  { label: "Digital Advertising", href: "/social-media-advertising" },
-  { label: "SEO", href: "/seo" },
-  { label: "Web Design", href: "/web-design" },
-  { label: "Social Media Management", href: "/social-media-management" },
+  { label: "Digital Advertising", href: "/services/social-media-advertising" },
+  { label: "SEO", href: "/services/seo" },
+  { label: "Web Design", href: "/services/web-design" },
+  { label: "Social Media Management", href: "/services/social-media-management" },
   { label: "Graphic Design", href: "/services/graphic-design" },
   { label: "Branding", href: "/services/branding" },
   { label: "Video Production", href: "/services/video-production" },
   { label: "Business Consulting", href: "/services/business-consulting" },
-  { label: "Vancouver Marketing Company", href: "/services/vancouver-marketing-company" },
 ];
 
 export default function Header() {

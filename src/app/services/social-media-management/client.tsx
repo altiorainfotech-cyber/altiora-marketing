@@ -32,7 +32,7 @@ import {
 
 import { motion } from "motion/react";
 import { useInView } from "react-intersection-observer";
-import styles from "../services/digital-marketing/dm.module.css";
+import styles from "../digital-marketing/dm.module.css";
 
 export default function SocialMediaManagementClient() {
   const { ref: overviewRef, inView: overviewInView } = useInView({
