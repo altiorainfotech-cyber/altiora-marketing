@@ -182,6 +182,7 @@ export default function LangleyMarketingClientPage() {
                   transition={{ duration: 0.6, delay: 0.7 }}
                   className="text-base sm:text-lg md:text-xl text-white/80 mb-3 sm:mb-4"
                 >
+                  Your Digital Marketing Company in Langley<br />
                   Turn growth into a predictable process.
                 </motion.p>
 
@@ -1176,7 +1177,7 @@ export default function LangleyMarketingClientPage() {
                 <span className={styles.gradientText}>Altiora Infotech?</span>
               </h2>
               <p className={`${styles.sectionDescription} !max-w-3xl mt-4`}>
-                As a trusted <strong className="text-white">Digital Marketing Company in Langley</strong>, we deliver measurable results through data&#8209;driven strategies tailored for local businesses.
+                As a trusted <a href="/" style={{ color: 'inherit', textDecoration: 'none' }}><strong className="text-white">Digital Marketing Company in Langley</strong></a>, we deliver measurable results through data&#8209;driven strategies tailored for local businesses.
               </p>
             </motion.div>
 

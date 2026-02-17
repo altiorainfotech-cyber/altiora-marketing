@@ -256,7 +256,7 @@ export default function UIUXDesignClient() {
                 Websites That Drive Results
               </h2>
               <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-4xl mx-auto leading-relaxed text-center">
-                Your website is often the first impression customers have of your business. We create stunning, user-friendly websites that not only look great but also drive conversions. From responsive design and intuitive navigation to fast loading speeds and SEO optimization, every element is crafted to enhance user experience and achieve your business goals. Whether you need a corporate website, e-commerce platform, or landing page, we deliver designs that are modern, accessible, and built to perform.
+                Your website is often the first impression customers have of your business. We create stunning, user-friendly websites that not only look great but also drive conversions. From responsive design and intuitive navigation to fast loading speeds and SEO optimization, every element is crafted to enhance user experience and achieve your business goals. Whether you need a corporate website, e-commerce platform, or landing page, we deliver designs that are modern, accessible, and built to perform. <a href="/" style={{ color: 'inherit', textDecoration: 'none' }}>Web Design Services.</a>
               </p>
             </div>
           </div>

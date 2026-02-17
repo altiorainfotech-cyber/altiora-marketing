@@ -1177,7 +1177,7 @@ export default function VancouverMarketingClientPage() {
                 <span className={styles.gradientText}>Altiora Infotech?</span>
               </h2>
               <p className={`${styles.sectionDescription} !max-w-3xl mt-4`}>
-                As a trusted <strong className="text-white">Digital Marketing Company in Vancouver</strong>, we deliver measurable results through data&#8209;driven strategies tailored for local businesses.
+                As a trusted <a href="/" style={{ color: 'inherit', textDecoration: 'none' }}><strong className="text-white">Digital Marketing Company in Vancouver</strong></a>, we deliver measurable results through data&#8209;driven strategies tailored for local businesses.
               </p>
             </motion.div>
 

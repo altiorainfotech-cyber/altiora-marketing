@@ -182,6 +182,7 @@ export default function RichmondMarketingClientPage() {
                   transition={{ duration: 0.6, delay: 0.7 }}
                   className="text-base sm:text-lg md:text-xl text-white/80 mb-3 sm:mb-4"
                 >
+                  Your Digital Marketing Company in Richmond<br />
                   Reach customers who research before they decide.
                 </motion.p>
 
@@ -341,7 +342,7 @@ export default function RichmondMarketingClientPage() {
                   <p className={`${styles.sectionDescription} !max-w-none relative z-10`}>
                     Richmond customers rely heavily on reviews, reputation, and clear communication before contacting a business. Visibility without credibility rarely converts.
                     <br />
-                    Altiora builds marketing systems combining discoverability and trust so Richmond businesses attract qualified enquiries instead of casual traffic.
+                    Altiora Infotech builds marketing systems combining discoverability and trust so Richmond businesses attract qualified enquiries instead of casual traffic.
                   </p>
                   <div className="absolute -top-24 -left-24 w-48 h-48 bg-[#f4cc6f]/10 blur-[80px] rounded-full pointer-events-none" />
                 </motion.div>
@@ -1177,7 +1178,7 @@ export default function RichmondMarketingClientPage() {
                 <span className={styles.gradientText}>Altiora Infotech?</span>
               </h2>
               <p className={`${styles.sectionDescription} !max-w-3xl mt-4`}>
-                As a trusted <strong className="text-white">Digital Marketing Company in Richmond</strong>, we deliver measurable results through data&#8209;driven strategies tailored for local businesses.
+                As a trusted <a href="/" style={{ color: 'inherit', textDecoration: 'none' }}><strong className="text-white">Digital Marketing Company in Richmond</strong></a>, we deliver measurable results through data&#8209;driven strategies tailored for local businesses.
               </p>
             </motion.div>
 

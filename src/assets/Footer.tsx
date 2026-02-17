@@ -110,14 +110,14 @@ export default function Footer() {
 
   const canadaLocations = [
     { name: "Vancouver", href: "/services/digital-marketing-company-in-vancouver" },
-    { name: "Surrey", href: "/surrey-marketing-company" },
-    { name: "Abbotsford", href: "/abbotsford-marketing-company" },
-    { name: "Calgary", href: "/calgary-marketing-company" },
+    { name: "Surrey", href: "/services/digital-marketing-company-in-surrey" },
+    { name: "Abbotsford", href: "/services/digital-marketing-company-in-abbotsford" },
+    { name: "Calgary", href: "/services/digital-marketing-company-in-Calgary" },
     { name: "Burnaby", href: "/services/digital-marketing-company-in-burnaby" },
     { name: "Richmond", href: "/services/digital-marketing-company-in-richmond" },
     { name: "Langley", href: "/services/digital-marketing-company-in-langley" },
-    { name: "Kerrville", href: "/kerrville-marketing-company" },
-    { name: "Indigenous", href: "/indigenous-marketing-company" },
+    { name: "Kerrville", href: "/services/digital-marketing-company-in-kerrville" },
+    { name: "Indigenous", href: "/services/digital-marketing-company-in-indigenous" },
   ];
 
   const usaLocations: { name: string; href: string }[] = [

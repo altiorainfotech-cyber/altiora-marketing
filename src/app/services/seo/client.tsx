@@ -569,7 +569,7 @@ export default function SEOClient() {
                 className="max-w-5xl mx-auto py-8 px-8 sm:py-12 sm:px-12 md:py-14 md:px-14 rounded-[40px] border border-white/5 bg-white/[0.02] backdrop-blur-xl shadow-[0_20px_50px_rgba(244,204,111,0.05)] relative overflow-hidden"
               >
                 <p className={`${styles.sectionDescription} !max-w-none relative z-10 !text-white/90`}>
-                  Build long-term online visibility that attracts customers even when you’re not running ads. Our SEO and Search Engine Optimization services help your business rank higher, drive qualified organic traffic, and generate consistent leads. At Altiora Infotech, we combine technical expertise, content strategy, and data-driven optimization to maximize search performance. We focus on sustainable rankings, stronger website authority, and measurable long-term business growth.
+                  Build long-term online visibility that attracts customers even when you’re not running ads. Our <a href="/" style={{ color: 'inherit', textDecoration: 'none' }}>SEO services</a> help your business rank higher, drive qualified organic traffic, and generate consistent leads. At Altiora Infotech, we combine technical expertise, content strategy, and data-driven optimization to maximize search performance. We focus on sustainable rankings, stronger website authority, and measurable long-term business growth.
                 </p>
 
                 {/* Subtle inner light effect */}

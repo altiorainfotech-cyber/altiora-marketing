@@ -170,7 +170,7 @@ export default function AbbotsfordMarketingClientPage() {
                   transition={{ duration: 0.6, delay: 0.6 }}
                   className={`${styles.heroTitle} mb-4 sm:mb-5 md:mb-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl`}
                 >
-                  Your Digital Marketing Partner in{' '}
+                  Digital Marketing Company in{' '}
                   <span className={styles.gradientText}>
                     Abbotsford
                   </span>
@@ -182,6 +182,7 @@ export default function AbbotsfordMarketingClientPage() {
                   transition={{ duration: 0.6, delay: 0.8 }}
                   className="text-sm sm:text-base md:text-lg text-white/70 mb-3 sm:mb-4"
                 >
+                  Your Digital Marketing Partner in Abbotsford<br />
                   Turn local searches into customers.
                 </motion.p>
 
@@ -1175,7 +1176,7 @@ export default function AbbotsfordMarketingClientPage() {
                 <span className={styles.gradientText}>Altiora Infotech?</span>
               </h2>
               <p className={`${styles.sectionDescription} !max-w-3xl mt-4`}>
-                As a trusted <strong className="text-white">Digital Marketing Company in Abbotsford</strong>, we deliver measurable results through data&#8209;driven strategies tailored for local businesses.
+                As a trusted <a href="/" style={{ color: 'inherit', textDecoration: 'none' }}><strong className="text-white">Digital Marketing Company in Abbotsford</strong></a>, we deliver measurable results through data&#8209;driven strategies tailored for local businesses.
               </p>
             </motion.div>
 

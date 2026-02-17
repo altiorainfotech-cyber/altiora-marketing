@@ -182,14 +182,6 @@ export default function SurreyMarketingClientPage() {
                   transition={{ duration: 0.6, delay: 0.7 }}
                   className="text-base sm:text-lg md:text-xl text-white/80 mb-3 sm:mb-4"
                 >
-                  Your Digital Marketing Partner in Surrey
-                </motion.p>
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={heroInView ? { opacity: 1 } : { opacity: 0 }}
-                  transition={{ duration: 0.6, delay: 0.8 }}
-                  className="text-sm sm:text-base md:text-lg text-white/70"
-                >
                   Compete confidently in a fast-growing city.
                 </motion.p>
 
@@ -1184,7 +1176,7 @@ export default function SurreyMarketingClientPage() {
                 <span className={styles.gradientText}>Altiora Infotech?</span>
               </h2>
               <p className={`${styles.sectionDescription} !max-w-3xl mt-4`}>
-                As a trusted <strong className="text-white">Digital Marketing Company in Surrey</strong>, we deliver measurable results through data&#8209;driven strategies tailored for local businesses.
+                As a trusted <a href="/" style={{ color: 'inherit', textDecoration: 'none' }}><strong className="text-white">Digital Marketing Company in Surrey</strong></a>, we deliver measurable results through data&#8209;driven strategies tailored for local businesses.
               </p>
             </motion.div>
 
