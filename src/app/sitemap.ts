@@ -127,7 +127,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.75,
     },
     {
-      url: `${baseUrl}/services/social-media-advertising`,
+      url: `${baseUrl}/services/paid-advertisement-services`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.75,

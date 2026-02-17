@@ -170,9 +170,9 @@ export default function IndigenousMarketingClientPage() {
                   transition={{ duration: 0.6, delay: 0.6 }}
                   className={`${styles.heroTitle} mb-4 sm:mb-5 md:mb-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl`}
                 >
-                  Marketing Solutions for{' '}
+                  Your Indigenous Marketing{' '}
                   <span className={styles.gradientText}>
-                    Indigenous Organizations
+                    Agency Partner
                   </span>
                 </motion.h1>
 
@@ -1175,7 +1175,7 @@ export default function IndigenousMarketingClientPage() {
                 <span className={styles.gradientText}>Altiora Infotech?</span>
               </h2>
               <p className={`${styles.sectionDescription} !max-w-3xl mt-4`}>
-                As a trusted <strong className="text-white">Digital Marketing Partner for Indigenous Communities</strong>, we deliver measurable results through culturally-sensitive, data&#8209;driven strategies.
+                As a trusted <a href="/" style={{ color: 'inherit', textDecoration: 'none' }}><strong className="text-white">Digital Marketing Partner for Indigenous Communities</strong></a>, we deliver measurable results through culturally-sensitive, data&#8209;driven strategies.
               </p>
             </motion.div>
 

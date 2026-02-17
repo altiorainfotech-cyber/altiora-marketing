@@ -170,7 +170,7 @@ export default function BurnabyMarketingClientPage() {
                   transition={{ duration: 0.6, delay: 0.6 }}
                   className={`${styles.heroTitle} mb-4 sm:mb-5 md:mb-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl`}
                 >
-                  Your Digital Marketing Partner in{' '}
+                  Digital Marketing Partner in{' '}
                   <span className={styles.gradientText}>
                     Burnaby
                   </span>
@@ -182,9 +182,8 @@ export default function BurnabyMarketingClientPage() {
                   transition={{ duration: 0.6, delay: 0.7 }}
                   className="space-y-1 mb-3 sm:mb-4"
                 >
-                  <p className="text-base sm:text-lg md:text-xl text-white/80">Simplify your marketing workload.</p>
-                  <p className="text-base sm:text-lg md:text-xl text-white/80">Focus on running your business.</p>
-                  <p className="text-base sm:text-lg md:text-xl text-white/80">Generate steady enquiries and long-term growth.</p>
+                  <p className="text-base sm:text-lg md:text-xl text-white/80">Your Digital Marketing Partner in Burnaby</p>
+                  <p className="text-base sm:text-lg md:text-xl text-white/80">Simplify your marketing workload. Focus on running your business. Generate steady enquiries and long-term growth.</p>
                 </motion.div>
 
                 <motion.div
@@ -343,7 +342,7 @@ export default function BurnabyMarketingClientPage() {
                   <p className={`${styles.sectionDescription} !max-w-none relative z-10`}>
                     Businesses in Burnaby compete inside the larger Metro Vancouver market, where customers compare multiple providers before contacting anyone. Visibility alone is not enough &mdash; trust and positioning decide who gets the inquiry.
                     <br />
-                    Altiora helps Burnaby businesses replace inconsistent referrals with a structured digital acquisition system built around search visibility, paid advertising, and high-conversion landing pages.
+                    Altiora Infotech helps Burnaby businesses replace inconsistent referrals with a structured digital acquisition system built around search visibility, paid advertising, and high-conversion landing pages.
                   </p>
                   <div className="absolute -top-24 -left-24 w-48 h-48 bg-[#f4cc6f]/10 blur-[80px] rounded-full pointer-events-none" />
                 </motion.div>
@@ -1179,7 +1178,7 @@ export default function BurnabyMarketingClientPage() {
                 <span className={styles.gradientText}>Altiora Infotech?</span>
               </h2>
               <p className={`${styles.sectionDescription} !max-w-3xl mt-4`}>
-                As a trusted <strong className="text-white">Digital Marketing Company in Burnaby</strong>, we deliver measurable results through data&#8209;driven strategies tailored for local businesses.
+                As a trusted <a href="/" style={{ color: 'inherit', textDecoration: 'none' }}><strong className="text-white">Digital Marketing Company in Burnaby</strong></a>, we deliver measurable results through data&#8209;driven strategies tailored for local businesses.
               </p>
             </motion.div>
 

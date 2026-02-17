@@ -60,7 +60,7 @@ const iconMap: Record<string, ComponentType<{ className?: string; size?: string 
 // Default fallback data
 const defaultDigitalMarketingServices = [
   {
-    title: "Digital Advertising",
+    title: "Paid Advertisement Services",
     description: "Platforms like Facebook, Instagram, Google YouTube and TikTok are taking over the advertising space... and it makes sense; these companies have so much data that it allows us to create targeted ad campaigns that put your brand in front of the right people, creating brand awareness and increasing your sales.",
     features: [
       "Facebook Ads",
@@ -69,7 +69,7 @@ const defaultDigitalMarketingServices = [
       "TikTok Ads",
       "Targeted ad campaigns for brand growth"
     ],
-    link: "/services/social-media-advertising",
+    link: "/services/paid-advertisement-services",
     metric: "",
     metricLabel: "",
     icon: "Megaphone",
@@ -365,10 +365,19 @@ export default function DigitalMarketingClientPage({ pageData }: DigitalMarketin
                   transition={{ duration: 0.6, delay: 0.6 }}
                   className={`${styles.heroTitle} mb-4 sm:mb-5 md:mb-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl`}
                 >
-                  {heroSection.title.split(' ').slice(0, -2).join(' ')}{' '}
-                  <span className={styles.gradientText}>
-                    {heroSection.title.split(' ').slice(-2).join(' ')}
-                  </span>
+                  {heroSection.title.split('Digital Marketing Agency').map((part: string, i: number, arr: string[]) => (
+                    <React.Fragment key={i}>
+                      {i > 0 && <a href="https://altiorainfotech.com/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>Digital Marketing Agency</a>}
+                      {i === arr.length - 1 ? (
+                        <>
+                          {part.split(' ').slice(0, -2).join(' ')}{' '}
+                          <span className={styles.gradientText}>
+                            {part.split(' ').slice(-2).join(' ')}
+                          </span>
+                        </>
+                      ) : part}
+                    </React.Fragment>
+                  ))}
                 </motion.h1>
 
                 <motion.p
@@ -444,7 +453,7 @@ export default function DigitalMarketingClientPage({ pageData }: DigitalMarketin
                   className="max-w-5xl mx-auto pt-[5px] px-8 pb-8 sm:px-12 sm:pb-12 md:px-14 md:pb-14 rounded-[40px] border border-white/5 bg-white/[0.02] backdrop-blur-xl shadow-[0_20px_50px_rgba(244,204,111,0.05)] relative overflow-hidden"
                 >
                   <p className={`${styles.sectionDescription} !max-w-none relative z-10`}>
-                    <span className="">As an experienced Digital Marketing Agency, we focus on measurable outcomes — not just impressions or clicks.</span> Every strategy is designed to attract high-intent customers and convert them into revenue.
+                    <span className="">As an experienced <a href="https://altiorainfotech.com/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>Digital Marketing Agency</a>, we focus on measurable outcomes — not just impressions or clicks.</span> Every strategy is designed to attract high-intent customers and convert them into revenue.
                    
                     From local businesses to national brands, our team builds scalable digital ecosystems that drive long-term success.
                   </p>
@@ -773,7 +782,7 @@ export default function DigitalMarketingClientPage({ pageData }: DigitalMarketin
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.7, delay: 0.1 }}
               >
-                How Our Digital Marketing Agency Delivers Consistent <span className="text-[#f4cc6f]">Growth</span>
+                How Our <a href="https://altiorainfotech.com/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>Digital Marketing Agency</a> Delivers Consistent <span className="text-[#f4cc6f]">Growth</span>
               </motion.h2>
               <motion.p
                 className={styles.sectionDescription}

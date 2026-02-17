@@ -578,12 +578,12 @@ export default function SocialMediaAdvertisingClient() {
                   ALTIORA INFOTECH
                 </span>
                 <h1 className="font-semibold tracking-tight text-4xl leading-[1.05] sm:text-5xl md:text-6xl lg:text-7xl text-white">
-                  Social Media
+                 Paid Advertising
                   <br />
-                  <span className="text-[#f4cc6f]">Advertising</span>
+                  <span className="text-[#f4cc6f]">Services</span>
                 </h1>
                 <p className="text-xl sm:text-2xl text-white/90">
-                  Accelerate Business Growth with High-Performance Social Media Advertising Service
+                  Accelerate Business Growth with High-Performance Advertising Service
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 md:gap-4 pt-4">
                   <Link href="/contact" className="inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold bg-gradient-to-r from-[#f4cc6f] to-[#e6b85c] text-[#010c22] hover:shadow-lg hover:shadow-[#f4cc6f]/25 focus:shadow-lg focus:shadow-[#f4cc6f]/25 focus:outline-none focus:ring-2 focus:ring-[#f4cc6f]/50 transition-all duration-300 transform hover:scale-105 focus:scale-105">
@@ -627,7 +627,8 @@ export default function SocialMediaAdvertisingClient() {
                 className="max-w-5xl mx-auto py-8 px-8 sm:py-12 sm:px-12 md:py-14 md:px-14 rounded-[40px] border border-white/5 bg-white/[0.02] backdrop-blur-xl shadow-[0_20px_50px_rgba(244,204,111,0.05)] relative overflow-hidden"
               >
                 <p className={`${styles.sectionDescription} !max-w-none relative z-10 !text-white/90`}>
-                  Reach your ideal customers where they already spend their time and turn engagement into real business results. Our Social Media Advertising Services helps you connect with highly targeted audiences, build brand awareness, and drive measurable conversions. At Altiora Infotech, we create data-driven campaigns that combine precise targeting, compelling creatives, and continuous optimization. From lead generation to brand growth, we build scalable social ad systems designed for consistent ROI.
+                 Connect with the right audience where they’re already active and turn clicks into real business growth. Our (PPC) Paid Advertising Services are designed to help you reach highly targeted customers through powerful social media campaigns that boost visibility, engagement, and conversions. At Altiora Infotech, we build performance-focused strategies using smart targeting, scroll-stopping creatives, and ongoing optimization to maximize results. Whether your goal is lead generation, increased sales, or stronger brand awareness, we create scalable social ad campaigns built to deliver consistent ROI.
+
                 </p>
 
                 {/* Subtle inner light effect */}
@@ -646,7 +647,7 @@ export default function SocialMediaAdvertisingClient() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
-              Social Media Platforms We <span className="text-[#f4cc6f]">Master</span>
+             Advertisement Platforms We <span className="text-[#f4cc6f]">Master</span>
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed">
               Reach your audience where they spend their time with platform-specific strategies and creative excellence.
@@ -729,10 +730,10 @@ export default function SocialMediaAdvertisingClient() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white text-center">
-              Our Social Media Advertising <span className="text-[#f4cc6f]">Services</span>
+              Our Paid Media Advertisement <span className="text-[#f4cc6f]">Services</span>
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed">
-              Comprehensive social media advertising solutions designed to maximize engagement and drive conversions.
+              Comprehensive Paid media Advertisement solutions designed to maximize engagement and drive conversions.
             </p>
           </div>
 
@@ -815,8 +816,8 @@ export default function SocialMediaAdvertisingClient() {
 
       {/* Social Media Process - New Timeline Design */}
       <ProcessTimeline
-        title="Our Social Media Advertising <span class='text-[#f4cc6f]'>Process</span>"
-        subtitle="A strategic approach that transforms your social media presence into a powerful conversion engine."
+        title="Our Paid Media Advertising <span class='text-[#f4cc6f]'>Process</span>"
+        subtitle="A strategic approach that transforms your Paid media presence into a powerful conversion engine."
         steps={[
           {
             step: "01",

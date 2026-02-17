@@ -150,15 +150,15 @@ export default function SocialMediaManagementClient() {
                 >
                   Social Media Management
                   <br />
-                  <span className="bg-gradient-to-r from-[#f4cc6f] via-[#f4d97f] to-[#f4cc6f] bg-clip-text text-transparent animate-pulse">Turn Attention Into Revenue</span>
+                  <span className="text-[#f4cc6f]">Services</span>
                 </motion.h1>
-                <motion.p 
+                <motion.p
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.4 }}
                   className="text-xl sm:text-2xl text-white/90 max-w-3xl"
                 >
-                  Without managing it yourself. We design a system that makes your brand recognizable, trusted, and chosen.
+                  Turn Attention Into Revenue
                 </motion.p>
                 <motion.div 
                   initial={{ opacity: 0, y: 30 }}
