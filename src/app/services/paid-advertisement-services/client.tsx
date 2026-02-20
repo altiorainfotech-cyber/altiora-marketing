@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/assets/Header";
@@ -307,6 +307,25 @@ export default function SocialMediaAdvertisingClient() {
     triggerOnce: true,
   });
 
+  // Why Choose slider autoplay
+  const [activeSlide, setActiveSlide] = useState(0);
+  const sliderRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const total = 6; // whyChoosePoints.length
+    const interval = setInterval(() => {
+      setActiveSlide((prev) => {
+        const next = (prev + 1) % total;
+        if (sliderRef.current) {
+          const cardWidth = sliderRef.current.scrollWidth / total;
+          sliderRef.current.scrollTo({ left: cardWidth * next, behavior: "smooth" });
+        }
+        return next;
+      });
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
   // Social Media Platforms Data
   const socialPlatforms = [
     {
@@ -547,12 +566,36 @@ export default function SocialMediaAdvertisingClient() {
   ];
 
   const whyChoosePoints = [
-    "Platform-specific expertise across all major social media channels",
-    "Data-driven creative strategies that resonate with your target audience",
-    "Advanced targeting techniques for precise audience segmentation",
-    "Real-time campaign optimization for maximum ROI and performance",
-    "Comprehensive reporting with actionable insights and recommendations",
-    "Cross-platform campaign coordination for consistent brand messaging",
+    {
+      title: "Platform Expertise",
+      description: "Deep platform-specific knowledge across Meta, LinkedIn, TikTok, Google, and Snapchat allows us to craft campaigns that maximize reach, engagement, and conversions tailored to your unique business goals and audience behavior.",
+      icon: Share2,
+    },
+    {
+      title: "Creative Strategy",
+      description: "Data-driven creative strategies that resonate deeply with your target audience and stop the scroll. Every ad — copy, visual, and format — is crafted with purpose to generate measurable, scalable business outcomes.",
+      icon: Target,
+    },
+    {
+      title: "Precise Targeting",
+      description: "Advanced audience segmentation, custom lookalike audiences, and behavioral targeting techniques place your ads in front of the right people at the right moment — eliminating wasted spend and maximizing every dollar invested.",
+      icon: TrendingUp,
+    },
+    {
+      title: "Real-Time Optimization",
+      description: "Continuous campaign monitoring, live A/B testing, and real-time bid adjustments ensure your ads perform at peak efficiency. We never set and forget — every data signal is acted on to protect and grow your ROI.",
+      icon: BarChart3,
+    },
+    {
+      title: "Actionable Reporting",
+      description: "Comprehensive analytics dashboards with clear performance insights, trend analysis, and prioritized recommendations you can act on immediately. We translate complex ad data into strategic decisions that keep campaigns growing month over month.",
+      icon: Eye,
+    },
+    {
+      title: "Cross-Platform Sync",
+      description: "Strategically coordinated campaigns across all social platforms ensure your brand message is consistent, reinforcing, and impossible to ignore. Unified messaging builds trust faster, strengthens brand recall, and delivers compounding results over time.",
+      icon: Users,
+    },
   ];
 
   return (
@@ -758,11 +801,10 @@ export default function SocialMediaAdvertisingClient() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* Desktop Grid */}
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {whyChoosePoints.map((point, index) => {
-              const icons = [Share2, Target, TrendingUp, BarChart3, Eye, Users];
-              const Icon = icons[index];
-
+              const Icon = point.icon;
               return (
                 <motion.div
                   key={index}
@@ -771,22 +813,62 @@ export default function SocialMediaAdvertisingClient() {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="group relative"
                 >
-                  <div className="relative p-6 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm hover:bg-white/[0.08] hover:border-white/20 transition-all duration-500 hover:-translate-y-2 h-[200px] flex flex-col">
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-gray-500/10 to-gray-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                    <div className="relative z-10 flex-1 flex flex-col">
-                      <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-gray-600 to-gray-700 flex items-center justify-center mb-4">
-                        <Icon className="w-7 h-7 text-[#f4cc6f]" />
-                      </div>
-
-                      <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed group-hover:text-white transition-colors duration-300 flex-1">
-                        {point}
-                      </p>
+                  <div className="relative h-full p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-[#0B0D2A] to-[#0B0D2A] shadow-xl transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 hover:border-[#F4CC6F]/50 flex flex-col overflow-hidden">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-gray-600 to-gray-700 flex items-center justify-center mb-5 flex-shrink-0 shadow-lg">
+                      <Icon className="w-7 h-7 text-white" />
                     </div>
+                    <h3 className="text-lg font-bold text-white mb-2 group-hover:text-[#f4cc6f] transition-colors duration-300">
+                      {point.title}
+                    </h3>
+                    <p className="text-base text-white/70 leading-relaxed group-hover:text-white/90 transition-colors duration-300 flex-1">
+                      {point.description}
+                    </p>
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#f4cc6f]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl pointer-events-none" />
                   </div>
                 </motion.div>
               );
             })}
+          </div>
+
+          {/* Mobile Slider */}
+          <div className="md:hidden">
+            <div ref={sliderRef} className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 -mx-6 px-6 scrollbar-hide">
+              {whyChoosePoints.map((point, index) => {
+                const Icon = point.icon;
+                return (
+                  <div
+                    key={index}
+                    className="group relative flex-shrink-0 w-[82vw] snap-start"
+                  >
+                    <div className="relative h-full p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-[#0B0D2A] to-[#0B0D2A] shadow-xl hover:border-[#F4CC6F]/50 flex flex-col overflow-hidden">
+                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-gray-600 to-gray-700 flex items-center justify-center mb-5 flex-shrink-0 shadow-lg">
+                        <Icon className="w-7 h-7 text-white" />
+                      </div>
+                      <h3 className="text-lg font-bold text-white mb-2">
+                        {point.title}
+                      </h3>
+                      <p className="text-base text-white/70 leading-relaxed flex-1">
+                        {point.description}
+                      </p>
+                      <div className="absolute inset-0 bg-gradient-to-br from-[#f4cc6f]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl pointer-events-none" />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            {/* Dots indicator */}
+            <div className="flex justify-center gap-2 mt-4">
+              {whyChoosePoints.map((_, index) => (
+                <div
+                  key={index}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    activeSlide === index
+                      ? "w-6 bg-[#f4cc6f]"
+                      : "w-2 bg-white/30"
+                  }`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>

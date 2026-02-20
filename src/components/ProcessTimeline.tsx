@@ -66,8 +66,21 @@ export default function ProcessTimeline({ title, subtitle, steps }: ProcessTimel
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Circular Progress Wheel */}
           <div className="relative">
+            {/* Play/Pause Button */}
+            <div className="flex justify-center mb-6">
+              <button
+                onClick={() => setIsAutoPlaying(!isAutoPlaying)}
+                className="group px-4 py-1.5 text-sm rounded-full bg-gradient-to-r from-[#f4cc6f]/10 to-[#e6b85c]/10 backdrop-blur-sm border border-[#f4cc6f]/30 text-[#f4cc6f] hover:from-[#f4cc6f]/20 hover:to-[#e6b85c]/20 hover:border-[#f4cc6f]/50 transition-all duration-300"
+              >
+                <span className="flex items-center gap-2">
+                  <div className={`w-2 h-2 rounded-full bg-[#f4cc6f] ${isAutoPlaying ? 'animate-pulse' : ''}`} />
+                  {isAutoPlaying ? 'Auto-Playing' : 'Paused'} Process
+                </span>
+              </button>
+            </div>
+
             <div className="flex justify-center">
-              <div className="relative w-96 h-96">
+              <div className="relative" style={{ width: '326px', height: '326px' }}>
                 {/* Background Circle */}
                 <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
                   <circle
@@ -128,7 +141,7 @@ export default function ProcessTimeline({ title, subtitle, steps }: ProcessTimel
                         }}
                       >
                         <motion.div
-                          className={`relative w-16 h-16 rounded-full flex items-center justify-center shadow-lg transition-all duration-500 ${
+                          className={`relative rounded-full flex items-center justify-center shadow-lg transition-all duration-500 ${
                             isActive
                               ? `bg-gradient-to-br ${stepColors.gradient} scale-110`
                               : isCompleted
@@ -138,6 +151,8 @@ export default function ProcessTimeline({ title, subtitle, steps }: ProcessTimel
                           whileHover={{ scale: isActive ? 1.15 : 1.1 }}
                           whileTap={{ scale: 0.95 }}
                           style={{
+                            width: '54px',
+                            height: '54px',
                             boxShadow: isActive ? `0 0 20px ${stepColors.solid}40` : undefined
                           }}
                         >
@@ -148,7 +163,7 @@ export default function ProcessTimeline({ title, subtitle, steps }: ProcessTimel
                             />
                           )}
                           
-                          <Icon className={`relative z-10 w-8 h-8 transition-colors duration-300 ${
+                          <Icon className={`relative z-10 w-7 h-7 transition-colors duration-300 ${
                             isActive || isCompleted ? 'text-white' : 'text-white/60'
                           }`} />
                         </motion.div>
@@ -166,7 +181,7 @@ export default function ProcessTimeline({ title, subtitle, steps }: ProcessTimel
 
                 {/* Center Content */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center bg-[#010c22]/80 backdrop-blur-sm rounded-full w-32 h-32 flex flex-col items-center justify-center border border-[#f4cc6f]/20">
+                  <div className="text-center bg-[#010c22]/80 backdrop-blur-sm rounded-full flex flex-col items-center justify-center border border-[#f4cc6f]/20" style={{ width: '109px', height: '109px' }}>
                     <div className="text-3xl font-bold text-[#f4cc6f] mb-1">
                       {activeStep + 1}/{steps.length}
                     </div>
@@ -176,19 +191,6 @@ export default function ProcessTimeline({ title, subtitle, steps }: ProcessTimel
                   </div>
                 </div>
               </div>
-            </div>
-
-            {/* Play/Pause Button */}
-            <div className="flex justify-center mt-8">
-              <button
-                onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-                className="group px-6 py-3 rounded-full bg-gradient-to-r from-[#f4cc6f]/10 to-[#e6b85c]/10 backdrop-blur-sm border border-[#f4cc6f]/30 text-[#f4cc6f] hover:from-[#f4cc6f]/20 hover:to-[#e6b85c]/20 hover:border-[#f4cc6f]/50 transition-all duration-300"
-              >
-                <span className="flex items-center gap-2">
-                  <div className={`w-2 h-2 rounded-full bg-[#f4cc6f] ${isAutoPlaying ? 'animate-pulse' : ''}`} />
-                  {isAutoPlaying ? 'Auto-Playing' : 'Paused'} Process
-                </span>
-              </button>
             </div>
           </div>
 
@@ -209,30 +211,14 @@ export default function ProcessTimeline({ title, subtitle, steps }: ProcessTimel
                 </div>
 
                 {/* Title */}
-                <h3 className="text-3xl md:text-4xl font-bold text-white leading-tight">
+                <h3 className="text-lg font-bold text-white leading-tight">
                   {steps[activeStep].title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-lg text-white/80 leading-relaxed">
+                <p className="text-base text-white/80 leading-relaxed">
                   {steps[activeStep].description}
                 </p>
-
-                {/* Progress Indicator */}
-                <div className="space-y-3">
-                  <div className="flex justify-between text-sm text-white/60">
-                    <span>Overall Progress</span>
-                    <span>{Math.round((activeStep / (steps.length - 1)) * 100)}% Complete</span>
-                  </div>
-                  <div className="w-full bg-white/10 rounded-full h-3 overflow-hidden">
-                    <motion.div
-                      className="bg-gradient-to-r from-[#f4cc6f] to-[#e6b85c] h-3 rounded-full shadow-lg"
-                      initial={{ width: 0 }}
-                      animate={{ width: `${(activeStep / (steps.length - 1)) * 100}%` }}
-                      transition={{ duration: 0.8, ease: "easeOut" }}
-                    />
-                  </div>
-                </div>
 
                 {/* Navigation */}
                 <div className="flex gap-4 pt-6">
