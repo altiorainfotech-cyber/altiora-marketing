@@ -46,11 +46,14 @@ import {
   FaTools,
   FaHandshake,
   FaFacebook,
+  FaFacebookF,
   FaInstagram,
   FaLinkedin,
+  FaLinkedinIn,
   FaTwitter,
   FaTiktok,
   FaSnapchat,
+  FaSnapchatGhost,
   FaGoogle
 } from "react-icons/fa";
 
@@ -445,37 +448,37 @@ export default function SocialMediaAdvertisingClient() {
     {
       title: "Facebook & Instagram Advertising",
       description: "Targeted campaigns across Meta's platforms with advanced audience segmentation and creative optimization.",
-      icon: <FaFacebook className="w-12 h-12" />,
+      icon: <FaFacebookF className="w-8 h-8 text-white" />,
       link: "/contact"
     },
     {
       title: "LinkedIn Advertising",
       description: "Professional B2B campaigns targeting decision-makers with sponsored content and InMail campaigns.",
-      icon: <FaLinkedin className="w-12 h-12" />,
+      icon: <FaLinkedinIn className="w-8 h-8 text-white" />,
       link: "/contact"
     },
     {
       title: "Twitter/X Advertising",
       description: "Real-time engagement campaigns with promoted tweets, trends, and targeted follower acquisition.",
-      icon: <FaTwitter className="w-12 h-12" />,
+      icon: <FaTwitter className="w-8 h-8 text-white" />,
       link: "/contact"
     },
     {
       title: "Google Advertising",
       description: "Comprehensive Google Ads campaigns across Search, Display, YouTube, and Shopping networks.",
-      icon: <FaGoogle className="w-12 h-12" />,
+      icon: <FaGoogle className="w-8 h-8 text-white" />,
       link: "/contact"
     },
     {
       title: "TikTok Advertising",
       description: "Creative short-form video campaigns targeting Gen Z and millennial audiences with viral potential.",
-      icon: <FaTiktok className="w-12 h-12" />,
+      icon: <FaTiktok className="w-8 h-8 text-white" />,
       link: "/contact"
     },
     {
       title: "Snapchat Advertising",
       description: "AR-powered advertising campaigns with Snap Ads, Story Ads, and immersive lens experiences.",
-      icon: <FaSnapchat className="w-12 h-12" />,
+      icon: <FaSnapchatGhost className="w-8 h-8 text-white" />,
       link: "/contact"
     },
     // {
@@ -487,19 +490,19 @@ export default function SocialMediaAdvertisingClient() {
     {
       title: "Audience Targeting & Segmentation",
       description: "Advanced audience research, custom audiences, lookalikes, and behavioral targeting strategies.",
-      icon: <Target className="w-12 h-12" />,
+      icon: <Target className="w-8 h-8 text-white" />,
       link: "/contact"
     },
     {
       title: "Campaign Analytics & Optimization",
       description: "Real-time performance tracking, A/B testing, and continuous optimization for maximum ROI.",
-      icon: <BarChart3 className="w-12 h-12" />,
+      icon: <BarChart3 className="w-8 h-8 text-white" />,
       link: "/contact"
     },
     {
       title: "Social Commerce Integration",
       description: "Shoppable posts, product catalogs, and seamless purchase experiences within social platforms.",
-      icon: <ShoppingCart className="w-12 h-12" />,
+      icon: <ShoppingCart className="w-8 h-8 text-white" />,
       link: "/contact"
     }
   ];
@@ -507,39 +510,39 @@ export default function SocialMediaAdvertisingClient() {
   const mobileServices = [
     {
       title: "Facebook & Instagram Ads",
-      icon: <FaFacebook className="w-8 h-8 text-[#f4cc6f]" />
+      icon: <FaFacebookF className="w-8 h-8 text-white" />
     },
     {
       title: "LinkedIn Advertising",
-      icon: <FaLinkedin className="w-8 h-8 text-[#f4cc6f]" />
+      icon: <FaLinkedinIn className="w-8 h-8 text-white" />
     },
     {
       title: "Twitter/X Advertising",
-      icon: <FaTwitter className="w-8 h-8 text-[#f4cc6f]" />
+      icon: <FaTwitter className="w-8 h-8 text-white" />
     },
     {
       title: "Google Advertising",
-      icon: <FaGoogle className="w-8 h-8 text-[#f4cc6f]" />
+      icon: <FaGoogle className="w-8 h-8 text-white" />
     },
     {
       title: "TikTok Advertising",
-      icon: <FaTiktok className="w-8 h-8 text-[#f4cc6f]" />
+      icon: <FaTiktok className="w-8 h-8 text-white" />
     },
     {
       title: "Snapchat Advertising",
-      icon: <FaSnapchat className="w-8 h-8 text-[#f4cc6f]" />
-    },
-    {
-      title: "Creative Development",
-      icon: <Camera className="w-8 h-8 text-[#f4cc6f]" />
+      icon: <FaSnapchatGhost className="w-8 h-8 text-white" />
     },
     {
       title: "Audience Targeting",
-      icon: <Target className="w-8 h-8 text-[#f4cc6f]" />
+      icon: <Target className="w-8 h-8 text-white" />
     },
     {
       title: "Analytics & Optimization",
-      icon: <BarChart3 className="w-8 h-8 text-[#f4cc6f]" />
+      icon: <BarChart3 className="w-8 h-8 text-white" />
+    },
+    {
+      title: "Social Commerce",
+      icon: <ShoppingCart className="w-8 h-8 text-white" />
     }
   ];
 
@@ -694,37 +697,7 @@ export default function SocialMediaAdvertisingClient() {
         </div>
       </section>
 
-      {/* Social Media Posts Showcase */}
-      <section className="py-20 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
-              Creative Content That <span className="text-[#f4cc6f]">Converts</span>
-            </h2>
-            <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed">
-              See examples of high-performing social media content we've created for our clients across different platforms.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {samplePosts.map((post, index) => (
-              <SocialPostMockup key={index} post={post} delay={index * 0.2} />
-            ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-[#f4cc6f] to-[#e6b85c] text-[#010c22] font-semibold hover:shadow-lg hover:shadow-[#f4cc6f]/25 transition-all duration-300 transform hover:scale-105"
-            >
-              <Camera className="w-5 h-5" />
-              Get Custom Creative Strategy
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
+     
       {/* Services Section - Redesigned for Social Media */}
       <section className="py-20 px-6 bg-[#010b22]/50">
         <div className="max-w-7xl mx-auto">
@@ -747,21 +720,25 @@ export default function SocialMediaAdvertisingClient() {
                   description={service.description}
                   icon={service.icon}
                   link={service.link}
+                  hideServiceTag={true}
+                  iconVariant="gray"
                 />
               ))}
             </div>
           </div>
 
-          {/* Mobile Layout - Simple 2-row Grid */}
+          {/* Mobile Layout */}
           <div className="block md:hidden">
             <div className="grid grid-cols-1 gap-4">
-              {mobileServices.map((service, index) => (
+              {services.map((service, index) => (
                 <ServiceCard
                   key={index}
                   title={service.title}
-                  description="Comprehensive social media advertising solution"
+                  description={service.description}
                   icon={service.icon}
-                  link="/contact"
+                  link={service.link}
+                  hideServiceTag={true}
+                  iconVariant="gray"
                 />
               ))}
             </div>

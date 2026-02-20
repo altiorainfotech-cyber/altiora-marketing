@@ -2,8 +2,8 @@ import { Metadata } from "next";
 import SEOClient from "./client";
 
 export const metadata: Metadata = {
-  title: "Professional SEO Services | Altiora Infotech",
-  description: "Improve rankings, drive organic traffic, and generate consistent leads with Altiora Infotech’s data-driven SEO services for long-term business growth.",
+  title: " Professional SEO Services That Generate Customers",
+  description: "Turn your website into a predictable lead source. We optimize search intent, technical SEO and authority so your business ranks and converts consistently.",
   keywords: "SEO services, search engine optimization, keyword research, on-page SEO, technical SEO, link building, organic traffic, Google rankings",
 };
 
