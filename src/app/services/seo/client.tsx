@@ -183,13 +183,13 @@ const SEOStrategyCard = ({ strategy, className }: { strategy: any; className?: s
 
   return (
     <motion.div
-      className={cn("relative group cursor-pointer", className)}
+      className={cn("relative group cursor-pointer h-full", className)}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       whileHover={{ scale: 1.02 }}
       transition={{ type: "spring", stiffness: 300 }}
     >
-      <div className={`relative rounded-3xl p-6 md:p-8 border-2 transition-all duration-500 ${strategy.borderColor} ${strategy.bgGradient} backdrop-blur-sm overflow-hidden h-[380px] flex flex-col`}>
+      <div className={`relative rounded-3xl p-6 md:p-8 border-2 transition-all duration-500 ${strategy.borderColor} ${strategy.bgGradient} backdrop-blur-sm overflow-hidden min-h-[380px] h-full flex flex-col`}>
         {/* Animated Background Pattern */}
         <div className="absolute inset-0 opacity-10">
           <div className={`absolute top-0 right-0 w-32 h-32 ${strategy.iconBg} rounded-full blur-3xl animate-pulse`} />
@@ -296,64 +296,64 @@ export default function SEOClient() {
   // SEO Strategies Data
   const seoStrategies = [
     {
-      name: "Technical SEO",
-      highlightedName: "Technical <span class='text-[#f4cc6f]'>SEO</span>",
+      name: "Infrastructure & Indexation Excellence",
+      highlightedName: "Infrastructure & <span class='text-[#f4cc6f]'>Indexation Excellence</span>",
       icon: Settings,
-      description: "Optimize site architecture, speed, and crawlability for search engines and better user experience.",
-      impact: "+89%",
-      timeframe: "3-6 months",
+      description: "Before growth, search engines must fully trust and understand your website. We optimize site architecture, crawl pathways, performance, and indexation signals.",
+      impact: "90 days",
+      timeframe: "Foundational",
       borderColor: "border-gray-500/30",
       bgGradient: "bg-gradient-to-br from-gray-800/20 to-gray-700/20",
       iconBg: "bg-gradient-to-br from-gray-600 to-gray-700",
       iconColor: "text-white",
       textColor: "text-gray-300",
       hoverGradient: "bg-gradient-to-br from-gray-600 to-gray-700",
-      features: ["Site Speed Optimization", "Mobile Responsiveness", "Schema Markup", "Core Web Vitals", "XML Sitemaps", "Robots.txt Optimization"]
+      features: ["Site Architecture & Crawl Pathways", "Core Web Vitals & Performance", "Structured Data & Entity Clarity", "Index Control & Authority Flow", "Technical Signal Consolidation"]
     },
     {
-      name: "Content Strategy",
-      highlightedName: "Content <span class='text-[#f4cc6f]'>Strategy</span>",
+      name: "Search Intent & Content Authority",
+      highlightedName: "Search Intent & <span class='text-[#f4cc6f]'>Content Authority</span>",
       icon: FileText,
-      description: "Create high-quality, SEO-optimized content that ranks well and engages your target audience.",
-      impact: "+156%",
-      timeframe: "4-8 months",
+      description: "We build structured authority around revenue-driving themes — not filler content. Every page is engineered to match intent and convert qualified visitors.",
+      impact: "4–6 months",
+      timeframe: "Momentum",
       borderColor: "border-gray-500/30",
       bgGradient: "bg-gradient-to-br from-gray-800/20 to-gray-700/20",
       iconBg: "bg-gradient-to-br from-gray-600 to-gray-700",
       iconColor: "text-white",
       textColor: "text-gray-300",
       hoverGradient: "bg-gradient-to-br from-gray-600 to-gray-700",
-      features: ["Keyword Research", "Topic Clusters", "Content Optimization", "Semantic SEO", "Content Audits", "Featured Snippets"]
+      features: ["Buyer-Intent Keyword Mapping", "Topic Cluster Engineering", "Semantic SEO Optimization", "Conversion-Aligned Page Design", "Competitive Content Gap Analysis"]
     },
     {
-      name: "Link Building",
-      highlightedName: "Link <span class='text-[#f4cc6f]'>Building</span>",
+      name: "Digital Authority & Brand Signals",
+      highlightedName: "Digital Authority & <span class='text-[#f4cc6f]'>Brand Signals</span>",
       icon: LinkIcon,
-      description: "Build high-quality backlinks and domain authority through strategic outreach and digital PR.",
-      impact: "+234%",
-      timeframe: "6-12 months",
+      description: "Search engines rank trusted brands — not isolated URLs. We strengthen your domain's authority through strategic placements, digital PR, and entity signals.",
+      impact: "6–12 months",
+      timeframe: "Compounding",
       borderColor: "border-gray-500/30",
       bgGradient: "bg-gradient-to-br from-gray-800/20 to-gray-700/20",
       iconBg: "bg-gradient-to-br from-gray-600 to-gray-700",
       iconColor: "text-white",
       textColor: "text-gray-300",
       hoverGradient: "bg-gradient-to-br from-gray-600 to-gray-700",
-      features: ["Digital PR Campaigns", "Guest Posting", "Resource Link Building", "Broken Link Building", "HARO Outreach", "Competitor Analysis"]
+      features: ["Contextual Authority Placements", "Digital PR & Industry Features", "Entity Association Signals", "Strategic Backlink Acquisition", "Brand Search Growth"]
     },
     {
-      name: "Local SEO",
-      highlightedName: "Local <span class='text-[#f4cc6f]'>SEO</span>",
+      name: "Local & Market Dominance Strategy",
+      highlightedName: "Local & <span class='text-[#f4cc6f]'>Market Dominance</span>",
       icon: Globe,
-      description: "Dominate local search results with optimized Google My Business and location-based strategies.",
-      impact: "+178%",
-      timeframe: "2-4 months",
+      description: "For service-based and regional businesses, proximity and trust signals determine visibility. We build the local infrastructure that drives high-intent inquiries.",
+      impact: "60–120 days",
+      timeframe: "Early Visibility",
       borderColor: "border-gray-500/30",
       bgGradient: "bg-gradient-to-br from-gray-800/20 to-gray-700/20",
       iconBg: "bg-gradient-to-br from-gray-600 to-gray-700",
       iconColor: "text-white",
       textColor: "text-gray-300",
       hoverGradient: "bg-gradient-to-br from-gray-600 to-gray-700",
-      features: ["Google My Business", "Local Citations", "Review Management", "Location Pages", "Local Schema", "NAP Consistency"]
+      features: ["Business Profile Positioning", "Geographic Landing Page Ecosystems", "Citation & NAP Consistency", "Review Authority Reinforcement", "Local Structured Data"]
     }
   ];
 
@@ -393,64 +393,40 @@ export default function SEOClient() {
 
   const services = [
     {
-      title: "Keyword Research & Strategy",
-      description: "Comprehensive keyword analysis, search intent mapping, and competitive keyword gap analysis.",
+      title: "Keyword Research & Opportunity Mapping",
+      description: "We identify searches used by real buyers at different decision stages — problem aware, comparison, and service decision searches — to build rankings that grow toward competitive terms.",
       icon: <FaKeyboard className="w-12 h-12" />,
       link: "/contact"
     },
     {
-      title: "On-Page SEO Optimization",
-      description: "Title tags, meta descriptions, header optimization, internal linking, and content optimization.",
+      title: "On-Page SEO (Search Intent Optimization)",
+      description: "We optimize intent matching, page structure, internal linking hierarchy, and conversion positioning so your pages attract fewer but higher-quality visitors.",
       icon: <FileText className="w-12 h-12" />,
       link: "/contact"
     },
     {
-      title: "Technical SEO Audits",
-      description: "Site speed optimization, mobile responsiveness, crawlability, and Core Web Vitals improvement.",
+      title: "Technical SEO & Indexability",
+      description: "We resolve crawl inefficiencies, duplicate pages, rendering issues, page authority dilution, and structured data gaps — unlocking rankings already available to your domain.",
       icon: <Settings className="w-12 h-12" />,
       link: "/contact"
     },
     {
-      title: "Content SEO Strategy",
-      description: "SEO-optimized content creation, topic clusters, and semantic keyword integration.",
-      icon: <FileText className="w-12 h-12" />,
-      link: "/contact"
-    },
-    {
-      title: "Link Building & Authority",
-      description: "High-quality backlink acquisition, digital PR, and domain authority improvement strategies.",
+      title: "Authority Building",
+      description: "We build topical authority through niche-relevant placements, entity association signals, branded search growth, and citation reinforcement — so search engines rank your site as a trusted entity.",
       icon: <LinkIcon className="w-12 h-12" />,
       link: "/contact"
     },
     {
-      title: "Local SEO Optimization",
-      description: "Google My Business optimization, local citations, and location-based search visibility.",
+      title: "Local SEO (For Regional Businesses)",
+      description: "We optimize business profile relevance, service area pages, local landing page structure, and review consistency to drive visibility in map results and nearby searches.",
       icon: <Globe className="w-12 h-12" />,
       link: "/contact"
     },
-    {
-      title: "E-commerce SEO",
-      description: "Product page optimization, category structure, schema markup, and shopping feed optimization.",
-      icon: <ShoppingCart className="w-12 h-12" />,
-      link: "/contact"
-    },
-    {
-      title: "SEO Analytics & Reporting",
-      description: "Comprehensive tracking, ranking monitoring, traffic analysis, and ROI measurement.",
-      icon: <BarChart3 className="w-12 h-12" />,
-      link: "/contact"
-    },
-    {
-      title: "SEO Competitor Analysis",
-      description: "Competitive landscape analysis, gap identification, and strategic positioning insights.",
-      icon: <Target className="w-12 h-12" />,
-      link: "/contact"
-    }
   ];
 
   const mobileServices = [
     {
-      title: "Keyword Research",
+      title: "Keyword Research & Opportunity Mapping",
       icon: <FaKeyboard className="w-8 h-8 text-[#f4cc6f]" />
     },
     {
@@ -458,29 +434,17 @@ export default function SEOClient() {
       icon: <FileText className="w-8 h-8 text-[#f4cc6f]" />
     },
     {
-      title: "Technical SEO",
+      title: "Technical SEO & Indexability",
       icon: <Settings className="w-8 h-8 text-[#f4cc6f]" />
     },
     {
-      title: "Content Strategy",
-      icon: <FileText className="w-8 h-8 text-[#f4cc6f]" />
-    },
-    {
-      title: "Link Building",
+      title: "Authority Building",
       icon: <LinkIcon className="w-8 h-8 text-[#f4cc6f]" />
     },
     {
       title: "Local SEO",
       icon: <Globe className="w-8 h-8 text-[#f4cc6f]" />
     },
-    {
-      title: "E-commerce SEO",
-      icon: <ShoppingCart className="w-8 h-8 text-[#f4cc6f]" />
-    },
-    {
-      title: "SEO Analytics",
-      icon: <BarChart3 className="w-8 h-8 text-[#f4cc6f]" />
-    }
   ];
 
   const whyChoosePoints = [
@@ -518,16 +482,16 @@ export default function SEOClient() {
                   ALTIORA INFOTECH
                 </span>
                 <h1 className="font-semibold tracking-tight text-4xl leading-[1.05] sm:text-5xl md:text-6xl lg:text-7xl text-white">
-                  SEO Services
+                  Professional SEO
                   <br />
-                  <span className="text-[#f4cc6f]">Search Engine Optimization</span>
+                  <span className="text-[#f4cc6f]">Services</span>
                 </h1>
                 <p className="text-xl sm:text-2xl text-white/90">
-                  Boost your organic visibility and rankings with data-driven SEO strategies.
+                  For Businesses That Need Consistent Leads — Not Just Traffic
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 md:gap-4 pt-4">
                   <Link href="/contact" className="inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold bg-gradient-to-r from-[#f4cc6f] to-[#e6b85c] text-[#010c22] hover:shadow-lg hover:shadow-[#f4cc6f]/25 focus:shadow-lg focus:shadow-[#f4cc6f]/25 focus:outline-none focus:ring-2 focus:ring-[#f4cc6f]/50 transition-all duration-300 transform hover:scale-105 focus:scale-105">
-                    Get Started
+                    Get SEO Growth Plan
                     <FaRocket className="ml-2 w-4 h-4" />
                   </Link>
                 </div>
@@ -569,7 +533,9 @@ export default function SEOClient() {
                 className="max-w-5xl mx-auto py-8 px-8 sm:py-12 sm:px-12 md:py-14 md:px-14 rounded-[40px] border border-white/5 bg-white/[0.02] backdrop-blur-xl shadow-[0_20px_50px_rgba(244,204,111,0.05)] relative overflow-hidden"
               >
                 <p className={`${styles.sectionDescription} !max-w-none relative z-10 !text-white/90`}>
-                  Build long-term online visibility that attracts customers even when you’re not running ads. Our <a href="/" style={{ color: 'inherit', textDecoration: 'none' }}>SEO services</a> help your business rank higher, drive qualified organic traffic, and generate consistent leads. At Altiora Infotech, we combine technical expertise, content strategy, and data-driven optimization to maximize search performance. We focus on sustainable rankings, stronger website authority, and measurable long-term business growth.
+                  Our <Link href="/" style={{ color: 'inherit', textDecoration: 'none' }}>SEO Services</Link> help companies turn their website into a reliable acquisition channel using search-intent optimization, technical authority, and long-term ranking strategy.
+                  <br />
+                  Best suited for service businesses, local companies, SaaS &amp; high-ticket providers.
                 </p>
 
                 {/* Subtle inner light effect */}
@@ -588,14 +554,14 @@ export default function SEOClient() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
-              SEO Strategies That <span className="text-[#f4cc6f]">Drive Results</span>
+              SEO <span className="text-[#f4cc6f]">Growth Pillars</span>
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed">
-              Comprehensive SEO approaches tailored to your business goals and industry requirements.
+              Strategic frameworks engineered to increase qualified demand — not just traffic.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
             {seoStrategies.map((strategy, index) => (
               <SEOStrategyCard key={index} strategy={strategy} />
             ))}
@@ -636,7 +602,7 @@ export default function SEOClient() {
       </section>
 
       {/* SEO Results Showcase */}
-      <section className="py-20 px-6">
+      {/* <section className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
@@ -664,48 +630,110 @@ export default function SEOClient() {
             </Link>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Services Section - Redesigned for SEO */}
       <section className="py-20 px-6 bg-[#010b22]/50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white text-center">
-              Our SEO <span className="text-[#f4cc6f]">Services</span>
+              Services / <span className="text-[#f4cc6f]">What We Do</span>
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed">
-              Comprehensive SEO solutions designed to improve your search visibility and drive organic growth.
+              Comprehensive SEO solutions designed to turn your website into a reliable acquisition channel.
             </p>
           </div>
 
-          {/* Desktop Layout - New ServiceCard Design */}
-          <div className="hidden md:block">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {services.map((service, index) => (
-                <ServiceCard
-                  key={index}
-                  title={service.title}
-                  description={service.description}
-                  icon={service.icon}
-                  link={service.link}
-                />
-              ))}
-            </div>
-          </div>
+          {/* Service Detail Cards — same visual design as ServiceCard */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+            {[
+              {
+                icon: <FaKeyboard className="w-5 h-5" />,
+                title: "Search Demand Intelligence",
+                intro: "We map how buyers actually search — not how tools estimate volume. Our research identifies:",
+                bullets: ["Buyer-intent keyword clusters", "Decision-stage queries", "Revenue-linked search paths", "Ranking probability gaps"],
+                closing: "This allows us to build early traction while strategically advancing toward competitive market terms.",
+              },
+              {
+                icon: <FileText className="w-5 h-5" />,
+                title: "Intent Architecture & Page Engineering",
+                intro: "Search engines rank pages that completely satisfy intent. We restructure your website around:",
+                bullets: ["Clear search-to-page alignment", "Structured content hierarchy", "Conversion-driven layout logic", "Strategic internal authority flow"],
+                closing: "The result: fewer visitors — higher revenue impact.",
+              },
+              {
+                icon: <Settings className="w-5 h-5" />,
+                title: "Technical Authority Optimization",
+                intro: "Many websites don't rank because search engines cannot fully interpret them. We correct:",
+                bullets: ["Crawl inefficiencies", "Indexation conflicts", "Duplicate or diluted authority", "Structured data gaps", "Rendering & performance issues"],
+                closing: "Technical precision often unlocks rankings already within reach.",
+              },
+              {
+                icon: <LinkIcon className="w-5 h-5" />,
+                title: "Topical Authority Development",
+                intro: "Modern SEO is about becoming a trusted entity in a niche. We build:",
+                bullets: ["Thematic content clusters", "Entity-based relevance signals", "Niche authority reinforcement", "Strategic brand mentions", "Contextual link placements"],
+                closing: "Search engines reward domains that demonstrate expertise, not isolated pages.",
+              },
+              {
+                icon: <Target className="w-5 h-5" />,
+                title: "Conversion-Centered SEO",
+                intro: "Traffic alone is not success. We align SEO with:",
+                bullets: ["Conversion path clarity", "Trust signal positioning", "Offer alignment with search stage", "Lead capture optimization"],
+                closing: "Because rankings without inquiries are vanity metrics.",
+              },
+              {
+                icon: <Globe className="w-5 h-5" />,
+                title: "Local Visibility & Proximity Signals",
+                intro: "For regional businesses, rankings depend on trust and geographic authority. We optimize:",
+                bullets: ["Business profile authority", "Location-based landing structures", "Service-area depth pages", "Review and citation consistency"],
+                closing: "This enables map visibility and dominance in high-intent local searches.",
+              },
+            ].map((item, index) => (
+              <Link href="/contact" key={index} className="block group h-full">
+                <div className="relative w-full h-full min-h-[360px] bg-gradient-to-br from-[#0B0D2A] to-[#0B0D2A] text-white rounded-2xl p-6 shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 border border-transparent group-hover:border-[#F4CC6F]/50 flex flex-col">
+                  {/* Curved Top Right Corner with Icon */}
+                  <div className="absolute top-0 right-0 w-20 h-20 bg-gray-100 rounded-bl-[40px] flex items-start justify-end p-3">
+                    <div className="w-11 h-11 rounded-full bg-[#f4cc6f] flex items-center justify-center shadow-lg">
+                      <div className="text-[#0B0D2A] text-lg">
+                        {item.icon}
+                      </div>
+                    </div>
+                  </div>
 
-          {/* Mobile Layout - Simple 1-column Grid */}
-          <div className="block md:hidden">
-            <div className="grid grid-cols-1 gap-4">
-              {mobileServices.map((service, index) => (
-                <ServiceCard
-                  key={index}
-                  title={service.title}
-                  description="Comprehensive SEO solution for organic growth"
-                  icon={service.icon}
-                  link="/contact"
-                />
-              ))}
-            </div>
+                  {/* Service Tag */}
+                  <div className="mb-4">
+                    <span className="inline-block px-3 py-1 bg-[#f4cc6f] text-[#0B0D2A] text-sm rounded-full font-medium">
+                      Service
+                    </span>
+                  </div>
+
+                  {/* Content */}
+                  <div className="pr-8 flex-1 flex flex-col">
+                    <h3 className="text-xl font-bold mb-3 text-white tracking-wide group-hover:text-[#f4cc6f] transition-colors duration-300">
+                      {item.title}
+                    </h3>
+                    <p className="text-base text-white/80 leading-relaxed mb-3">
+                      {item.intro}
+                    </p>
+                    <ul className="space-y-1 mb-4">
+                      {item.bullets.map((bullet, bIdx) => (
+                        <li key={bIdx} className="flex items-center gap-2 text-white/80 text-sm">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#f4cc6f] flex-shrink-0" />
+                          {bullet}
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="text-white/50 text-sm italic border-t border-white/10 pt-3 mt-auto">
+                      {item.closing}
+                    </p>
+                  </div>
+
+                  {/* Hover Effect Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#f4cc6f]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       </section>

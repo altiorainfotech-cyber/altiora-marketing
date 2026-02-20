@@ -17,7 +17,7 @@ const NAV: NavItem[] = [
 const SERVICES: NavItem[] = [
   { label: "Digital Advertising", href: "/services/paid-advertisement-services" },
   { label: "SEO", href: "/services/seo" },
-  { label: "Web Design", href: "/services/web-design" },
+  { label: "Website Development Services", href: "/services/website-development-services" },
   { label: "Social Media Management", href: "/services/social-media-management" },
   { label: "Graphic Design", href: "/services/graphic-design" },
   { label: "Branding", href: "/services/branding" },

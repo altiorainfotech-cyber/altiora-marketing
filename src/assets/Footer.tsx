@@ -95,7 +95,7 @@ const LINK_MAP: Record<string, string> = {
   "seo": "/services/seo",
   "ppc": "/services/ppc",
   "social media management": "/services/social-media-management",
-  "web design": "/services/web-design",
+  "web design": "/services/website-development-services",
   "branding": "/services/branding",
 };
 

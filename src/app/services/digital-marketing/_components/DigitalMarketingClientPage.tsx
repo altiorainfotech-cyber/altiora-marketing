@@ -94,7 +94,7 @@ const defaultDigitalMarketingServices = [
     color: "#10B981",
   },
   {
-    title: "Web Design",
+    title: "Website Development Services",
     description: "Convert visitors into value with a website that gives a great first impression. Our team of web developers design websites that not only look great but also help you rank better in search results. We can even dedicate the time to writing your written content and providing photos & videos.",
     features: [
       "Modern website design",
@@ -103,7 +103,7 @@ const defaultDigitalMarketingServices = [
       "Content writing support",
       "Photos & video integration"
     ],
-    link: "/services/web-design",
+    link: "/services/website-development-services",
     metric: "",
     metricLabel: "",
     icon: "Monitor",
