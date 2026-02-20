@@ -495,35 +495,11 @@ export default function SocialMediaAdvertisingClient() {
       link: "/contact"
     },
     {
-      title: "Snapchat Advertising",
-      description: "AR-powered advertising campaigns with Snap Ads, Story Ads, and immersive lens experiences.",
-      icon: <FaSnapchatGhost className="w-8 h-8 text-white" />,
-      link: "/contact"
-    },
-    // {
-    //   title: "Creative Development",
-    //   description: "High-converting ad creatives including video, carousel, story ads, and interactive content.",
-    //   icon: <Camera className="w-12 h-12" />,
-    //   link: "/contact"
-    // },
-    {
-      title: "Audience Targeting & Segmentation",
-      description: "Advanced audience research, custom audiences, lookalikes, and behavioral targeting strategies.",
-      icon: <Target className="w-8 h-8 text-white" />,
-      link: "/contact"
-    },
-    {
       title: "Campaign Analytics & Optimization",
       description: "Real-time performance tracking, A/B testing, and continuous optimization for maximum ROI.",
       icon: <BarChart3 className="w-8 h-8 text-white" />,
       link: "/contact"
     },
-    {
-      title: "Social Commerce Integration",
-      description: "Shoppable posts, product catalogs, and seamless purchase experiences within social platforms.",
-      icon: <ShoppingCart className="w-8 h-8 text-white" />,
-      link: "/contact"
-    }
   ];
 
   const mobileServices = [
@@ -548,21 +524,9 @@ export default function SocialMediaAdvertisingClient() {
       icon: <FaTiktok className="w-8 h-8 text-white" />
     },
     {
-      title: "Snapchat Advertising",
-      icon: <FaSnapchatGhost className="w-8 h-8 text-white" />
-    },
-    {
-      title: "Audience Targeting",
-      icon: <Target className="w-8 h-8 text-white" />
-    },
-    {
       title: "Analytics & Optimization",
       icon: <BarChart3 className="w-8 h-8 text-white" />
     },
-    {
-      title: "Social Commerce",
-      icon: <ShoppingCart className="w-8 h-8 text-white" />
-    }
   ];
 
   const whyChoosePoints = [
