@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 
 interface ServiceCardProps {
-  title: string;
+  title: React.ReactNode;
   description: string;
   icon: React.ReactNode;
   link: string;

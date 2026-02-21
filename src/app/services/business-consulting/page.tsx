@@ -1,24 +1,12 @@
-import { Metadata } from 'next';
-import BusinessConsultingClientPage from './_components/BusinessConsultingClientPage';
+import { Metadata } from "next";
+import BusinessConsultingClient from "./client";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const title = 'Business Consulting Services — Strategy & Growth | Altiora Infotech';
-  const description = 'Expert business consulting for companies in Canada & USA. Strategic guidance, growth roadmaps, operational improvement & execution support to accelerate your business.';
-
-  return {
-    title,
-    description,
-    openGraph: {
-      title,
-      description,
-    },
-    twitter: {
-      title,
-      description,
-    }
-  };
-}
+export const metadata: Metadata = {
+  title: "Business Consulting Services — Strategy & Growth | Altiora Infotech",
+  description: "Expert business consulting for companies in Canada & USA. Strategic guidance, growth roadmaps, operational improvement & execution support to accelerate your business.",
+  keywords: "business consulting, strategy consulting, growth consulting, operational improvement, business strategy, digital transformation, financial advisory, leadership consulting",
+};
 
 export default function BusinessConsultingPage() {
-  return <BusinessConsultingClientPage />;
+  return <BusinessConsultingClient />;
 }

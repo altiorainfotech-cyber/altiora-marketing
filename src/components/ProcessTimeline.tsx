@@ -53,7 +53,7 @@ export default function ProcessTimeline({ title, subtitle, steps }: ProcessTimel
   };
 
   return (
-    <section className="py-20 px-6 bg-[#010b22]/50">
+    <section className="pt-0 pb-20 md:py-20 px-6 bg-[#010b22]/50">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
@@ -221,14 +221,14 @@ export default function ProcessTimeline({ title, subtitle, steps }: ProcessTimel
                 </p>
 
                 {/* Navigation */}
-                <div className="flex gap-4 pt-6">
+                <div className="flex justify-center lg:justify-start gap-3">
                   <button
                     onClick={() => {
                       setActiveStep(Math.max(0, activeStep - 1));
                       setIsAutoPlaying(false);
                     }}
                     disabled={activeStep === 0}
-                    className="px-6 py-3 rounded-full border border-[#f4cc6f]/30 text-[#f4cc6f] hover:bg-[#f4cc6f]/10 hover:border-[#f4cc6f]/50 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent"
+                    className="px-4 py-1.5 text-sm rounded-full border border-[#f4cc6f]/30 text-[#f4cc6f] hover:bg-[#f4cc6f]/10 hover:border-[#f4cc6f]/50 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent"
                   >
                     ← Previous
                   </button>
@@ -238,7 +238,7 @@ export default function ProcessTimeline({ title, subtitle, steps }: ProcessTimel
                       setIsAutoPlaying(false);
                     }}
                     disabled={activeStep === steps.length - 1}
-                    className="px-6 py-3 rounded-full bg-gradient-to-r from-[#f4cc6f] to-[#e6b85c] text-[#010c22] font-semibold hover:shadow-lg hover:shadow-[#f4cc6f]/25 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:shadow-none"
+                    className="px-4 py-1.5 text-sm rounded-full bg-gradient-to-r from-[#f4cc6f] to-[#e6b85c] text-[#010c22] font-semibold hover:shadow-lg hover:shadow-[#f4cc6f]/25 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:shadow-none"
                   >
                     Next →
                   </button>

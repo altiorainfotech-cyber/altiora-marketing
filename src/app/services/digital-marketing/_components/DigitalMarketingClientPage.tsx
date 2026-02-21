@@ -318,8 +318,8 @@ export default function DigitalMarketingClientPage({ pageData }: DigitalMarketin
 
   const heroSection = pageData?.heroSection || {
     badge: "Digital Marketing Excellence",
-    title: "Results-Driven Digital Marketing Agency in Canada & USA",
-    subtitle: "We combine SEO, performance marketing, and data-driven strategy to generate qualified leads, increase visibility, and maximize ROI.",
+    title: "Engineered Digital marketing for growth acceleration",
+    subtitle: "Altiora builds scalable growth engines for Canadian businesses using performance marketing, precision paid ad's, strategic content, advanced SEO, and optimized conversion systems that deliver consistent, measurable revenue growth.",
   };
 
   const servicesSection = pageData?.servicesSection || {
@@ -333,26 +333,23 @@ export default function DigitalMarketingClientPage({ pageData }: DigitalMarketin
         {/* Hero Section */}
         <section
           ref={heroRef}
-          className="py-8 px-4 pt-24 sm:py-12 sm:px-6 md:py-16 md:px-8 lg:py-20 lg:px-10 xl:py-24 relative overflow-hidden bg-[#010b22]"
+          className="py-8 px-4 pt-24 sm:py-12 sm:px-6 md:py-16 md:px-8 lg:py-20 lg:px-10 xl:py-24 relative overflow-hidden h-screen"
         >
-          {/* Floating Stars */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {mounted && [...Array(20)].map((_, i) => (
-              <div
-                key={i}
-                className="absolute w-1 h-1 bg-purple-400 rounded-full opacity-20 animate-pulse"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  animationDelay: `${Math.random() * 3}s`,
-                  animationDuration: `${2 + Math.random() * 2}s`,
-                }}
-              />
-            ))}
+          {/* Background Video */}
+          <div className="absolute inset-0 z-0">
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover opacity-70"
+            >
+              <source src="/images/homebg.mp4" type="video/mp4" />
+            </video>
           </div>
 
-          <div className="max-w-7xl mx-auto relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 lg:gap-16 xl:gap-20 items-center min-h-[500px] sm:min-h-[550px] md:min-h-[600px] lg:min-h-[650px]">
+          <div className="max-w-7xl mx-auto relative z-20 h-full flex items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 lg:gap-16 xl:gap-20 items-center w-full">
               <motion.div
                 initial={{ opacity: 0, x: -50 }}
                 animate={heroInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
@@ -411,14 +408,7 @@ export default function DigitalMarketingClientPage({ pageData }: DigitalMarketin
                 </motion.div>
               </motion.div>
 
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                animate={heroInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
-                transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
-                className="order-1 lg:order-2 relative h-[280px] sm:h-[320px] md:h-[380px] lg:h-[500px] xl:h-[600px]"
-              >
-                <DMHeroAnimation className="w-full h-full" />
-              </motion.div>
+
             </div>
           </div>
         </section>
@@ -454,7 +444,7 @@ export default function DigitalMarketingClientPage({ pageData }: DigitalMarketin
                 >
                   <p className={`${styles.sectionDescription} !max-w-none relative z-10`}>
                     <span className="">As an experienced <a href="https://altiorainfotech.com/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>Digital Marketing Agency</a>, we focus on measurable outcomes — not just impressions or clicks.</span> Every strategy is designed to attract high-intent customers and convert them into revenue.
-                   
+
                     From local businesses to national brands, our team builds scalable digital ecosystems that drive long-term success.
                   </p>
 

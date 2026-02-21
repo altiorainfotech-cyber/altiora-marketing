@@ -330,7 +330,7 @@ export default function SocialMediaAdvertisingClient() {
   const socialPlatforms = [
     {
       name: "Facebook & Instagram",
-      highlightedName: "Facebook & <span class='text-[#f4cc6f]'>Instagram</span>",
+      highlightedName: "Facebook & Instagram",
       icon: FaFacebook,
       description: "Reach 3.8B+ users with advanced targeting and creative formats across Meta's ecosystem.",
       reach: "3.8B+",
@@ -345,7 +345,7 @@ export default function SocialMediaAdvertisingClient() {
     },
     {
       name: "LinkedIn",
-      highlightedName: "<span class='text-[#f4cc6f]'>LinkedIn</span>",
+      highlightedName: "LinkedIn",
       icon: FaLinkedin,
       description: "Target 900M+ professionals with B2B-focused campaigns and thought leadership content.",
       reach: "900M+",
@@ -360,7 +360,7 @@ export default function SocialMediaAdvertisingClient() {
     },
     {
       name: "TikTok",
-      highlightedName: "<span class='text-[#f4cc6f]'>TikTok</span>",
+      highlightedName: "TikTok",
       icon: FaTiktok,
       description: "Engage 1B+ users with viral & Trends short-form video content and trending challenges.",
       reach: "1B+",
@@ -375,7 +375,7 @@ export default function SocialMediaAdvertisingClient() {
     },
     {
       name: "Google Ads",
-      highlightedName: "Google <span class='text-[#f4cc6f]'>Ads</span>",
+      highlightedName: "Google Ads",
       icon: FaGoogle,
       description: "Reach billions of users across Google Search, YouTube, Gmail, and the Google Display Network.",
       reach: "4B+",
@@ -390,7 +390,7 @@ export default function SocialMediaAdvertisingClient() {
     },
     {
       name: "Twitter/X",
-      highlightedName: "Twitter/<span class='text-[#f4cc6f]'>X</span>",
+      highlightedName: "Twitter/X",
       icon: FaTwitter,
       description: "Connect with 450M+ users through real-time conversations and trending / viral topics.",
       reach: "450M+",
@@ -405,7 +405,7 @@ export default function SocialMediaAdvertisingClient() {
     },
     {
       name: "Snapchat",
-      highlightedName: "<span class='text-[#f4cc6f]'>Snapchat</span>",
+      highlightedName: "Snapchat",
       icon: FaSnapchat,
       description: "Engage 750M+ daily active users with AR experiences and vertical video advertising.",
       reach: "750M+",
@@ -465,31 +465,31 @@ export default function SocialMediaAdvertisingClient() {
 
   const services = [
     {
-      title: "Facebook & Instagram Advertising",
+      title: <>Facebook & Instagram <span className="text-[#f4cc6f]">Advertising</span></>,
       description: "Targeted campaigns across Meta's platforms with advanced audience segmentation and creative optimization.",
       icon: <FaFacebookF className="w-8 h-8 text-white" />,
       link: "/contact"
     },
     {
-      title: "LinkedIn Advertising",
+      title: <>LinkedIn <span className="text-[#f4cc6f]">Advertising</span></>,
       description: "Professional B2B campaigns targeting decision-makers with sponsored content and InMail campaigns.",
       icon: <FaLinkedinIn className="w-8 h-8 text-white" />,
       link: "/contact"
     },
     {
-      title: "Twitter/X Advertising",
+      title: <>Twitter/X <span className="text-[#f4cc6f]">Advertising</span></>,
       description: "Real-time engagement campaigns with promoted tweets, trends, and targeted follower acquisition.",
       icon: <FaTwitter className="w-8 h-8 text-white" />,
       link: "/contact"
     },
     {
-      title: "Google Advertising",
+      title: <>Google <span className="text-[#f4cc6f]">Advertising</span></>,
       description: "Comprehensive Google Ads campaigns across Search, Display, YouTube, and Shopping networks.",
       icon: <FaGoogle className="w-8 h-8 text-white" />,
       link: "/contact"
     },
     {
-      title: "TikTok Advertising",
+      title: <>TikTok <span className="text-[#f4cc6f]">Advertising</span></>,
       description: "Creative short-form video campaigns targeting Gen Z and millennial audiences with viral potential.",
       icon: <FaTiktok className="w-8 h-8 text-white" />,
       link: "/contact"
@@ -567,11 +567,11 @@ export default function SocialMediaAdvertisingClient() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden text-white py-20 md:py-40 w-full max-w-full" style={{
+      <section className="relative overflow-hidden text-white min-h-screen md:min-h-0 py-20 md:py-40 flex items-center md:block w-full max-w-full" style={{
         background: "radial-gradient(85% 60% at 28% 8%, rgba(76,131,255,.25), rgba(0,0,0,0))"
       }}>
         <div className="absolute inset-0" style={{ animation: "float 6s ease-in-out infinite", transformStyle: "preserve-3d" }}>
-          <Image src="/images/agentic-ai/AI Infrastructure and Cloud Development-2.png" alt="Social Media Advertising" fill priority className="object-cover" />
+          <Image src="/images/services-bg/digital advertising.jpg.jpeg" alt="Paid Advertising" fill priority className="object-cover" />
         </div>
 
         {/* Floating Elements */}
@@ -588,15 +588,15 @@ export default function SocialMediaAdvertisingClient() {
                   ALTIORA INFOTECH
                 </span>
                 <h1 className="font-semibold tracking-tight text-4xl leading-[1.05] sm:text-5xl md:text-6xl lg:text-7xl text-white">
-                 Paid Advertising
+                  Paid Advertising
                   <br />
-                  <span className="text-[#f4cc6f]">Services</span>
+                  Services
                 </h1>
                 <p className="text-xl sm:text-2xl text-white/90">
                   Accelerate Business Growth with High-Performance Advertising Service
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 md:gap-4 pt-4">
-                  <Link href="/contact" className="inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold bg-gradient-to-r from-[#f4cc6f] to-[#e6b85c] text-[#010c22] hover:shadow-lg hover:shadow-[#f4cc6f]/25 focus:shadow-lg focus:shadow-[#f4cc6f]/25 focus:outline-none focus:ring-2 focus:ring-[#f4cc6f]/50 transition-all duration-300 transform hover:scale-105 focus:scale-105">
+                  <Link href="/contact" className="inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold bg-gradient-to-r from-[#f4cc6f] to-[#e6b85c] text-[#010c22] hover:shadow-lg hover:shadow-[#f4cc6f]/25 focus:shadow-lg focus:shadow-[#f4cc6f]/25 focus:outline-none focus:ring-2 focus:ring-[#f4cc6f]/50 transition-all duration-300 transform hover:scale-105 focus:scale-105 w-[60%] sm:w-auto">
                     Get Started
                     <FaRocket className="ml-2 w-4 h-4" />
                   </Link>
@@ -637,7 +637,7 @@ export default function SocialMediaAdvertisingClient() {
                 className="max-w-5xl mx-auto py-8 px-8 sm:py-12 sm:px-12 md:py-14 md:px-14 rounded-[40px] border border-white/5 bg-white/[0.02] backdrop-blur-xl shadow-[0_20px_50px_rgba(244,204,111,0.05)] relative overflow-hidden"
               >
                 <p className={`${styles.sectionDescription} !max-w-none relative z-10 !text-white/90`}>
-                 Connect with the right audience where they’re already active and turn clicks into real business growth. Our (PPC) Paid Advertising Services are designed to help you reach highly targeted customers through powerful social media campaigns that boost visibility, engagement, and conversions. At Altiora Infotech, we build performance-focused strategies using smart targeting, scroll-stopping creatives, and ongoing optimization to maximize results. Whether your goal is lead generation, increased sales, or stronger brand awareness, we create scalable social ad campaigns built to deliver consistent ROI.
+                  Connect with the right audience where they’re already active and turn clicks into real business growth. Our (PPC) Paid Advertising Services are designed to help you reach highly targeted customers through powerful social media campaigns that boost visibility, engagement, and conversions. At Altiora Infotech, we build performance-focused strategies using smart targeting, scroll-stopping creatives, and ongoing optimization to maximize results. Whether your goal is lead generation, increased sales, or stronger brand awareness, we create scalable social ad campaigns built to deliver consistent ROI.
 
                 </p>
 
@@ -657,7 +657,7 @@ export default function SocialMediaAdvertisingClient() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
-             Advertisement Platforms We <span className="text-[#f4cc6f]">Master</span>
+              <span className="text-[#f4cc6f]">Advertisement</span> Platforms We Master
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed">
               Reach your audience where they spend their time with platform-specific strategies and creative excellence.
@@ -678,7 +678,7 @@ export default function SocialMediaAdvertisingClient() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
-                Real-Time Campaign <span className="text-[#f4cc6f]">Performance</span>
+                Real-Time Campaign Performance
               </h2>
               <p className="text-base sm:text-lg md:text-xl text-white/80 mb-8 leading-relaxed">
                 Monitor your social media advertising success with our comprehensive analytics dashboard. Track impressions, engagement, clicks, and conversions across all platforms in real-time.
@@ -704,13 +704,13 @@ export default function SocialMediaAdvertisingClient() {
         </div>
       </section>
 
-     
+
       {/* Services Section - Redesigned for Social Media */}
       <section className="py-20 px-6 bg-[#010b22]/50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white text-center">
-              Our Paid Media Advertisement <span className="text-[#f4cc6f]">Services</span>
+              Our Paid Media Advertisement Services
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed">
               Comprehensive Paid media Advertisement solutions designed to maximize engagement and drive conversions.
@@ -758,7 +758,7 @@ export default function SocialMediaAdvertisingClient() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
-              Why Choose Our Social Media <span className="text-[#f4cc6f]">Advertising?</span>
+              Why Choose Our Social Media Advertising?
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed">
               We combine platform expertise with creative excellence to deliver social media campaigns that drive real business results.
@@ -825,11 +825,10 @@ export default function SocialMediaAdvertisingClient() {
               {whyChoosePoints.map((_, index) => (
                 <div
                   key={index}
-                  className={`h-2 rounded-full transition-all duration-300 ${
-                    activeSlide === index
+                  className={`h-2 rounded-full transition-all duration-300 ${activeSlide === index
                       ? "w-6 bg-[#f4cc6f]"
                       : "w-2 bg-white/30"
-                  }`}
+                    }`}
                 />
               ))}
             </div>
@@ -839,7 +838,7 @@ export default function SocialMediaAdvertisingClient() {
 
       {/* Social Media Process - New Timeline Design */}
       <ProcessTimeline
-        title="Our Paid Media Advertising <span class='text-[#f4cc6f]'>Process</span>"
+        title="Our Paid Media Advertising Process"
         subtitle="A strategic approach that transforms your Paid media presence into a powerful conversion engine."
         steps={[
           {
@@ -892,7 +891,7 @@ export default function SocialMediaAdvertisingClient() {
         <div className="max-w-6xl mx-auto w-full">
           <div className="text-center mb-8">
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
-              Why Work With Altiora <span className="text-[#f4cc6f]">Infotech?</span>
+              Why Work With Altiora Infotech?
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed">
               Partner with social media advertising experts who deliver measurable results.

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/assets/Header";
@@ -34,7 +34,7 @@ import {
 } from "react-icons/fa";
 
 import { cn } from "@/lib/utils";
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
 import { useInView } from "react-intersection-observer";
 import styles from "../digital-marketing/dm.module.css";
 import ServiceCard from "@/components/ServiceCard";
@@ -42,13 +42,9 @@ import ProcessTimeline from "@/components/ProcessTimeline";
 
 // Website Type Card Component
 const WebsiteTypeCard = ({ websiteType, className }: { websiteType: any; className?: string }) => {
-  const [isHovered, setIsHovered] = useState(false);
-
   return (
     <motion.div
       className={cn("relative group cursor-pointer", className)}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
       whileHover={{ scale: 1.02 }}
       transition={{ type: "spring", stiffness: 300 }}
     >
@@ -139,11 +135,10 @@ const WebsitePerformanceWidget = () => {
           return (
             <motion.div
               key={index}
-              className={`p-4 rounded-2xl border transition-all duration-500 ${
-                activeMetric === index
+              className={`p-4 rounded-2xl border transition-all duration-500 ${activeMetric === index
                   ? "border-[#f4cc6f] bg-[#f4cc6f]/10"
                   : "border-white/10 bg-white/5"
-              }`}
+                }`}
               animate={activeMetric === index ? { scale: 1.05 } : { scale: 1 }}
             >
               <Icon className="w-5 h-5 text-white/70 mb-2" />
@@ -158,55 +153,25 @@ const WebsitePerformanceWidget = () => {
   );
 };
 
-const ServicesHoverEffect = ({
-  items,
-  className,
-}: {
-  items: {
-    title: string;
-    description: string;
-    icon: React.ReactNode;
-    link: string;
-  }[];
-  className?: string;
-}) => {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
-  return (
-    <div className={cn("grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6", className)}>
-      {items.map((item, idx) => (
-        <Link
-          href={item?.link}
-          key={idx}
-          className="relative group block p-2 h-full w-full"
-          onMouseEnter={() => setHoveredIndex(idx)}
-          onMouseLeave={() => setHoveredIndex(null)}
-        >
-          <AnimatePresence>
-            {hoveredIndex === idx && (
-              <motion.span
-                className="absolute inset-0 h-full w-full bg-gray-300 block rounded-3xl max-w-full"
-                layoutId="hoverBackground"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1, transition: { duration: 0.15 } }}
-                exit={{ opacity: 0, transition: { duration: 0.15, delay: 0.2 } }}
-              />
-            )}
-          </AnimatePresence>
-          <div className="rounded-2xl h-full w-full p-6 overflow-hidden bg-gradient-to-br from-[#0B0D2A] to-[#0B0D2A] border border-transparent group-hover:border-[#F4CC6F]/50 relative z-20">
-            <div className="relative z-50">
-              <div className="mb-6 text-[#F4CC6F]">{item.icon}</div>
-              <h4 className="text-xl font-bold mb-3 text-white tracking-wide">{item.title}</h4>
-              <p className="text-base sm:text-lg md:text-xl text-white/80 tracking-wide leading-relaxed">{item.description}</p>
-            </div>
-          </div>
-        </Link>
-      ))}
-    </div>
-  );
-};
-
 export default function WebsiteDevelopmentClient() {
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const [activeSlide, setActiveSlide] = useState(0);
+
+  useEffect(() => {
+    const total = 6;
+    const interval = setInterval(() => {
+      setActiveSlide((prev) => {
+        const next = (prev + 1) % total;
+        if (sliderRef.current) {
+          const cardWidth = sliderRef.current.scrollWidth / total;
+          sliderRef.current.scrollTo({ left: cardWidth * next, behavior: "smooth" });
+        }
+        return next;
+      });
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
   const { ref: overviewRef, inView: overviewInView } = useInView({
     threshold: 0.1,
     triggerOnce: true,
@@ -320,80 +285,92 @@ export default function WebsiteDevelopmentClient() {
 
   const services = [
     {
-      title: "Custom Website Design",
-      description: "Unique, brand-aligned designs built from scratch to make your business stand out online.",
+      title: <>CRM <span className="text-[#f4cc6f]">Development</span></>,
+      description: "Custom CRM solutions to manage customer relationships, track sales pipelines, and automate workflows for business growth.",
       icon: <Layout className="w-12 h-12" />,
       link: "/contact",
     },
     {
-      title: "E-Commerce Development",
-      description: "Full-featured online stores with product management, payments, and seamless shopping experience.",
+      title: <>SaaS <span className="text-[#f4cc6f]">Development</span></>,
+      description: "Scalable SaaS platforms with subscription management, user dashboards, and multi-tenant architecture.",
+      icon: <Code className="w-12 h-12" />,
+      link: "/contact",
+    },
+    {
+      title: <>Webapp <span className="text-[#f4cc6f]">Development</span></>,
+      description: "Full-featured web applications with custom functionality, user authentication, and database integration.",
+      icon: <Globe className="w-12 h-12" />,
+      link: "/contact",
+    },
+    {
+      title: <>UI/UX <span className="text-[#f4cc6f]">Design</span></>,
+      description: "User-centered design that creates intuitive, engaging experiences and drives higher conversion rates.",
+      icon: <Eye className="w-12 h-12" />,
+      link: "/contact",
+    },
+    {
+      title: <>E-Commerce <span className="text-[#f4cc6f]">Development</span></>,
+      description: "Full-featured online stores with product management, secure payments, and seamless shopping experience.",
       icon: <ShoppingCart className="w-12 h-12" />,
       link: "/contact",
     },
     {
-      title: "WordPress Development",
-      description: "Custom WordPress websites with themes, plugins, and easy-to-manage content management systems.",
-      icon: <Settings className="w-12 h-12" />,
+      title: <>Custom Website <span className="text-[#f4cc6f]">Design</span></>,
+      description: "Unique, brand-aligned designs built from scratch to make your business stand out and convert visitors into customers.",
+      icon: <Layout className="w-12 h-12" />,
       link: "/contact",
     },
     {
-      title: "Landing Page Design",
-      description: "High-converting single-page designs focused on one goal — turning visitors into leads.",
+      title: <>Landing Page <span className="text-[#f4cc6f]">Design</span></>,
+      description: "High-converting single-page designs focused on one goal — turning visitors into qualified leads.",
       icon: <Target className="w-12 h-12" />,
       link: "/contact",
     },
     {
-      title: "Website Redesign",
-      description: "Modernize your outdated website with a fresh design, improved UX, and better performance.",
+      title: <>Website <span className="text-[#f4cc6f]">Redesign</span></>,
+      description: "Modernize your outdated website with a fresh design, improved UX, and significantly better performance.",
       icon: <RefreshCw className="w-12 h-12" />,
       link: "/contact",
     },
     {
-      title: "Mobile Responsive Design",
-      description: "Pixel-perfect responsive layouts that look and work flawlessly on every device and screen size.",
-      icon: <Smartphone className="w-12 h-12" />,
-      link: "/contact",
-    },
-    {
-      title: "Performance Optimization",
+      title: <>Performance <span className="text-[#f4cc6f]">Optimization</span></>,
       description: "Speed audits, Core Web Vitals improvements, and technical fixes for faster, higher-ranking websites.",
       icon: <Zap className="w-12 h-12" />,
       link: "/contact",
     },
-    {
-      title: "SEO-Friendly Development",
-      description: "Clean code, semantic HTML, structured data, and on-page optimization baked into every build.",
-      icon: <Search className="w-12 h-12" />,
-      link: "/contact",
-    },
-    {
-      title: "Website Maintenance",
-      description: "Ongoing updates, security monitoring, backups, and support to keep your website running smoothly.",
-      icon: <Shield className="w-12 h-12" />,
-      link: "/contact",
-    },
-  ];
-
-  const mobileServices = [
-    { title: "Custom Design", icon: <Layout className="w-8 h-8 text-[#f4cc6f]" /> },
-    { title: "E-Commerce", icon: <ShoppingCart className="w-8 h-8 text-[#f4cc6f]" /> },
-    { title: "WordPress", icon: <Settings className="w-8 h-8 text-[#f4cc6f]" /> },
-    { title: "Landing Pages", icon: <Target className="w-8 h-8 text-[#f4cc6f]" /> },
-    { title: "Website Redesign", icon: <RefreshCw className="w-8 h-8 text-[#f4cc6f]" /> },
-    { title: "Responsive Design", icon: <Smartphone className="w-8 h-8 text-[#f4cc6f]" /> },
-    { title: "Performance", icon: <Zap className="w-8 h-8 text-[#f4cc6f]" /> },
-    { title: "SEO Development", icon: <Search className="w-8 h-8 text-[#f4cc6f]" /> },
-    { title: "Maintenance", icon: <Shield className="w-8 h-8 text-[#f4cc6f]" /> },
   ];
 
   const whyChoosePoints = [
-    "Responsive design that works flawlessly on all devices and screen sizes",
-    "SEO-optimized structure for better search engine visibility and rankings",
-    "Fast loading speeds and Core Web Vitals optimized for user experience",
-    "Modern, clean aesthetics aligned with your brand identity and values",
-    "Conversion-focused layouts designed to turn visitors into customers",
-    "Secure, reliable builds with best-in-class performance and uptime",
+    {
+      title: "Responsive Design",
+      description: "Pixel-perfect responsive layouts that work flawlessly on every device, screen size, and browser.",
+      icon: Smartphone,
+    },
+    {
+      title: "SEO-Optimized Code",
+      description: "Clean semantic HTML, structured data, and on-page optimization built into every website we develop.",
+      icon: Search,
+    },
+    {
+      title: "Performance-First",
+      description: "99+ PageSpeed scores on mobile and desktop with Core Web Vitals optimized from day one of every build.",
+      icon: Zap,
+    },
+    {
+      title: "Conversion-Focused",
+      description: "Strategic layouts and UX patterns designed to guide visitors through your funnel and convert them into customers.",
+      icon: TrendingUp,
+    },
+    {
+      title: "Custom-Built",
+      description: "Every website is crafted from scratch — no templates — with modern aesthetics aligned to your brand identity.",
+      icon: Eye,
+    },
+    {
+      title: "Secure & Reliable",
+      description: "SSL certificates, secure code practices, and robust architecture to keep your website protected and always online.",
+      icon: Shield,
+    },
   ];
 
   return (
@@ -402,11 +379,11 @@ export default function WebsiteDevelopmentClient() {
 
       {/* Hero Section */}
       <section
-        className="relative overflow-hidden text-white py-20 md:py-40 w-full max-w-full"
+        className="relative overflow-hidden text-white min-h-screen md:min-h-0 py-20 md:py-40 flex items-center md:block w-full max-w-full"
         style={{ background: "radial-gradient(85% 60% at 28% 8%, rgba(76,131,255,.25), rgba(0,0,0,0))" }}
       >
         <div className="absolute inset-0" style={{ animation: "float 6s ease-in-out infinite", transformStyle: "preserve-3d" }}>
-          <Image src="/images/agentic-ai/AI Infrastructure and Cloud Development-2.png" alt="Website Development Services" fill priority className="object-cover" />
+          <Image src="/images/services-bg/Website Development Services.jpg.jpeg" alt="Website Development Services" fill priority className="object-cover" />
         </div>
 
         {/* Floating Elements */}
@@ -425,7 +402,7 @@ export default function WebsiteDevelopmentClient() {
                 <h1 className="font-semibold tracking-tight text-4xl leading-[1.05] sm:text-5xl md:text-6xl lg:text-7xl text-white">
                   Website Development
                   <br />
-                  <span className="text-[#f4cc6f]">Services</span>
+                  Services
                 </h1>
                 <p className="text-xl sm:text-2xl text-white/90">
                   Build a Website That Converts Visitors Into Customers
@@ -433,7 +410,7 @@ export default function WebsiteDevelopmentClient() {
                 <div className="flex flex-col sm:flex-row gap-3 md:gap-4 pt-4">
                   <Link
                     href="/contact"
-                    className="inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold bg-gradient-to-r from-[#f4cc6f] to-[#e6b85c] text-[#010c22] hover:shadow-lg hover:shadow-[#f4cc6f]/25 focus:shadow-lg focus:shadow-[#f4cc6f]/25 focus:outline-none focus:ring-2 focus:ring-[#f4cc6f]/50 transition-all duration-300 transform hover:scale-105 focus:scale-105"
+                    className="w-[60%] sm:w-auto inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold bg-gradient-to-r from-[#f4cc6f] to-[#e6b85c] text-[#010c22] hover:shadow-lg hover:shadow-[#f4cc6f]/25 focus:shadow-lg focus:shadow-[#f4cc6f]/25 focus:outline-none focus:ring-2 focus:ring-[#f4cc6f]/50 transition-all duration-300 transform hover:scale-105 focus:scale-105"
                   >
                     Start Your Project
                     <FaRocket className="ml-2 w-4 h-4" />
@@ -511,7 +488,7 @@ export default function WebsiteDevelopmentClient() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
-                Performance-First <span className="text-[#f4cc6f]">Development</span>
+                Performance-First Development
               </h2>
               <p className="text-base sm:text-lg md:text-xl text-white/80 mb-8 leading-relaxed">
                 Every website we build is engineered for speed, SEO, and conversion. We optimize Core Web Vitals, ensure mobile responsiveness, and build with clean, semantic code that search engines love.
@@ -542,41 +519,25 @@ export default function WebsiteDevelopmentClient() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white text-center">
-              Our Website Development <span className="text-[#f4cc6f]">Services</span>
+              Our Development Services
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed">
               Comprehensive web development solutions designed to build, grow, and maintain your online presence.
             </p>
           </div>
 
-          {/* Desktop Layout */}
-          <div className="hidden md:block">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {services.map((service, index) => (
-                <ServiceCard
-                  key={index}
-                  title={service.title}
-                  description={service.description}
-                  icon={service.icon}
-                  link={service.link}
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* Mobile Layout */}
-          <div className="block md:hidden">
-            <div className="grid grid-cols-1 gap-4">
-              {mobileServices.map((service, index) => (
-                <ServiceCard
-                  key={index}
-                  title={service.title}
-                  description="Professional website development solution"
-                  icon={service.icon}
-                  link="/contact"
-                />
-              ))}
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {services.map((service, index) => (
+              <ServiceCard
+                key={index}
+                title={service.title}
+                description={service.description}
+                icon={service.icon}
+                link={service.link}
+                iconVariant="gray"
+                hideServiceTag={true}
+              />
+            ))}
           </div>
         </div>
       </section>
@@ -586,18 +547,17 @@ export default function WebsiteDevelopmentClient() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
-              Why Choose Our Website <span className="text-[#f4cc6f]">Development?</span>
+              Why Choose Our Website Development?
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed">
               We combine design excellence with technical precision to deliver websites that drive real business results.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* Desktop Grid */}
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {whyChoosePoints.map((point, index) => {
-              const icons = [Smartphone, Search, Zap, Eye, TrendingUp, Shield];
-              const Icon = icons[index];
-
+              const Icon = point.icon;
               return (
                 <motion.div
                   key={index}
@@ -606,27 +566,59 @@ export default function WebsiteDevelopmentClient() {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="group relative"
                 >
-                  <div className="relative p-6 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm hover:bg-white/[0.08] hover:border-white/20 transition-all duration-500 hover:-translate-y-2 h-[200px] flex flex-col">
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-gray-500/10 to-gray-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <div className="relative z-10 flex-1 flex flex-col">
-                      <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-gray-600 to-gray-700 flex items-center justify-center mb-4">
-                        <Icon className="w-7 h-7 text-[#f4cc6f]" />
-                      </div>
-                      <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed group-hover:text-white transition-colors duration-300 flex-1">
-                        {point}
-                      </p>
+                  <div className="relative h-full p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-[#0B0D2A] to-[#0B0D2A] shadow-xl transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 hover:border-[#F4CC6F]/50 flex flex-col overflow-hidden">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-gray-600 to-gray-700 flex items-center justify-center mb-5 flex-shrink-0 shadow-lg">
+                      <Icon className="w-7 h-7 text-white" />
                     </div>
+                    <h3 className="text-lg font-bold text-white mb-2 group-hover:text-[#f4cc6f] transition-colors duration-300">
+                      {point.title}
+                    </h3>
+                    <p className="text-base text-white/70 leading-relaxed group-hover:text-white/90 transition-colors duration-300 flex-1">
+                      {point.description}
+                    </p>
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#f4cc6f]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl pointer-events-none" />
                   </div>
                 </motion.div>
               );
             })}
+          </div>
+
+          {/* Mobile Slider */}
+          <div className="md:hidden">
+            <div ref={sliderRef} className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 -mx-6 px-6 scrollbar-hide">
+              {whyChoosePoints.map((point, index) => {
+                const Icon = point.icon;
+                return (
+                  <div key={index} className="group relative flex-shrink-0 w-[82vw] snap-start">
+                    <div className="relative h-full p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-[#0B0D2A] to-[#0B0D2A] shadow-xl hover:border-[#F4CC6F]/50 flex flex-col overflow-hidden">
+                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-gray-600 to-gray-700 flex items-center justify-center mb-5 flex-shrink-0 shadow-lg">
+                        <Icon className="w-7 h-7 text-white" />
+                      </div>
+                      <h3 className="text-lg font-bold text-white mb-2">{point.title}</h3>
+                      <p className="text-base text-white/70 leading-relaxed flex-1">{point.description}</p>
+                      <div className="absolute inset-0 bg-gradient-to-br from-[#f4cc6f]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl pointer-events-none" />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            {/* Dots indicator */}
+            <div className="flex justify-center gap-2 mt-4">
+              {whyChoosePoints.map((_, index) => (
+                <div
+                  key={index}
+                  className={`h-2 rounded-full transition-all duration-300 ${activeSlide === index ? "w-6 bg-[#f4cc6f]" : "w-2 bg-white/30"
+                    }`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* Process Timeline */}
       <ProcessTimeline
-        title="Our Website Development <span class='text-[#f4cc6f]'>Process</span>"
+        title="Our Website Development Process"
         subtitle="A structured approach from discovery to launch that ensures your website is beautiful, functional, and built to convert."
         steps={[
           {

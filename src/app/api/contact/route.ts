@@ -129,58 +129,14 @@ export async function POST(request: NextRequest) {
       country,
       phoneCode,
       phoneNumber,
-      services,
-      budget,
-      timeline,
       message,
       attachments
     } = body;
 
     // Validate required fields
-    if (!firstName || !lastName || !email || !phoneNumber || !services || !Array.isArray(services) || services.length === 0) {
+    if (!firstName || !lastName || !email || !phoneNumber) {
       return NextResponse.json(
-        { error: 'All required fields must be provided, including phone number and at least one service' },
-        {
-          status: 400,
-          headers: SECURITY_HEADERS
-        }
-      );
-    }
-
-    // Validate services array
-    const validServices = [
-      'web3-development', 'web3-marketing', 'web2-development', 'digital-marketing',
-      'nft-marketplace', 'smart-contract-audit', 'web3-community', 'ui-ux-design',
-      'ai-development', 'ai-chatbot', 'ai-integration', 'predictive-analytics', 'ai-automation',
-      'quick-enquiry'
-    ];
-
-    const invalidServices = services.filter((service: string) => !validServices.includes(service));
-    if (invalidServices.length > 0) {
-      return NextResponse.json(
-        { error: 'Invalid service selection' },
-        {
-          status: 400,
-          headers: SECURITY_HEADERS
-        }
-      );
-    }
-
-    // Validate budget if provided
-    if (budget && !['under-10k', '10k-50k', '50k-200k', '200k-plus'].includes(budget)) {
-      return NextResponse.json(
-        { error: 'Invalid budget selection' },
-        {
-          status: 400,
-          headers: SECURITY_HEADERS
-        }
-      );
-    }
-
-    // Validate timeline if provided
-    if (timeline && !['1-4-weeks', '1-3-months', '3-6-months', '6-plus-months'].includes(timeline)) {
-      return NextResponse.json(
-        { error: 'Invalid timeline selection' },
+        { error: 'All required fields must be provided, including phone number' },
         {
           status: 400,
           headers: SECURITY_HEADERS
@@ -234,9 +190,6 @@ export async function POST(request: NextRequest) {
       country: country ? sanitizeInput(country) : undefined,
       phoneCode: phoneCode ? sanitizeInput(phoneCode) : undefined,
       phoneNumber: phoneNumber ? sanitizeInput(phoneNumber) : undefined,
-      services: services.map((service: string) => sanitizeInput(service)),
-      budget: budget ? sanitizeInput(budget) : undefined,
-      timeline: timeline ? sanitizeInput(timeline) : undefined,
       message: message && message.trim() && message.trim().length > 0 ? sanitizeInput(message) : undefined,
       attachments: attachments && Array.isArray(attachments) ? attachments.map((att: any) => ({
         originalName: sanitizeInput(att.originalName),
@@ -303,9 +256,6 @@ export async function POST(request: NextRequest) {
       country: sanitizedData.country,
       phoneCode: sanitizedData.phoneCode,
       phoneNumber: sanitizedData.phoneNumber,
-      services: sanitizedData.services,
-      budget: sanitizedData.budget,
-      timeline: sanitizedData.timeline,
       message: sanitizedData.message,
       attachments: sanitizedData.attachments,
       submittedAt: new Date(),

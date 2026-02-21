@@ -493,18 +493,8 @@ export default function ContactPage() {
     const company = (form.querySelector('[name="company"]') as HTMLInputElement)?.value || "";
     const message = (form.querySelector('[name="message"]') as HTMLTextAreaElement)?.value || "";
 
-    // Use state variables for services, budget, and timeline
-    const services = selectedServices;
-    const budget = selectedBudget;
-    const timeline = selectedTimeline;
-
-    if (!firstName || !lastName || !email || !company) {
+    if (!firstName || !lastName || !email) {
       setError("Please fill in all required fields.");
-      return;
-    }
-
-    if (services.length === 0) {
-      setError("Please select at least one service you're interested in.");
       return;
     }
 
@@ -548,13 +538,10 @@ export default function ContactPage() {
         firstName,
         lastName,
         email,
-        company,
+        company: company || undefined,
         country: selectedCountry?.name || undefined,
         phoneCode: selectedCountry?.phone_code || undefined,
         phoneNumber: phoneNumber.trim(),
-        services,
-        budget: budget || undefined,
-        timeline: timeline || undefined,
         message: message.trim() || undefined,
         attachments: attachments.length > 0 ? attachments : undefined,
       };
@@ -578,9 +565,6 @@ export default function ContactPage() {
       setSelectedCountry(null);
       setPhoneNumber("");
       setCountrySearch("");
-      setSelectedServices([]);
-      setSelectedBudget("");
-      setSelectedTimeline("");
       setHumanVerified(false);
       setUploadedFiles([]);
       // Reset email verification state
@@ -841,7 +825,7 @@ export default function ContactPage() {
                     {/* Company Field */}
                     <div className="space-y-2">
                       <label htmlFor="company" className="block text-sm font-medium text-slate-300">
-                        Company / Organization <span className="text-red-400">*</span>
+                        Company / Organization
                       </label>
                       <div className="relative">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -853,7 +837,6 @@ export default function ContactPage() {
                           type="text"
                           id="company"
                           name="company"
-                          required
                           className="w-full bg-slate-800/50 border border-slate-600 rounded-lg pl-10 pr-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all duration-200"
                           placeholder="Your Company Name"
                         />
@@ -861,222 +844,10 @@ export default function ContactPage() {
                     </div>
                   </div>
 
-                  {/* Project Details Section */}
-                  <div className="space-y-6">
-                    <div className="flex items-center gap-3 mb-6">
-                      <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full flex items-center justify-center text-white font-semibold text-sm">2</div>
-                      <h4 className="text-lg font-semibold text-white">Project Details</h4>
-                    </div>
-
-                    {/* Services Interested In */}
-                    <div className="space-y-2">
-                      <label className="block text-sm font-medium text-slate-300">
-                        Services Interested In<span className="text-red-400 ml-1">*</span>
-                      </label>
-                      <div className="relative services-dropdown">
-                        <button
-                          type="button"
-                          onClick={() => setShowServicesDropdown(!showServicesDropdown)}
-                          className="w-full bg-slate-800/50 border border-slate-600 rounded-lg px-4 py-3 text-left text-white hover:border-slate-500 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all duration-200 flex items-center justify-between"
-                        >
-                          <span className="text-sm">
-                            {selectedServices.length === 0
-                              ? "Select services you're interested in..."
-                              : selectedServices.length === 1
-                                ? serviceOptions.find(s => s.value === selectedServices[0])?.label
-                                : `${selectedServices.length} services selected`
-                            }
-                          </span>
-                          <svg className={`w-5 h-5 text-slate-400 transform transition-transform duration-200 ${showServicesDropdown ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                          </svg>
-                        </button>
-
-                        {showServicesDropdown && (
-                          <div className="absolute z-50 w-full mt-2 max-h-72 overflow-y-auto bg-slate-800 border border-slate-600 rounded-lg shadow-2xl">
-                            <div className="p-2">
-                              {serviceOptions.map((service) => (
-                                <label
-                                  key={service.value}
-                                  className="flex items-start gap-3 px-3 py-3 text-sm text-white hover:bg-slate-700 cursor-pointer rounded-md transition-colors duration-150"
-                                >
-                                  <input
-                                    type="checkbox"
-                                    checked={selectedServices.includes(service.value)}
-                                    onChange={(e) => {
-                                      if (e.target.checked) {
-                                        setSelectedServices([...selectedServices, service.value]);
-                                      } else {
-                                        setSelectedServices(selectedServices.filter(s => s !== service.value));
-                                      }
-                                    }}
-                                    className="w-4 h-4 mt-0.5 rounded border-2 border-slate-500 bg-transparent text-blue-500 focus:ring-blue-500 focus:ring-2"
-                                  />
-                                  <span className="leading-5">{service.label}</span>
-                                </label>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                      {selectedServices.length > 0 && (
-                        <div className="mt-3 flex flex-wrap gap-2">
-                          {selectedServices.map((serviceValue) => {
-                            const service = serviceOptions.find(s => s.value === serviceValue);
-                            return (
-                              <span
-                                key={serviceValue}
-                                className="inline-flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-200 text-xs rounded-full border border-blue-500/30"
-                              >
-                                <span className="max-w-[200px] truncate">{service?.label}</span>
-                                <button
-                                  type="button"
-                                  onClick={() => setSelectedServices(selectedServices.filter(s => s !== serviceValue))}
-                                  className="text-blue-300 hover:text-white transition-colors duration-150"
-                                >
-                                  <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                                  </svg>
-                                </button>
-                              </span>
-                            );
-                          })}
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Budget and Timeline Row */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                      {/* Estimated Project Budget */}
-                      <div className="space-y-2">
-                        <label className="block text-sm font-medium text-slate-300">
-                          Estimated Budget
-                        </label>
-                        <div className="relative budget-dropdown">
-                          <button
-                            type="button"
-                            onClick={() => setShowBudgetDropdown(!showBudgetDropdown)}
-                            className="w-full bg-slate-800/50 border border-slate-600 rounded-lg px-4 py-3 text-left text-white hover:border-slate-500 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all duration-200 flex items-center justify-between"
-                          >
-                            <span className="text-sm">
-                              {selectedBudget
-                                ? budgetOptions.find(b => b.value === selectedBudget)?.label
-                                : "Select budget range..."
-                              }
-                            </span>
-                            <svg className={`w-5 h-5 text-slate-400 transform transition-transform duration-200 ${showBudgetDropdown ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                            </svg>
-                          </button>
-
-                          {showBudgetDropdown && (
-                            <div className="absolute z-50 w-full mt-2 bg-slate-800 border border-slate-600 rounded-lg shadow-2xl overflow-hidden">
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  setSelectedBudget("");
-                                  setShowBudgetDropdown(false);
-                                }}
-                                className="w-full text-left px-4 py-3 text-sm text-slate-400 hover:bg-slate-700 border-b border-slate-600 transition-colors duration-150"
-                              >
-                                <div className="flex items-center gap-2">
-                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                  </svg>
-                                  No preference
-                                </div>
-                              </button>
-                              {budgetOptions.map((budget) => (
-                                <button
-                                  key={budget.value}
-                                  type="button"
-                                  onClick={() => {
-                                    setSelectedBudget(budget.value);
-                                    setShowBudgetDropdown(false);
-                                  }}
-                                  className="w-full text-left px-4 py-3 text-sm text-white hover:bg-slate-700 border-b border-slate-600 last:border-b-0 transition-colors duration-150"
-                                >
-                                  <div className="flex items-center gap-2">
-                                    <svg className="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-                                    </svg>
-                                    {budget.label}
-                                  </div>
-                                </button>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Target Timeline */}
-                      <div className="space-y-2">
-                        <label className="block text-sm font-medium text-slate-300">
-                          Target Timeline
-                        </label>
-                        <div className="relative timeline-dropdown">
-                          <button
-                            type="button"
-                            onClick={() => setShowTimelineDropdown(!showTimelineDropdown)}
-                            className="w-full bg-slate-800/50 border border-slate-600 rounded-lg px-4 py-3 text-left text-white hover:border-slate-500 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all duration-200 flex items-center justify-between"
-                          >
-                            <span className="text-sm">
-                              {selectedTimeline
-                                ? timelineOptions.find(t => t.value === selectedTimeline)?.label
-                                : "Select timeline..."
-                              }
-                            </span>
-                            <svg className={`w-5 h-5 text-slate-400 transform transition-transform duration-200 ${showTimelineDropdown ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                            </svg>
-                          </button>
-
-                          {showTimelineDropdown && (
-                            <div className="absolute z-50 w-full mt-2 bg-slate-800 border border-slate-600 rounded-lg shadow-2xl overflow-hidden">
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  setSelectedTimeline("");
-                                  setShowTimelineDropdown(false);
-                                }}
-                                className="w-full text-left px-4 py-3 text-sm text-slate-400 hover:bg-slate-700 border-b border-slate-600 transition-colors duration-150"
-                              >
-                                <div className="flex items-center gap-2">
-                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                  </svg>
-                                  No preference
-                                </div>
-                              </button>
-                              {timelineOptions.map((timeline) => (
-                                <button
-                                  key={timeline.value}
-                                  type="button"
-                                  onClick={() => {
-                                    setSelectedTimeline(timeline.value);
-                                    setShowTimelineDropdown(false);
-                                  }}
-                                  className="w-full text-left px-4 py-3 text-sm text-white hover:bg-slate-700 border-b border-slate-600 last:border-b-0 transition-colors duration-150"
-                                >
-                                  <div className="flex items-center gap-2">
-                                    <svg className="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                    {timeline.label}
-                                  </div>
-                                </button>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
                   {/* Message Section */}
                   <div className="space-y-6">
                     <div className="flex items-center gap-3 mb-6">
-                      <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-teal-600 rounded-full flex items-center justify-center text-white font-semibold text-sm">3</div>
+                      <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-teal-600 rounded-full flex items-center justify-center text-white font-semibold text-sm">2</div>
                       <h4 className="text-lg font-semibold text-white">Tell Us About Your Project</h4>
                     </div>
 
@@ -1110,7 +881,7 @@ export default function ContactPage() {
                   {/* File Upload Section */}
                   <div className="space-y-6">
                     <div className="flex items-center gap-3 mb-6">
-                      <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-red-600 rounded-full flex items-center justify-center text-white font-semibold text-sm">4</div>
+                      <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-red-600 rounded-full flex items-center justify-center text-white font-semibold text-sm">3</div>
                       <h4 className="text-lg font-semibold text-white">File Attachments</h4>
                       <span className="text-xs text-slate-400 bg-slate-800 px-2 py-1 rounded-full">Optional</span>
                       <button
@@ -1409,40 +1180,6 @@ export default function ContactPage() {
                         sales@altiorainfotech.com
                       </Link>
                       <p className="text-xs text-slate-500 mt-2">We typically respond within 24 hours</p>
-                    </div>
-                  </div>
-
-                  {/* Office Locations */}
-                  <div className="group">
-                    <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-400/20 rounded-xl p-6 hover:border-purple-400/40 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/10">
-                      <div className="flex items-center gap-4 mb-4">
-                        <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
-                          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                          </svg>
-                        </div>
-                        <div>
-                          <h4 className="text-lg font-semibold text-white">Our Offices</h4>
-                          <p className="text-sm text-slate-400">Global presence, local expertise</p>
-                        </div>
-                      </div>
-                      <div className="space-y-4">
-                        <div className="border-l-2 border-blue-400 pl-4">
-                          <p className="font-semibold text-white mb-1">🇨🇦 Surrey, Canada</p>
-                          <p className="text-sm text-slate-400 leading-relaxed">
-                            15905 98a ave<br />
-                            Surrey V4N2K8, Canada
-                          </p>
-                        </div>
-                        <div className="border-l-2 border-purple-400 pl-4">
-                          <p className="font-semibold text-white mb-1">🇮🇳 Zirakpur, India</p>
-                          <p className="text-sm text-slate-400 leading-relaxed">
-                            13th Floor, Motia Royal Business Park<br />
-                            Zirakpur, Punjab, India
-                          </p>
-                        </div>
-                      </div>
                     </div>
                   </div>
 
