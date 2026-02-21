@@ -567,17 +567,10 @@ export default function SocialMediaAdvertisingClient() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden text-white min-h-screen md:min-h-0 py-20 md:py-40 flex items-center md:block w-full max-w-full" style={{
-        background: "radial-gradient(85% 60% at 28% 8%, rgba(76,131,255,.25), rgba(0,0,0,0))"
-      }}>
-        <div className="absolute inset-0" style={{ animation: "float 6s ease-in-out infinite", transformStyle: "preserve-3d" }}>
-          <Image src="/images/services-bg/digital advertising.jpg.jpeg" alt="Paid Advertising" fill priority className="object-cover" />
+      <section className="relative overflow-hidden text-white min-h-screen md:min-h-0 py-20 md:py-40 flex items-center md:block w-full max-w-full">
+        <div className="absolute inset-0">
+          <Image src="/images/services-bg/digital advertising.jpg.jpeg" alt="Paid Advertising" fill priority quality={100} className="object-cover" style={{ transform: "translateZ(0)", willChange: "transform", backfaceVisibility: "hidden" }} />
         </div>
-
-        {/* Floating Elements */}
-        <div className="absolute top-20 left-10 w-20 h-20 bg-gradient-to-br from-pink-400/20 to-purple-500/20 rounded-full blur-xl animate-pulse" />
-        <div className="absolute bottom-32 right-16 w-32 h-32 bg-gradient-to-br from-blue-400/15 to-cyan-500/15 rounded-full blur-2xl animate-bounce" style={{ animationDuration: '3s' }} />
-        <div className="absolute top-1/2 right-10 w-16 h-16 bg-gradient-to-br from-orange-400/20 to-red-500/20 rounded-full blur-lg animate-ping" style={{ animationDuration: '4s' }} />
 
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8 w-full">
           <div className="w-full max-w-full">

@@ -17,8 +17,10 @@ const NAV: NavItem[] = [
 const SERVICES: NavItem[] = [
   { label: "Digital Advertising", href: "/services/paid-advertisement-services" },
   { label: "SEO", href: "/services/seo" },
+  { label: "AEO & GEO", href: "/services/aeo-geo" },
   { label: "Website Development Services", href: "/services/website-development-services" },
   { label: "Social Media Management", href: "/services/social-media-management" },
+  { label: "Influencer & UGC Marketing", href: "/services/influencer-ugc-marketing" },
   { label: "Graphic Design", href: "/services/graphic-design" },
   { label: "Branding", href: "/services/branding" },
   { label: "Video Production", href: "/services/video-production" },
@@ -258,7 +260,7 @@ export default function Header() {
               <div
                 className={[
                   "overflow-hidden transition-all duration-200",
-                  mobileServicesOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0",
+                  mobileServicesOpen ? "max-h-[480px] opacity-100" : "max-h-0 opacity-0",
                 ].join(" ")}
               >
                 <div className="pl-4 flex flex-col gap-0.5">

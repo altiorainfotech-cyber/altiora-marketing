@@ -116,9 +116,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Connect to MongoDB
-    await connectDB();
-
     const body = await request.json();
 
     const {
@@ -263,53 +260,34 @@ export async function POST(request: NextRequest) {
       userAgent: request.headers.get('user-agent')?.substring(0, 200) || 'unknown'
     };
 
-    const contact = new Contact(contactData);
-
-    // Save to database
-    const savedContact = await contact.save();
-
-    // Send auto-reply email (don't block the response if it fails)
-    let autoReplySuccess = false;
-    /* 
-    // Auto-reply temporarily disabled
+    // Save to database (non-blocking — email notification still sends even if DB fails)
+    let savedContact: any = null;
     try {
-      autoReplySuccess = await sendAutoReply({
-        firstName: sanitizedData.firstName,
-        lastName: sanitizedData.lastName,
-        email: sanitizedData.email,
-        company: sanitizedData.company,
-        country: sanitizedData.country,
-        phoneNumber: sanitizedData.phoneNumber,
-        services: sanitizedData.services,
-        budget: sanitizedData.budget,
-        timeline: sanitizedData.timeline,
-        message: sanitizedData.message,
-      });
-      // Auto-reply sent successfully
-    } catch (emailError) {
-      // Auto-reply failed (contact still saved)
+      await connectDB();
+      const contact = new Contact(contactData);
+      savedContact = await contact.save();
+    } catch (dbError) {
+      console.error('Database save failed:', dbError instanceof Error ? dbError.message : 'DB error');
     }
-    */
 
-    // Send admin notification email (don't block the response if it fails)
+    // Always send admin notification regardless of DB status
     let adminNotificationSuccess = false;
     try {
       adminNotificationSuccess = await sendAdminNotification(contactData);
-      // Admin notification sent successfully
     } catch (adminEmailError) {
-      // Admin notification failed (contact still saved)
+      // Email failed silently
     }
 
-    // Update the contact record with email status
-    try {
-      await Contact.findByIdAndUpdate(savedContact._id, {
-        autoReplySent: autoReplySuccess,
-        autoReplySentAt: autoReplySuccess ? new Date() : undefined,
-        adminNotificationSent: adminNotificationSuccess,
-        adminNotificationSentAt: adminNotificationSuccess ? new Date() : undefined,
-      });
-    } catch (updateError) {
-      console.error('Failed to update email status:', updateError);
+    // Update DB record with email status if it was saved
+    if (savedContact) {
+      try {
+        await Contact.findByIdAndUpdate(savedContact._id, {
+          adminNotificationSent: adminNotificationSuccess,
+          adminNotificationSentAt: adminNotificationSuccess ? new Date() : undefined,
+        });
+      } catch (updateError) {
+        console.error('Failed to update email status:', updateError);
+      }
     }
 
     // Return minimal response (don't expose database ID)
