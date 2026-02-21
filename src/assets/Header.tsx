@@ -23,6 +23,7 @@ const SERVICES: NavItem[] = [
   { label: "Branding", href: "/services/branding" },
   { label: "Video Production", href: "/services/video-production" },
   { label: "Business Consulting", href: "/services/business-consulting" },
+  { label: "Mobile App Development", href: "/services/mobile-app-development" },
 ];
 
 export default function Header() {

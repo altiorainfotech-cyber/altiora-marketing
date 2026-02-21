@@ -1,1201 +1,637 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-import {
-  Palette,
-  Target,
-  Lightbulb,
-  RefreshCw,
-  Send,
-  CheckCircle,
-  ArrowRight,
-  MessageSquare,
-  Eye,
-  Heart,
-  Zap,
-  Globe,
-  TrendingUp,
-  Users,
-  BookOpen,
-  Compass,
-  Shield,
-  Sparkles,
-  Megaphone,
-  FileText,
-} from "lucide-react";
-
 import Header from "@/assets/Header";
 import Footer from "@/assets/Footer";
-import styles from "../branding.module.css";
+import {
+  CheckCircle,
+  TrendingUp,
+  BarChart3,
+  Target,
+  Zap,
+  Eye,
+  Compass,
+  BookOpen,
+  Layers,
+  Users,
+  MessageSquare,
+  Shield,
+  Star,
+  Award,
+  Globe,
+  RefreshCw,
+} from "lucide-react";
+import {
+  FaRocket,
+  FaEye,
+  FaCode,
+  FaShieldAlt,
+  FaNetworkWired,
+  FaTools,
+  FaHandshake,
+} from "react-icons/fa";
+
+import { motion } from "motion/react";
+import { useInView } from "react-intersection-observer";
+import styles from "../../digital-marketing/dm.module.css";
+import ServiceCard from "@/components/ServiceCard";
+import ProcessTimeline from "@/components/ProcessTimeline";
+
+const BrandingServiceCard = ({ item, className }: { item: any; className?: string }) => {
+  return (
+    <motion.div
+      className={`relative group cursor-pointer ${className || ""}`}
+      whileHover={{ scale: 1.02 }}
+      transition={{ type: "spring", stiffness: 300 }}
+    >
+      <div className={`relative rounded-3xl p-6 md:p-8 border-2 transition-all duration-500 ${item.borderColor} ${item.bgGradient} backdrop-blur-sm overflow-hidden h-[480px] flex flex-col`}>
+        <div className="absolute inset-0 opacity-10">
+          <div className={`absolute top-0 right-0 w-32 h-32 ${item.iconBg} rounded-full blur-3xl animate-pulse`} />
+          <div className={`absolute bottom-0 left-0 w-24 h-24 ${item.iconBg} rounded-full blur-2xl animate-pulse`} style={{ animationDelay: "1s" }} />
+        </div>
+        <motion.div className={`inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-2xl ${item.iconBg} mb-6 relative z-10`}>
+          <item.icon className={`w-8 h-8 md:w-10 md:h-10 ${item.iconColor}`} />
+        </motion.div>
+        <div className="relative z-10 flex-1 flex flex-col">
+          <h3 className="text-xl md:text-2xl font-bold text-white mb-3" dangerouslySetInnerHTML={{ __html: item.highlightedName }} />
+          <p className="text-white/80 text-base md:text-lg mb-4 leading-relaxed flex-1">{item.description}</p>
+          <div className="flex items-center justify-between mb-4">
+            <div className="text-center">
+              <div className={`text-2xl font-bold ${item.textColor}`}>{item.stat1}</div>
+              <div className="text-xs text-white/60">{item.stat1Label}</div>
+            </div>
+            <div className="text-center">
+              <div className={`text-2xl font-bold ${item.textColor}`}>{item.stat2}</div>
+              <div className="text-xs text-white/60">{item.stat2Label}</div>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+            {item.features.map((feature: string, index: number) => (
+              <div key={index} className="flex items-center gap-2">
+                <CheckCircle className={`w-4 h-4 ${item.iconColor}`} />
+                <span className="text-sm text-white/80">{feature}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <motion.div className={`absolute inset-0 ${item.hoverGradient} opacity-0 group-hover:opacity-20 transition-opacity duration-500 rounded-3xl`} />
+      </div>
+    </motion.div>
+  );
+};
+
+const BrandImpactWidget = () => {
+  const [activeMetric, setActiveMetric] = useState(0);
+  const metrics = [
+    { label: "Brand Recognition", value: "+127%", change: "Avg increase", icon: Star },
+    { label: "Customer Trust", value: "+89%", change: "Trust score lift", icon: Shield },
+    { label: "Market Position", value: "Top 10%", change: "Industry ranking", icon: TrendingUp },
+    { label: "Revenue Impact", value: "3x", change: "ROI on branding", icon: BarChart3 },
+  ];
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveMetric((prev) => (prev + 1) % metrics.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
+  return (
+    <div className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 backdrop-blur-sm rounded-3xl p-6 md:p-8 border border-white/10">
+      <div className="flex items-center gap-3 mb-6">
+        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-gray-600 to-gray-700 flex items-center justify-center">
+          <Award className="w-6 h-6 text-white" />
+        </div>
+        <div>
+          <h3 className="text-xl font-bold text-white">Brand Impact Metrics</h3>
+          <p className="text-white/60 text-sm">Average results after branding</p>
+        </div>
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {metrics.map((metric, index) => {
+          const Icon = metric.icon;
+          return (
+            <motion.div
+              key={index}
+              className={`p-4 rounded-2xl border transition-all duration-500 ${activeMetric === index ? "border-[#f4cc6f] bg-[#f4cc6f]/10" : "border-white/10 bg-white/5"}`}
+              animate={activeMetric === index ? { scale: 1.05 } : { scale: 1 }}
+            >
+              <Icon className="w-5 h-5 text-white/70 mb-2" />
+              <div className="text-2xl font-bold text-white mb-1">{metric.value}</div>
+              <div className="text-xs text-white/60 mb-1">{metric.label}</div>
+              <div className="text-xs font-semibold text-white/80">{metric.change}</div>
+            </motion.div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
 
 export default function BrandingClientPage() {
-  const [mounted, setMounted] = useState(false);
-  const [heroRef, heroInView] = useInView({ threshold: 0.1, triggerOnce: true });
-  const [overviewRef, overviewInView] = useInView({ threshold: 0.1, triggerOnce: true });
-  const [whyRef, whyInView] = useInView({ threshold: 0.1, triggerOnce: true });
-  const [servicesRef, servicesInView] = useInView({ threshold: 0.1, triggerOnce: true });
-  const [workflowRef, workflowInView] = useInView({ threshold: 0.1, triggerOnce: true });
-  const [diffRef, diffInView] = useInView({ threshold: 0.1, triggerOnce: true });
-  const [whoRef, whoInView] = useInView({ threshold: 0.1, triggerOnce: true });
-  const [ctaRef, ctaInView] = useInView({ threshold: 0.1, triggerOnce: true });
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const [activeSlide, setActiveSlide] = useState(0);
 
   useEffect(() => {
-    setMounted(true);
+    const total = 6;
+    const interval = setInterval(() => {
+      setActiveSlide((prev) => {
+        const next = (prev + 1) % total;
+        if (sliderRef.current) {
+          const cardWidth = sliderRef.current.scrollWidth / total;
+          sliderRef.current.scrollTo({ left: cardWidth * next, behavior: "smooth" });
+        }
+        return next;
+      });
+    }, 3000);
+    return () => clearInterval(interval);
   }, []);
+
+  const { ref: overviewRef, inView: overviewInView } = useInView({ threshold: 0.1, triggerOnce: true });
+
+  const brandingAreas = [
+    {
+      highlightedName: "Brand <span class='text-[#f4cc6f]'>Strategy</span>",
+      icon: Compass,
+      description: "The strategic foundation that defines who you are, what you stand for, and why customers should choose you over every competitor.",
+      stat1: "100%",
+      stat1Label: "Research-Led",
+      stat2: "Long",
+      stat2Label: "Term Impact",
+      borderColor: "border-gray-500/30",
+      bgGradient: "bg-gradient-to-br from-gray-800/20 to-gray-700/20",
+      iconBg: "bg-gradient-to-br from-gray-600 to-gray-700",
+      iconColor: "text-white",
+      textColor: "text-gray-300",
+      hoverGradient: "bg-gradient-to-br from-gray-600 to-gray-700",
+      features: ["Mission & Vision", "Brand Values", "Competitive Analysis", "Target Audience", "Positioning Statement", "Brand Architecture"],
+    },
+    {
+      highlightedName: "Visual <span class='text-[#f4cc6f]'>Identity</span>",
+      icon: Layers,
+      description: "A cohesive visual system — logo, colors, typography, and imagery — that makes your brand instantly recognizable and visually compelling.",
+      stat1: "500+",
+      stat1Label: "Brands Built",
+      stat2: "98%",
+      stat2Label: "Satisfaction",
+      borderColor: "border-gray-500/30",
+      bgGradient: "bg-gradient-to-br from-gray-800/20 to-gray-700/20",
+      iconBg: "bg-gradient-to-br from-gray-600 to-gray-700",
+      iconColor: "text-white",
+      textColor: "text-gray-300",
+      hoverGradient: "bg-gradient-to-br from-gray-600 to-gray-700",
+      features: ["Logo Design", "Color Palette", "Typography System", "Imagery Style", "Icon Library", "Visual Language"],
+    },
+    {
+      highlightedName: "Brand <span class='text-[#f4cc6f]'>Messaging</span>",
+      icon: MessageSquare,
+      description: "Your brand's voice, tone, and language — crafted to resonate deeply with your target audience and communicate your value with clarity.",
+      stat1: "Clear",
+      stat1Label: "Value Prop",
+      stat2: "Unified",
+      stat2Label: "Voice & Tone",
+      borderColor: "border-gray-500/30",
+      bgGradient: "bg-gradient-to-br from-gray-800/20 to-gray-700/20",
+      iconBg: "bg-gradient-to-br from-gray-600 to-gray-700",
+      iconColor: "text-white",
+      textColor: "text-gray-300",
+      hoverGradient: "bg-gradient-to-br from-gray-600 to-gray-700",
+      features: ["Brand Voice", "Tagline Creation", "Value Proposition", "Key Messages", "Tone of Voice", "Copywriting Framework"],
+    },
+    {
+      highlightedName: "Brand <span class='text-[#f4cc6f]'>Guidelines</span>",
+      icon: BookOpen,
+      description: "Comprehensive brand standards documentation that ensures perfect consistency across every team member, agency, and platform your brand touches.",
+      stat1: "Full",
+      stat1Label: "Documentation",
+      stat2: "Team",
+      stat2Label: "Ready",
+      borderColor: "border-gray-500/30",
+      bgGradient: "bg-gradient-to-br from-gray-800/20 to-gray-700/20",
+      iconBg: "bg-gradient-to-br from-gray-600 to-gray-700",
+      iconColor: "text-white",
+      textColor: "text-gray-300",
+      hoverGradient: "bg-gradient-to-br from-gray-600 to-gray-700",
+      features: ["Logo Usage Rules", "Color Codes", "Typography Specs", "Do's & Don'ts", "Application Examples", "Digital & Print"],
+    },
+    {
+      highlightedName: "Brand <span class='text-[#f4cc6f]'>Positioning</span>",
+      icon: Target,
+      description: "Define and own your unique market position — the specific place in your customer's mind where your brand lives and why you're the obvious choice.",
+      stat1: "Market",
+      stat1Label: "Differentiation",
+      stat2: "Customer",
+      stat2Label: "Clarity",
+      borderColor: "border-gray-500/30",
+      bgGradient: "bg-gradient-to-br from-gray-800/20 to-gray-700/20",
+      iconBg: "bg-gradient-to-br from-gray-600 to-gray-700",
+      iconColor: "text-white",
+      textColor: "text-gray-300",
+      hoverGradient: "bg-gradient-to-br from-gray-600 to-gray-700",
+      features: ["Market Research", "Competitor Analysis", "Positioning Map", "Unique Differentiators", "Perception Strategy", "Customer Promise"],
+    },
+    {
+      highlightedName: "Brand <span class='text-[#f4cc6f]'>Relaunch</span>",
+      icon: RefreshCw,
+      description: "Modernize and reposition established brands for new audiences, changing markets, or business pivots without losing existing brand equity.",
+      stat1: "Fresh",
+      stat1Label: "Market Entry",
+      stat2: "Equity",
+      stat2Label: "Preserved",
+      borderColor: "border-gray-500/30",
+      bgGradient: "bg-gradient-to-br from-gray-800/20 to-gray-700/20",
+      iconBg: "bg-gradient-to-br from-gray-600 to-gray-700",
+      iconColor: "text-white",
+      textColor: "text-gray-300",
+      hoverGradient: "bg-gradient-to-br from-gray-600 to-gray-700",
+      features: ["Brand Audit", "Repositioning Strategy", "Visual Refresh", "Message Evolution", "Audience Expansion", "Launch Planning"],
+    },
+  ];
 
   const services = [
     {
-      icon: Palette,
-      title: "Brand Identity Development",
-      description: "We craft logos, color palettes, typography systems, and visual guidelines that reflect your essence.",
-      features: [
-        "Custom logo creation",
-        "Color palette design",
-        "Typography systems",
-        "Visual guidelines",
-        "Brand mark variations",
-      ],
-      color: "#f4cc6f",
+      title: <>Brand <span className="text-[#f4cc6f]">Strategy</span></>,
+      description: "A comprehensive brand strategy defining your mission, values, positioning, and competitive differentiation to guide every business decision.",
+      icon: <Compass className="w-12 h-12" />,
+      link: "/contact",
     },
     {
-      icon: Target,
-      title: "Brand Strategy & Positioning",
-      description: "We define your voice, values, mission, messaging, and how you uniquely fit into your market.",
-      features: [
-        "Brand voice definition",
-        "Core values articulation",
-        "Mission & vision crafting",
-        "Market positioning",
-        "Competitive differentiation",
-      ],
-      color: "#EC4899",
+      title: <>Visual <span className="text-[#f4cc6f]">Identity</span></>,
+      description: "Complete visual identity systems — logo, colors, typography, and imagery — that make your brand instantly recognizable across all touchpoints.",
+      icon: <Layers className="w-12 h-12" />,
+      link: "/contact",
     },
     {
-      icon: Megaphone,
-      title: "Brand Messaging & Tone of Voice",
-      description: "From taglines to core messaging frameworks, we help your brand speak clearly and consistently.",
-      features: [
-        "Tagline development",
-        "Core messaging framework",
-        "Tone of voice guide",
-        "Elevator pitch creation",
-        "Content voice standards",
-      ],
-      color: "#3B82F6",
+      title: <>Brand <span className="text-[#f4cc6f]">Messaging</span></>,
+      description: "Compelling brand voice, taglines, value propositions, and messaging frameworks that communicate your unique value with clarity and confidence.",
+      icon: <MessageSquare className="w-12 h-12" />,
+      link: "/contact",
     },
     {
-      icon: FileText,
-      title: "Brand Guidelines & Playbooks",
-      description: "A comprehensive reference document that ensures everyone communicates your brand the same way, every time.",
-      features: [
-        "Complete brand playbook",
-        "Usage rules & standards",
-        "Digital & print specs",
-        "Template systems",
-        "Internal brand training",
-      ],
-      color: "#10B981",
+      title: <>Brand <span className="text-[#f4cc6f]">Guidelines</span></>,
+      description: "Comprehensive brand standards documentation ensuring perfect consistency across every team, agency, and platform your brand appears on.",
+      icon: <BookOpen className="w-12 h-12" />,
+      link: "/contact",
     },
     {
-      icon: RefreshCw,
-      title: "Brand Refresh & Repositioning",
-      description: "For growing companies looking to realign their image with evolving goals and markets.",
-      features: [
-        "Brand audit & analysis",
-        "Visual identity refresh",
-        "Market repositioning",
-        "Brand migration strategy",
-        "Stakeholder alignment",
-      ],
-      color: "#8B5CF6",
+      title: <>Brand <span className="text-[#f4cc6f]">Positioning</span></>,
+      description: "Strategic market positioning that carves out your unique space in the competitive landscape and makes you the obvious choice for your ideal customer.",
+      icon: <Target className="w-12 h-12" />,
+      link: "/contact",
+    },
+    {
+      title: <>Brand <span className="text-[#f4cc6f]">Audit</span></>,
+      description: "A thorough analysis of your current brand health, perception gaps, and opportunities — the essential first step before any brand evolution.",
+      icon: <Eye className="w-12 h-12" />,
+      link: "/contact",
     },
   ];
 
-  const workflowSteps = [
+  const whyChoosePoints = [
     {
+      title: "Strategic Foundation",
+      description: "Every branding decision we make is rooted in research, competitive analysis, and a deep understanding of your target audience's psychology and decision-making.",
       icon: Compass,
-      title: "Discovery & Exploration",
-      description: "We begin with research, stakeholder interviews, and market analysis to understand what makes your business unique.",
     },
     {
-      icon: Lightbulb,
-      title: "Strategic Direction",
-      description: "We define brand positioning, voice, audience insights, and messaging frameworks that guide every creative decision.",
+      title: "Consistent Identity",
+      description: "We build visual and messaging systems that maintain perfect consistency across every touchpoint — from social media to print to packaging to website.",
+      icon: Layers,
     },
     {
-      icon: Sparkles,
-      title: "Creative Execution",
-      description: "Our design team translates strategy into visual identity — logos, visuals, and designs that represent your distinct value.",
+      title: "Memorable Positioning",
+      description: "We help you own a distinct, ownable position in the market that makes your brand the first — and only — name that comes to mind for your ideal customer.",
+      icon: Target,
     },
     {
-      icon: Send,
-      title: "Implementation & Support",
-      description: "From digital platforms to print materials, we ensure your brand is applied consistently and effectively.",
-    },
-  ];
-
-  const differentiators = [
-    {
-      icon: TrendingUp,
-      title: "Business-Driven Brand Strategy",
-      description: "We don't create brands that just look nice — we build brands that perform and drive measurable business outcomes.",
-    },
-    {
+      title: "Audience Clarity",
+      description: "Deep understanding of your target audience's motivations, fears, and aspirations ensures your brand speaks directly to the people most likely to buy from you.",
       icon: Users,
-      title: "Audience-First Thinking",
-      description: "Your brand is built around the expectations and needs of your customers, not trends.",
     },
     {
-      icon: Globe,
-      title: "Consistency Across Every Touchpoint",
-      description: "From website to social media to internal culture — your brand feels unified and professional everywhere.",
+      title: "Long-Term Value",
+      description: "Great branding is an investment, not an expense. We build brands that appreciate in value over time, reducing customer acquisition costs and commanding premium pricing.",
+      icon: TrendingUp,
     },
     {
-      icon: Zap,
-      title: "Built for Growth",
-      description: "Whether you're launching locally in Canada or scaling across the USA, your brand scales with you.",
+      title: "Expert Team",
+      description: "Seasoned brand strategists, designers, and copywriters who've built brands across industries — bringing the depth of expertise your brand deserves.",
+      icon: Award,
     },
-  ];
-
-  const whoIsItFor = [
-    { text: "Startups building identity from scratch", icon: Sparkles },
-    { text: "Businesses needing repositioning or revitalization", icon: RefreshCw },
-    { text: "Companies expanding into new markets", icon: Globe },
-    { text: "Enterprises seeking stronger brand cohesion", icon: Shield },
-    { text: "Digital-first brands wanting strategic differentiation", icon: Target },
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#010b22] text-[#F8FBFB]">
+    <div className="min-h-screen flex flex-col bg-[#010c22] text-[#F8FBFB] overflow-x-hidden w-full max-w-full">
       <Header />
-      <main className="flex-grow">
-        {/* Hero Section */}
-        <section
-          ref={heroRef}
-          className="py-8 px-4 pt-24 sm:py-12 sm:px-6 md:py-16 md:px-8 lg:py-20 lg:px-10 xl:py-24 relative overflow-hidden bg-[#010b22]"
-        >
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {mounted && [...Array(20)].map((_, i) => (
-              <div
-                key={i}
-                className="absolute w-1 h-1 bg-[#f4cc6f] rounded-full opacity-20 animate-pulse"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  animationDelay: `${Math.random() * 3}s`,
-                  animationDuration: `${2 + Math.random() * 2}s`,
-                }}
-              />
-            ))}
-          </div>
 
-          <div className="max-w-7xl mx-auto relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 lg:gap-16 xl:gap-20 items-center min-h-[500px] sm:min-h-[550px] md:min-h-[600px] lg:min-h-[650px]">
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                animate={heroInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-                transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-                className="order-2 lg:order-1 text-center lg:text-left relative z-20"
-              >
-                <motion.h1
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={heroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                  transition={{ duration: 0.6, delay: 0.6 }}
-                  className={`${styles.heroTitle} mb-4 sm:mb-5 md:mb-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl`}
-                >
-                  Branding That Shapes Perception, Builds Trust &{' '}
-                  <span className={styles.gradientText}>
-                    Drives Growth
-                  </span>
-                </motion.h1>
-
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={heroInView ? { opacity: 1 } : { opacity: 0 }}
-                  transition={{ duration: 0.6, delay: 0.8 }}
-                  className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 mb-6 sm:mb-8 md:mb-10 leading-relaxed max-w-2xl mx-auto lg:mx-0"
-                >
-                  Your brand is more than a logo — it&apos;s the story people tell about you. Our Branding Services help businesses in Canada and the USA create strategic brand identities that connect emotionally, stand out clearly, and influence customer decisions.
-                </motion.p>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={heroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                  transition={{ duration: 0.6, delay: 1 }}
-                  className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
-                >
-                  <Link
-                    href="/contact"
-                    className="group inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-[#f4cc6f] to-[#e6b85c] hover:from-[#e6b85c] hover:to-[#f4cc6f] text-[#010c22] text-sm sm:text-base font-semibold transition-all duration-300 shadow-lg shadow-[#f4cc6f]/25 hover:shadow-xl hover:shadow-[#f4cc6f]/40"
-                  >
-                    Start Your Branding Project
-                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                  <Link
-                    href="/contact"
-                    className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full border-2 border-[#f4cc6f]/50 hover:border-[#f4cc6f] text-[#f4cc6f] hover:text-white text-sm sm:text-base font-semibold transition-all duration-300 hover:bg-[#f4cc6f]/10"
-                  >
-                    Get a Free Brand Strategy Call
-                  </Link>
-                </motion.div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                animate={heroInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
-                transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
-                className="order-1 lg:order-2 relative h-[280px] sm:h-[320px] md:h-[380px] lg:h-[500px] xl:h-[600px] flex items-center justify-center"
-              >
-                <div className="relative w-full h-full flex items-center justify-center">
-                  {mounted && (
-                    <>
-                      {/* Outer colorful glow orbs */}
-                      <motion.div
-                        className="absolute w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-full opacity-30 blur-3xl"
-                        style={{ background: "radial-gradient(circle, #f4cc6f, #EC4899, #3B82F6, transparent)" }}
-                        animate={{ scale: [1, 1.15, 1], rotate: [0, 180, 360] }}
-                        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-                      />
-
-                      {/* Rotating gradient ring - outer */}
-                      <motion.div
-                        className="absolute w-52 h-52 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-[22rem] lg:h-[22rem] rounded-full"
-                        style={{
-                          background: "conic-gradient(from 0deg, #f4cc6f, #EC4899, #8B5CF6, #3B82F6, #10B981, #f4cc6f)",
-                          padding: "2px",
-                          WebkitMask: "radial-gradient(farthest-side, transparent calc(100% - 2px), #fff calc(100% - 2px))",
-                          mask: "radial-gradient(farthest-side, transparent calc(100% - 2px), #fff calc(100% - 2px))",
-                        }}
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                      />
-
-                      {/* Rotating gradient ring - middle */}
-                      <motion.div
-                        className="absolute w-40 h-40 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-72 lg:h-72 rounded-full"
-                        style={{
-                          background: "conic-gradient(from 180deg, #3B82F6, #8B5CF6, #EC4899, #f4cc6f, #10B981, #3B82F6)",
-                          padding: "2px",
-                          WebkitMask: "radial-gradient(farthest-side, transparent calc(100% - 2px), #fff calc(100% - 2px))",
-                          mask: "radial-gradient(farthest-side, transparent calc(100% - 2px), #fff calc(100% - 2px))",
-                        }}
-                        animate={{ rotate: -360 }}
-                        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                      />
-
-                      {/* Inner gradient glow */}
-                      <motion.div
-                        className="absolute w-28 h-28 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 rounded-full"
-                        style={{ background: "radial-gradient(circle, rgba(244,204,111,0.15), rgba(139,92,246,0.1), transparent)" }}
-                        animate={{ scale: [1, 1.2, 1] }}
-                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                      />
-
-                      {/* Center icon */}
-                      <div className="relative z-10 flex items-center justify-center">
-                        <motion.div
-                          className="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 rounded-2xl flex items-center justify-center shadow-2xl"
-                          style={{
-                            background: "linear-gradient(135deg, #f4cc6f, #EC4899, #8B5CF6)",
-                            boxShadow: "0 20px 60px rgba(244,204,111,0.3), 0 0 40px rgba(236,72,153,0.2), 0 0 60px rgba(139,92,246,0.15)",
-                          }}
-                          animate={{ y: [0, -12, 0] }}
-                          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                        >
-                          <BookOpen className="w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 text-white" />
-                        </motion.div>
-                      </div>
-
-                      {/* Floating colorful dots */}
-                      {[0, 1, 2, 3, 4, 5].map((i) => (
-                        <motion.div
-                          key={`dot-${i}`}
-                          className="absolute w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full"
-                          style={{
-                            background: ['#f4cc6f', '#EC4899', '#3B82F6', '#10B981', '#8B5CF6', '#f4cc6f'][i],
-                            boxShadow: `0 0 12px ${['#f4cc6f', '#EC4899', '#3B82F6', '#10B981', '#8B5CF6', '#f4cc6f'][i]}80`,
-                            top: `${15 + Math.sin(i * 1.05) * 35}%`,
-                            left: `${50 + Math.cos(i * 1.05) * 40}%`,
-                          }}
-                          animate={{
-                            y: [0, -10 - i * 2, 0],
-                            opacity: [0.6, 1, 0.6],
-                          }}
-                          transition={{ duration: 2 + i * 0.4, repeat: Infinity, ease: "easeInOut", delay: i * 0.3 }}
-                        />
-                      ))}
-
-                      {/* Floating small icons */}
-                      {[
-                        { Icon: Palette, color: "#EC4899", bg: "rgba(236,72,153,0.15)", top: "15%", left: "8%" },
-                        { Icon: Target, color: "#3B82F6", bg: "rgba(59,130,246,0.15)", top: "20%", left: "80%" },
-                        { Icon: Eye, color: "#10B981", bg: "rgba(16,185,129,0.15)", top: "65%", left: "5%" },
-                        { Icon: Heart, color: "#8B5CF6", bg: "rgba(139,92,246,0.15)", top: "72%", left: "82%" },
-                        { Icon: Zap, color: "#f4cc6f", bg: "rgba(244,204,111,0.15)", top: "42%", left: "88%" },
-                      ].map((item, i) => (
-                        <motion.div
-                          key={`icon-${i}`}
-                          className="absolute w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center backdrop-blur-sm"
-                          style={{
-                            top: item.top,
-                            left: item.left,
-                            background: item.bg,
-                            border: `1px solid ${item.color}30`,
-                            boxShadow: `0 4px 20px ${item.color}20`,
-                          }}
-                          animate={{ y: [0, -10, 0], rotate: [0, 5, -5, 0] }}
-                          transition={{ duration: 3 + i * 0.5, repeat: Infinity, ease: "easeInOut", delay: i * 0.4 }}
-                        >
-                          <item.Icon className="w-5 h-5 sm:w-6 sm:h-6" style={{ color: item.color }} />
-                        </motion.div>
-                      ))}
-                    </>
-                  )}
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* Overview - Why Branding Matters */}
-        <section
-          ref={overviewRef}
-          className="py-16 sm:py-20 px-4 sm:px-6 md:px-8 lg:px-10 relative overflow-hidden bg-[#010b22]"
-        >
-          <div className="max-w-7xl mx-auto relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={overviewInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8 }}
-              className="text-center"
-            >
-              <div className="flex items-center justify-center gap-6 mb-8">
-                <div className="h-px w-full max-w-[80px] sm:max-w-[120px] bg-gradient-to-l from-[#f4cc6f]/50 to-transparent" />
-                <span className={styles.overviewTitle}>
-                  Why It Matters
+      {/* Hero Section */}
+      <section
+        className="relative overflow-hidden text-white min-h-screen md:min-h-0 py-20 md:py-40 flex items-center md:block w-full max-w-full"
+        style={{ background: "radial-gradient(85% 60% at 28% 8%, rgba(76,131,255,.25), rgba(0,0,0,0))" }}
+      >
+        <div className="absolute inset-0" style={{ animation: "float 6s ease-in-out infinite", transformStyle: "preserve-3d" }}>
+          <Image src="/images/services-bg/Branding.jpg.jpeg" alt="Branding Services" fill priority className="object-cover" />
+        </div>
+        <div className="absolute top-20 left-10 w-20 h-20 bg-gradient-to-br from-pink-400/20 to-purple-500/20 rounded-full blur-xl animate-pulse" />
+        <div className="absolute bottom-32 right-16 w-32 h-32 bg-gradient-to-br from-blue-400/15 to-cyan-500/15 rounded-full blur-2xl animate-bounce" style={{ animationDuration: "3s" }} />
+        <div className="absolute top-1/2 right-10 w-16 h-16 bg-gradient-to-br from-orange-400/20 to-red-500/20 rounded-full blur-lg animate-ping" style={{ animationDuration: "4s" }} />
+        <div className="relative max-w-7xl mx-auto px-6 lg:px-8 w-full">
+          <div className="w-full max-w-full">
+            <div className="grid lg:grid-cols-12 gap-12 items-center w-full max-w-full">
+              <div className="lg:col-span-12 space-y-6 w-full max-w-full">
+                <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.08] px-4 py-2 text-xs tracking-wider text-white/90 backdrop-blur-sm">
+                  <Award className="w-4 h-4" />
+                  ALTIORA INFOTECH
                 </span>
-                <div className="h-px w-full max-w-[80px] sm:max-w-[120px] bg-gradient-to-r from-[#f4cc6f]/50 to-transparent" />
-              </div>
-
-              <div className="flex flex-col items-center">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={overviewInView ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ duration: 1, delay: 0.3 }}
-                  className="max-w-5xl mx-auto p-8 sm:p-12 md:p-14 rounded-[40px] border border-white/5 bg-white/[0.02] backdrop-blur-xl shadow-[0_20px_50px_rgba(244,204,111,0.05)] relative overflow-hidden"
-                >
-                  <p className={`${styles.sectionDescription} !max-w-none relative z-10`}>
-                    <span>In today&apos;s crowded market, the companies that win are the ones customers remember. Branding is the foundation of that memory.</span> Effective branding defines who you are and what you stand for, builds trust and credibility with your audience, differentiates you from competitors, improves customer loyalty and recall, and supports every marketing and sales effort.
-                    <br />
-                    At Altiora Infotech, we build brands with purpose — brands that feel familiar, trusted, and unmistakably yours.
-                  </p>
-                  <div className="absolute -top-24 -left-24 w-48 h-48 bg-[#f4cc6f]/10 blur-[80px] rounded-full pointer-events-none" />
-                </motion.div>
-              </div>
-            </motion.div>
-          </div>
-
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-4xl bg-[#f4cc6f]/5 blur-[120px] rounded-full pointer-events-none z-0" />
-        </section>
-
-        {/* Why Branding Matters - Visual Points */}
-        <section
-          ref={whyRef}
-          className="py-16 sm:py-20 px-4 sm:px-6 md:px-8 lg:px-10 relative overflow-hidden bg-[#061630]"
-        >
-          <div className="absolute top-0 left-1/4 w-60 h-60 bg-[#f4cc6f]/5 blur-[100px] rounded-full pointer-events-none" />
-          <div className="absolute bottom-0 right-1/4 w-48 h-48 bg-purple-500/5 blur-[80px] rounded-full pointer-events-none" />
-
-          <div className="max-w-6xl mx-auto relative z-10">
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 sm:gap-5">
-              {[
-                { icon: MessageSquare, label: "Defines Your Identity", color: "#f4cc6f", desc: "Who you are & stand for" },
-                { icon: Shield, label: "Builds Trust", color: "#10B981", desc: "Credibility & confidence" },
-                { icon: Eye, label: "Stands Out", color: "#3B82F6", desc: "Competitive differentiation" },
-                { icon: Heart, label: "Customer Loyalty", color: "#EC4899", desc: "Lasting connections" },
-                { icon: TrendingUp, label: "Supports Sales", color: "#8B5CF6", desc: "Marketing backbone" },
-              ].map((item, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 30, scale: 0.9 }}
-                  animate={whyInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-                  transition={{ duration: 0.5, delay: index * 0.12, type: "spring", stiffness: 120 }}
-                  className="group relative text-center p-5 sm:p-6 rounded-2xl border border-white/5 bg-white/[0.02] backdrop-blur-sm hover:border-opacity-40 transition-all duration-500 hover:bg-white/[0.05]"
-                >
-                  {/* Hover glow */}
-                  <div
-                    className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                    style={{ background: `radial-gradient(circle at center, ${item.color}10, transparent 70%)` }}
-                  />
-
-                  {/* Number badge */}
-                  <div
-                    className="absolute top-3 right-3 w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold opacity-40 group-hover:opacity-80 transition-opacity duration-300"
-                    style={{ background: `${item.color}15`, color: item.color }}
+                <h1 className="font-semibold tracking-tight text-4xl leading-[1.05] sm:text-5xl md:text-6xl lg:text-7xl text-white">
+                  Branding Services
+                  <br />
+                  That Build Trust
+                </h1>
+                <p className="text-xl sm:text-2xl text-white/90">
+                  Shape Perception, Build Authority & Drive Business Growth
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3 md:gap-4 pt-4">
+                  <Link
+                    href="/contact"
+                    className="w-[60%] sm:w-auto inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold bg-gradient-to-r from-[#f4cc6f] to-[#e6b85c] text-[#010c22] hover:shadow-lg hover:shadow-[#f4cc6f]/25 focus:shadow-lg focus:shadow-[#f4cc6f]/25 focus:outline-none focus:ring-2 focus:ring-[#f4cc6f]/50 transition-all duration-300 transform hover:scale-105 focus:scale-105"
                   >
-                    {String(index + 1).padStart(2, '0')}
-                  </div>
-
-                  {/* Icon */}
-                  <motion.div
-                    className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 relative"
-                    style={{ background: `${item.color}12`, border: `1px solid ${item.color}20` }}
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <item.icon className="w-7 h-7 sm:w-8 sm:h-8" style={{ color: item.color }} />
-                    <div
-                      className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 group-hover:animate-ping"
-                      style={{ background: `${item.color}08`, animationDuration: '2s' }}
-                    />
-                  </motion.div>
-
-                  {/* Label */}
-                  <p className="text-sm sm:text-base font-bold text-white mb-1 relative z-10">{item.label}</p>
-                  <p className="text-xs text-white/40 relative z-10">{item.desc}</p>
-
-                  {/* Bottom accent line */}
-                  <div
-                    className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[2px] w-0 group-hover:w-3/4 rounded-full transition-all duration-500"
-                    style={{ background: `linear-gradient(90deg, transparent, ${item.color}, transparent)` }}
-                  />
-                </motion.div>
-              ))}
+                    Build Your Brand
+                    <FaRocket className="ml-2 w-4 h-4" />
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Services Section */}
-        <section ref={servicesRef} className="py-16 sm:py-20 px-4 sm:px-6 md:px-8 lg:px-10 relative overflow-hidden">
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {mounted && [...Array(15)].map((_, i) => (
+      {/* Overview Section */}
+      <section ref={overviewRef} className="pb-12 pt-8 sm:pb-16 sm:pt-12 md:pb-20 md:pt-16 px-4 sm:px-6 md:px-8 lg:px-10 relative overflow-hidden bg-[#010b22]">
+        <div className="max-w-7xl mx-auto relative z-10">
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={overviewInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8 }} className="text-center">
+            <div className="flex items-center justify-center gap-6 mb-8">
+              <div className="h-px w-full max-w-[80px] sm:max-w-[120px] bg-gradient-to-l from-[#f4cc6f]/50 to-transparent" />
+              <span className={styles.overviewTitle}>Overview</span>
+              <div className="h-px w-full max-w-[80px] sm:max-w-[120px] bg-gradient-to-r from-[#f4cc6f]/50 to-transparent" />
+            </div>
+            <div className="flex flex-col items-center">
               <motion.div
-                key={`particle-${i}`}
-                className="absolute w-1 h-1 rounded-full"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  background: ['#f4cc6f', '#EC4899', '#3B82F6', '#10B981', '#8B5CF6'][i % 5],
-                }}
-                animate={{
-                  y: [0, -30, 0],
-                  opacity: [0, 0.6, 0],
-                }}
-                transition={{
-                  duration: 3 + Math.random() * 2,
-                  repeat: Infinity,
-                  delay: Math.random() * 3,
-                }}
-              />
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={overviewInView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 1, delay: 0.3 }}
+                className="max-w-5xl mx-auto py-8 px-8 sm:py-12 sm:px-12 md:py-14 md:px-14 rounded-[40px] border border-white/5 bg-white/[0.02] backdrop-blur-xl shadow-[0_20px_50px_rgba(244,204,111,0.05)] relative overflow-hidden"
+              >
+                <p className={`${styles.sectionDescription} !max-w-none relative z-10 !text-white/90`}>
+                  Your brand is the most valuable asset your business owns — yet most businesses treat it as an afterthought. At Altiora Infotech, we build brands that shape perception, command premium pricing, and create the kind of deep customer trust that drives long-term business growth. From brand strategy and visual identity to messaging frameworks and brand guidelines, we craft every element with strategic intent — ensuring your brand doesn't just look good, but actively works to grow your business.
+                </p>
+                <div className="absolute -top-24 -left-24 w-48 h-48 bg-[#f4cc6f]/10 blur-[80px] rounded-full pointer-events-none" />
+              </motion.div>
+            </div>
+          </motion.div>
+        </div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-4xl bg-[#f4cc6f]/5 blur-[120px] rounded-full pointer-events-none z-0" />
+      </section>
+
+      {/* Branding Areas */}
+      <section className="py-20 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
+              Branding <span className="text-[#f4cc6f]">Solutions</span> We Deliver
+            </h2>
+            <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed">
+              Comprehensive branding services that build cohesive, powerful brand identities from strategy through execution.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {brandingAreas.map((item, index) => (
+              <BrandingServiceCard key={index} item={item} />
             ))}
           </div>
+        </div>
+      </section>
 
-          <div className="max-w-6xl mx-auto relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={servicesInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ duration: 0.6 }}
-              className="text-center mb-12 sm:mb-16"
-            >
-              <motion.h2
-                className={styles.sectionHeading}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.7, delay: 0.1 }}
-              >
-                What We <span className="text-[#f4cc6f]">Do</span>
-              </motion.h2>
-              <motion.p
-                className={styles.sectionDescription}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.7, delay: 0.2 }}
-              >
-                Comprehensive branding services designed to tell your story, visually and strategically.
-              </motion.p>
-            </motion.div>
+      {/* Brand Impact Section */}
+      <section className="py-20 px-6 bg-[#010b22]/50">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
+                Branding That Delivers Measurable Results
+              </h2>
+              <p className="text-base sm:text-lg md:text-xl text-white/80 mb-8 leading-relaxed">
+                Strong branding isn't just about looking good — it's a business multiplier. Businesses with consistent, strategic branding see dramatically higher customer trust, faster sales cycles, and the ability to command premium prices in their market.
+              </p>
+              <div className="space-y-4">
+                {[
+                  "127% average increase in brand recognition after rebrand",
+                  "3x higher revenue impact from consistent brand identity",
+                  "89% boost in customer trust and perceived credibility",
+                  "Reduced customer acquisition costs through brand authority",
+                ].map((feature, index) => (
+                  <div key={index} className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-[#f4cc6f]" />
+                    <span className="text-white/90">{feature}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div>
+              <BrandImpactWidget />
+            </div>
+          </div>
+        </div>
+      </section>
 
-            {/* Top row - 3 cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-              {services.slice(0, 3).map((service, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 40 }}
-                  animate={servicesInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-                  transition={{ duration: 0.6, delay: index * 0.12, type: "spring", stiffness: 80 }}
-                  className={`${styles.serviceCardEnhanced} group relative flex flex-col h-full`}
-                >
-                  <div className="relative z-10 flex flex-col h-full">
-                    <motion.div
-                      className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5"
-                      style={{ background: `${service.color}15`, border: `1px solid ${service.color}25` }}
-                      whileHover={{ scale: 1.1, rotate: -5 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <service.icon className="w-7 h-7" style={{ color: service.color }} />
-                    </motion.div>
+      {/* Services Section */}
+      <section className="py-20 px-6 bg-[#010b22]/50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white text-center">
+              Our Branding Services
+            </h2>
+            <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed">
+              End-to-end branding solutions designed to build a powerful brand identity that attracts your ideal customers and drives business growth.
+            </p>
+          </div>
+          <div className="hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {services.map((service, index) => (
+              <ServiceCard key={index} title={service.title} description={service.description} icon={service.icon} link={service.link} hideServiceTag={true} iconVariant="gray" />
+            ))}
+          </div>
+          <div className="block md:hidden grid grid-cols-1 gap-4">
+            {services.map((service, index) => (
+              <ServiceCard key={index} title={service.title} description={service.description} icon={service.icon} link={service.link} hideServiceTag={true} iconVariant="gray" />
+            ))}
+          </div>
+        </div>
+      </section>
 
-                    <h3 className="text-xl font-bold text-white mb-3">{service.title}</h3>
-                    <p className="text-sm text-white/60 mb-5 leading-relaxed">{service.description}</p>
-
-                    <div className="mt-auto space-y-2">
-                      {service.features.map((feature, fIndex) => (
-                        <div key={fIndex} className="flex items-center gap-2.5">
-                          <CheckCircle className="w-4 h-4 flex-shrink-0" style={{ color: service.color }} />
-                          <span className="text-sm text-white/70">{feature}</span>
-                        </div>
-                      ))}
+      {/* Why Choose Section */}
+      <section className="py-20 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
+              Why Choose Our Branding Services?
+            </h2>
+            <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed">
+              We build brands that don't just look impressive — they actively work to grow your business and command premium market positioning.
+            </p>
+          </div>
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {whyChoosePoints.map((point, index) => {
+              const Icon = point.icon;
+              return (
+                <motion.div key={index} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }} className="group relative">
+                  <div className="relative h-full p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-[#0B0D2A] to-[#0B0D2A] shadow-xl transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 hover:border-[#F4CC6F]/50 flex flex-col overflow-hidden">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-gray-600 to-gray-700 flex items-center justify-center mb-5 flex-shrink-0 shadow-lg">
+                      <Icon className="w-7 h-7 text-white" />
                     </div>
+                    <h3 className="text-lg font-bold text-white mb-2 group-hover:text-[#f4cc6f] transition-colors duration-300">{point.title}</h3>
+                    <p className="text-base text-white/70 leading-relaxed group-hover:text-white/90 transition-colors duration-300 flex-1">{point.description}</p>
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#f4cc6f]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl pointer-events-none" />
                   </div>
                 </motion.div>
-              ))}
-            </div>
-
-            {/* Bottom row - 2 cards centered */}
-            <div className="flex flex-col md:flex-row justify-center gap-5 sm:gap-6 mt-5 sm:mt-6">
-              {services.slice(3, 5).map((service, index) => (
-                <motion.div
-                  key={index + 3}
-                  initial={{ opacity: 0, y: 40 }}
-                  animate={servicesInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-                  transition={{ duration: 0.6, delay: (index + 3) * 0.12, type: "spring", stiffness: 80 }}
-                  className={`${styles.serviceCardEnhanced} group relative flex flex-col h-full w-full md:w-[calc(50%-0.625rem)] lg:w-[calc(33.333%-0.5rem)]`}
-                >
-                  <div className="relative z-10 flex flex-col h-full">
-                    <motion.div
-                      className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5"
-                      style={{ background: `${service.color}15`, border: `1px solid ${service.color}25` }}
-                      whileHover={{ scale: 1.1, rotate: -5 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <service.icon className="w-7 h-7" style={{ color: service.color }} />
-                    </motion.div>
-
-                    <h3 className="text-xl font-bold text-white mb-3">{service.title}</h3>
-                    <p className="text-sm text-white/60 mb-5 leading-relaxed">{service.description}</p>
-
-                    <div className="mt-auto space-y-2">
-                      {service.features.map((feature, fIndex) => (
-                        <div key={fIndex} className="flex items-center gap-2.5">
-                          <CheckCircle className="w-4 h-4 flex-shrink-0" style={{ color: service.color }} />
-                          <span className="text-sm text-white/70">{feature}</span>
-                        </div>
-                      ))}
+              );
+            })}
+          </div>
+          <div className="md:hidden">
+            <div ref={sliderRef} className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 -mx-6 px-6 scrollbar-hide">
+              {whyChoosePoints.map((point, index) => {
+                const Icon = point.icon;
+                return (
+                  <div key={index} className="group relative flex-shrink-0 w-[82vw] snap-start">
+                    <div className="relative h-full p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-[#0B0D2A] to-[#0B0D2A] shadow-xl hover:border-[#F4CC6F]/50 flex flex-col overflow-hidden">
+                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-gray-600 to-gray-700 flex items-center justify-center mb-5 flex-shrink-0 shadow-lg">
+                        <Icon className="w-7 h-7 text-white" />
+                      </div>
+                      <h3 className="text-lg font-bold text-white mb-2">{point.title}</h3>
+                      <p className="text-base text-white/70 leading-relaxed flex-1">{point.description}</p>
+                      <div className="absolute inset-0 bg-gradient-to-br from-[#f4cc6f]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl pointer-events-none" />
                     </div>
                   </div>
-                </motion.div>
+                );
+              })}
+            </div>
+            <div className="flex justify-center gap-2 mt-4">
+              {whyChoosePoints.map((_, index) => (
+                <div key={index} className={`h-2 rounded-full transition-all duration-300 ${activeSlide === index ? "w-6 bg-[#f4cc6f]" : "w-2 bg-white/30"}`} />
               ))}
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Workflow / Process Section */}
-        <section ref={workflowRef} className="py-16 sm:py-20 px-4 sm:px-6 md:px-8 lg:px-10 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-[#010b22] via-[#0a0f2e] to-[#010b22] opacity-50" />
-          <div className="absolute top-1/4 -left-20 w-80 h-80 bg-[#f4cc6f]/5 blur-[120px] rounded-full pointer-events-none" />
-          <div className="absolute bottom-1/4 -right-20 w-72 h-72 bg-[#EC4899]/5 blur-[100px] rounded-full pointer-events-none" />
+      {/* Process Timeline */}
+      <ProcessTimeline
+        title="Our Branding Process"
+        subtitle="A strategic, research-led approach that builds powerful brand identities from the ground up — with measurable results at every stage."
+        steps={[
+          { step: "01", title: "Brand Discovery", description: "Deep-dive sessions to understand your business, values, competitive landscape, and target audience psychology before any creative work begins.", icon: Eye, color: "from-blue-500 to-cyan-500" },
+          { step: "02", title: "Strategy Development", description: "Build your brand positioning, messaging framework, value proposition, and competitive differentiation strategy backed by research.", icon: Compass, color: "from-purple-500 to-pink-500" },
+          { step: "03", title: "Visual Identity Design", description: "Create your logo, color palette, typography system, and visual language that embodies your brand strategy and resonates with your audience.", icon: Layers, color: "from-green-500 to-emerald-500" },
+          { step: "04", title: "Messaging & Voice", description: "Develop your brand voice, tone, tagline, and key messaging framework that communicates your value clearly and compellingly across all channels.", icon: MessageSquare, color: "from-yellow-500 to-orange-500" },
+          { step: "05", title: "Brand Guidelines", description: "Document every element of your brand into a comprehensive guidelines manual that ensures consistency wherever your brand appears.", icon: BookOpen, color: "from-red-500 to-pink-500" },
+          { step: "06", title: "Launch & Implementation", description: "Roll out your new brand across all touchpoints — website, social media, collateral, and communications — with strategic launch support.", icon: Zap, color: "from-indigo-500 to-purple-500" },
+        ]}
+      />
 
-          <div className="max-w-6xl mx-auto relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={workflowInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ duration: 0.6 }}
-              className="text-center mb-12 sm:mb-16"
-            >
-              <motion.h2
-                className={styles.sectionHeading}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.7, delay: 0.1 }}
-              >
-                Our Branding <span className="text-[#f4cc6f]">Process</span>
-              </motion.h2>
-              <motion.p
-                className={styles.sectionDescription}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.7, delay: 0.2 }}
-              >
-                A collaborative, detail-driven process from strategy to final delivery.
-              </motion.p>
-            </motion.div>
-
-            {/* Desktop - Alternating zigzag layout */}
-            <div className="hidden md:block relative">
-              {/* Central vertical line */}
-              <div className="absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2">
-                <motion.div
-                  className="w-full h-full origin-top"
-                  style={{ background: "linear-gradient(to bottom, transparent, #f4cc6f40, #EC489940, #3B82F640, transparent)" }}
-                  initial={{ scaleY: 0 }}
-                  animate={workflowInView ? { scaleY: 1 } : { scaleY: 0 }}
-                  transition={{ duration: 1.2, ease: "easeOut" }}
-                />
-              </div>
-
-              <div className="space-y-12 lg:space-y-16">
-                {workflowSteps.map((step, index) => {
-                  const isLeft = index % 2 === 0;
-                  const colors = ["#f4cc6f", "#EC4899", "#3B82F6", "#10B981"];
-                  const color = colors[index % colors.length];
-
-                  return (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, x: isLeft ? -60 : 60 }}
-                      animate={workflowInView ? { opacity: 1, x: 0 } : { opacity: 0, x: isLeft ? -60 : 60 }}
-                      transition={{ duration: 0.7, delay: index * 0.2, type: "spring", stiffness: 80 }}
-                      className={`relative flex items-center gap-6 lg:gap-10 ${isLeft ? 'flex-row' : 'flex-row-reverse'}`}
-                    >
-                      {/* Card side */}
-                      <div className={`w-[calc(50%-2rem)] ${isLeft ? 'text-right' : 'text-left'}`}>
-                        <motion.div
-                          className="group relative p-6 lg:p-8 rounded-2xl bg-white/[0.03] border border-white/8 backdrop-blur-sm overflow-hidden transition-all duration-500 hover:bg-white/[0.06]"
-                          whileHover={{ y: -5, scale: 1.02 }}
-                          transition={{ duration: 0.3 }}
-                          style={{ borderColor: `${color}15` }}
-                        >
-                          <div
-                            className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                            style={{ background: `linear-gradient(${isLeft ? '135deg' : '225deg'}, ${color}08, transparent 60%)` }}
-                          />
-
-                          <div
-                            className={`absolute ${isLeft ? '-right-2' : '-left-2'} -top-4 text-[7rem] font-black leading-none opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-500 select-none pointer-events-none`}
-                            style={{ color }}
-                          >
-                            {String(index + 1).padStart(2, '0')}
-                          </div>
-
-                          <div className="relative z-10">
-                            <div
-                              className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-bold tracking-widest uppercase mb-4"
-                              style={{ background: `${color}12`, color, border: `1px solid ${color}20` }}
-                            >
-                              Step {String(index + 1).padStart(2, '0')}
-                            </div>
-
-                            <h3 className="text-lg lg:text-xl font-bold text-white mb-3">{step.title}</h3>
-                            <p className="text-sm text-white/50 leading-relaxed">{step.description}</p>
-                          </div>
-
-                          <div
-                            className={`absolute bottom-0 ${isLeft ? 'right-0' : 'left-0'} h-[2px] w-0 group-hover:w-full rounded-full transition-all duration-700`}
-                            style={{ background: `linear-gradient(${isLeft ? 'to left' : 'to right'}, ${color}, transparent)` }}
-                          />
-                        </motion.div>
-                      </div>
-
-                      {/* Center node */}
-                      <div className="relative z-20 flex-shrink-0">
-                        <motion.div
-                          className="w-14 h-14 lg:w-16 lg:h-16 rounded-full flex items-center justify-center relative"
-                          style={{
-                            background: `linear-gradient(135deg, ${color}, ${color}CC)`,
-                            boxShadow: `0 0 30px ${color}40, 0 0 60px ${color}15`,
-                          }}
-                          whileHover={{ scale: 1.2 }}
-                          transition={{ duration: 0.4, type: "spring" }}
-                        >
-                          <step.icon className="w-7 h-7 lg:w-8 lg:h-8 text-white" />
-                          <motion.div
-                            className="absolute inset-0 rounded-full"
-                            style={{ border: `2px solid ${color}` }}
-                            animate={{ scale: [1, 1.5, 1.5], opacity: [0.6, 0, 0] }}
-                            transition={{ duration: 2, repeat: Infinity, delay: index * 0.4 }}
-                          />
-                        </motion.div>
-                      </div>
-
-                      {/* Empty side */}
-                      <div className="w-[calc(50%-2rem)]" />
-                    </motion.div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Mobile - Vertical timeline */}
-            <div className="md:hidden relative">
-              <div className="absolute left-[1.875rem] top-0 bottom-0 w-px bg-gradient-to-b from-[#f4cc6f]/30 via-[#EC4899]/20 to-transparent" />
-
-              <div className="space-y-8">
-                {workflowSteps.map((step, index) => {
-                  const colors = ["#f4cc6f", "#EC4899", "#3B82F6", "#10B981"];
-                  const color = colors[index % colors.length];
-
-                  return (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, x: -30 }}
-                      animate={workflowInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
-                      transition={{ duration: 0.5, delay: index * 0.15 }}
-                      className="relative flex items-start gap-5 group"
-                    >
-                      <motion.div
-                        className="relative z-10 flex-shrink-0 w-[3.75rem] h-[3.75rem] rounded-full flex items-center justify-center"
-                        style={{
-                          background: `linear-gradient(135deg, ${color}, ${color}CC)`,
-                          boxShadow: `0 0 20px ${color}30`,
-                        }}
-                        whileHover={{ scale: 1.1 }}
-                      >
-                        <step.icon className="w-7 h-7 text-white" />
-                      </motion.div>
-
-                      <motion.div
-                        className="flex-1 p-5 rounded-2xl bg-white/[0.03] border backdrop-blur-sm"
-                        style={{ borderColor: `${color}15` }}
-                        whileHover={{ x: 5 }}
-                      >
-                        <div
-                          className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-widest uppercase mb-3"
-                          style={{ background: `${color}12`, color, border: `1px solid ${color}20` }}
-                        >
-                          Step {String(index + 1).padStart(2, '0')}
+      {/* Why Work With Altiora */}
+      <section className="px-4 md:px-6 py-24 md:py-20">
+        <div className="max-w-6xl mx-auto w-full">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
+              Why Work With Altiora <span className="text-[#f4cc6f]">Infotech?</span>
+            </h2>
+            <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed">
+              Partner with branding experts who build brands that become business assets.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+            {[
+              { text: "Strategic Depth – We start with strategy, not aesthetics, ensuring every design decision serves your business goals.", icon: FaNetworkWired },
+              { text: "Holistic Approach – From strategy and identity to messaging and guidelines, we handle your brand as a complete ecosystem.", icon: FaTools },
+              { text: "Research-Driven – Every decision is backed by audience research, competitive analysis, and market positioning data.", icon: FaCode },
+              { text: "Proven Results – A track record of building brands that command premium positioning and drive measurable business growth.", icon: FaShieldAlt },
+              { text: "Long-Term Partnership – We invest in understanding your business deeply so we can continue evolving your brand as you grow.", icon: FaRocket },
+              { text: "Full Ownership – You own 100% of all brand assets, files, and intellectual property created during our engagement.", icon: FaHandshake },
+            ].map((benefit, index) => {
+              const Icon = benefit.icon;
+              const colors = ["from-pink-500 to-purple-500", "from-blue-500 to-cyan-500", "from-green-500 to-emerald-500", "from-red-500 to-orange-500", "from-yellow-500 to-orange-500", "from-teal-500 to-cyan-500"];
+              const titles = ["Strategic", "Holistic", "Research", "Proven", "Long-Term", "Full"];
+              const subtitles = ["Depth", "Approach", "Driven", "Results", "Partnership", "Ownership"];
+              return (
+                <div key={index} className="group relative cursor-pointer">
+                  <div className="relative rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm p-4 md:p-6 transition-all duration-500 hover:bg-white/[0.08] hover:border-white/20 hover:shadow-2xl hover:-translate-y-2">
+                    <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${colors[index]} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+                    <div className="relative z-10">
+                      <div className="flex items-center gap-3 md:gap-4 mb-4">
+                        <div className={`w-12 h-12 md:w-14 md:h-14 rounded-xl bg-gradient-to-br ${colors[index]} flex items-center justify-center`}>
+                          <Icon className="w-6 h-6 md:w-7 md:h-7 text-white" />
                         </div>
-                        <h3 className="text-base font-bold mb-2 text-white">{step.title}</h3>
-                        <p className="text-sm text-white/50 leading-relaxed">{step.description}</p>
-                      </motion.div>
-                    </motion.div>
-                  );
-                })}
+                        <div>
+                          <h3 className="text-lg md:text-xl font-bold text-white group-hover:text-[#f4cc6f] transition-colors duration-300">{titles[index]}</h3>
+                          <span className="text-sm text-white/60">{subtitles[index]}</span>
+                        </div>
+                      </div>
+                      <p className="text-base sm:text-lg md:text-xl text-white/80 group-hover:text-white transition-colors duration-300">{benefit.text}</p>
+                      <div className="mt-3 md:mt-4 h-1 w-full bg-white/10 rounded-full overflow-hidden hidden md:block">
+                        <div className={`h-full w-0 bg-gradient-to-r ${colors[index]} transition-all duration-700 group-hover:w-full rounded-full`} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="px-4 md:px-6 py-8 md:py-12">
+        <div className="max-w-6xl mx-auto w-full">
+          <div className="relative p-6 sm:p-8 md:p-12 text-center rounded-2xl md:rounded-3xl border border-white/20 backdrop-blur-sm overflow-hidden">
+            <div className="absolute inset-0">
+              <Image src="/images/agentic-ai/cta/AI-Infrastructure-cta.png" alt="Branding Services" fill className="object-cover rounded-3xl" />
+            </div>
+            <div className="absolute inset-0 bg-gradient-to-br from-[#010c22]/95 via-[#0a1038]/85 to-[#010c22]/95" />
+            <div className="absolute inset-0 bg-gradient-to-br from-pink-500/10 via-purple-500/10 to-blue-500/10" />
+            <div className="relative z-10">
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-[#f4cc6f]/20 to-[#e6b85c]/20 ring-2 ring-[#f4cc6f]/30 mb-8 mx-auto">
+                <Award className="w-10 h-10 text-[#f4cc6f]" />
+              </div>
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-4 md:mb-6">
+                Ready to Build a Brand That Stands Apart?
+              </h3>
+              <p className="text-white/90 max-w-3xl mx-auto text-base sm:text-lg mb-6 md:mb-8">
+                Your brand is the foundation everything else is built on. At Altiora Infotech, we build brands that attract premium customers, command higher prices, and create lasting business value through strategic identity and consistent presence.
+              </p>
+              <p className="text-white/90 max-w-3xl mx-auto text-base sm:text-lg mb-8">
+                Share your business goals and brand vision, and we'll create a comprehensive branding proposal including strategy, visual concepts, and a clear roadmap for your brand transformation.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
+                <Link href="https://calendly.com/altiorainfotech/30min" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-full px-8 py-4 font-semibold bg-gradient-to-r from-[#f4cc6f] to-[#e6b85c] text-[#010c22] hover:shadow-lg hover:shadow-[#f4cc6f]/25 transition-all duration-300 transform hover:scale-105">
+                  <FaRocket className="mr-2 w-5 h-5" />
+                  Book Brand Strategy Call
+                </Link>
+                <Link href="/contact" className="inline-flex items-center justify-center rounded-full px-8 py-4 font-semibold border border-white/30 bg-white/[0.08] backdrop-blur-sm text-white hover:bg-white/[0.12] transition-all duration-300">
+                  <FaEye className="mr-2 w-5 h-5" />
+                  Get Custom Quote
+                </Link>
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* What Sets Our Branding Apart */}
-        <section ref={diffRef} className="py-16 sm:py-20 px-4 sm:px-6 md:px-8 lg:px-10 relative overflow-hidden bg-[#010b22]">
-          <div className="absolute top-20 right-0 w-96 h-96 bg-[#f4cc6f]/4 blur-[150px] rounded-full pointer-events-none" />
-          <div className="absolute bottom-10 left-0 w-72 h-72 bg-[#3B82F6]/4 blur-[120px] rounded-full pointer-events-none" />
-
-          <div className="max-w-6xl mx-auto relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={diffInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ duration: 0.6 }}
-              className="text-center mb-12 sm:mb-16"
-            >
-              <motion.h2
-                className={`${styles.sectionHeading} max-w-4xl mx-auto`}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-              >
-                What Sets Our Branding <span className="text-[#f4cc6f]">Apart</span>
-              </motion.h2>
-            </motion.div>
-
-            {/* Bento Grid Layout */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
-              {(() => {
-                const colors = ["#f4cc6f", "#EC4899", "#3B82F6", "#10B981"];
-                return differentiators.map((item, index) => {
-                  const color = colors[index % colors.length];
-
-                  return (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, y: 40 }}
-                      animate={diffInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-                      transition={{ duration: 0.6, delay: index * 0.12, type: "spring", stiffness: 90 }}
-                      className="group relative rounded-3xl overflow-hidden"
-                    >
-                      <div
-                        className="relative p-7 sm:p-8 lg:p-10 h-full border backdrop-blur-sm bg-white/[0.02] hover:bg-white/[0.05] rounded-3xl transition-all duration-500"
-                        style={{ borderColor: `${color}12` }}
-                      >
-                        <div
-                          className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"
-                          style={{ background: `radial-gradient(ellipse at ${index % 2 === 0 ? 'top left' : 'top right'}, ${color}0A, transparent 60%)` }}
-                        />
-
-                        <div
-                          className="absolute -right-4 -top-6 text-[8rem] sm:text-[10rem] font-black leading-none opacity-[0.025] group-hover:opacity-[0.06] transition-opacity duration-700 select-none pointer-events-none"
-                          style={{ color }}
-                        >
-                          {String(index + 1).padStart(2, '0')}
-                        </div>
-
-                        <div className="relative z-10 flex flex-col h-full">
-                          <div className="flex items-start justify-between mb-6">
-                            <motion.div
-                              className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center relative"
-                              style={{ background: `${color}10`, border: `1px solid ${color}18` }}
-                              whileHover={{ scale: 1.1, rotate: -5 }}
-                              transition={{ duration: 0.3 }}
-                            >
-                              <item.icon className="w-7 h-7 sm:w-8 sm:h-8" style={{ color }} />
-                              <div
-                                className="absolute inset-0 rounded-2xl blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-500"
-                                style={{ background: `${color}20` }}
-                              />
-                            </motion.div>
-
-                            <div
-                              className="px-3 py-1.5 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase"
-                              style={{ background: `${color}10`, color, border: `1px solid ${color}18` }}
-                            >
-                              0{index + 1}
-                            </div>
-                          </div>
-
-                          <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 group-hover:text-white transition-colors">
-                            {item.title}
-                          </h3>
-
-                          <p className="text-sm sm:text-base text-white/45 leading-relaxed flex-grow">
-                            {item.description}
-                          </p>
-
-                          <div className="mt-6 pt-5 border-t border-white/5">
-                            <div className="flex items-center gap-2">
-                              <div
-                                className="w-8 h-[2px] rounded-full group-hover:w-16 transition-all duration-500"
-                                style={{ background: color }}
-                              />
-                              <span
-                                className="text-xs font-semibold tracking-wider uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                                style={{ color }}
-                              >
-                                Our Approach
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div
-                          className="absolute top-0 right-0 w-24 h-24 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                          style={{
-                            background: `radial-gradient(circle at top right, ${color}10, transparent 70%)`,
-                          }}
-                        />
-                      </div>
-                    </motion.div>
-                  );
-                });
-              })()}
-            </div>
-          </div>
-        </section>
-
-        {/* Who This Service Is For */}
-        <section
-          ref={whoRef}
-          className="py-16 sm:py-20 px-4 sm:px-6 md:px-8 lg:px-10 relative overflow-hidden bg-[#061630]"
-        >
-          {/* Rich background layers */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#061630] via-[#0a1a3a] to-[#061630]" />
-          <div className="absolute top-0 right-1/4 w-80 h-80 bg-[#f4cc6f]/8 blur-[120px] rounded-full pointer-events-none" />
-          <div className="absolute bottom-0 left-1/4 w-72 h-72 bg-[#8B5CF6]/8 blur-[100px] rounded-full pointer-events-none" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#EC4899]/4 blur-[150px] rounded-full pointer-events-none" />
-          <div className="absolute top-10 left-10 w-40 h-40 bg-[#3B82F6]/6 blur-[80px] rounded-full pointer-events-none" />
-          <div className="absolute bottom-20 right-20 w-48 h-48 bg-[#10B981]/5 blur-[90px] rounded-full pointer-events-none" />
-
-          {/* Subtle grid pattern overlay */}
-          <div
-            className="absolute inset-0 opacity-[0.03] pointer-events-none"
-            style={{
-              backgroundImage: `linear-gradient(rgba(244,204,111,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(244,204,111,0.3) 1px, transparent 1px)`,
-              backgroundSize: '60px 60px',
-            }}
-          />
-
-          {/* Floating particles */}
-          {mounted && [...Array(12)].map((_, i) => (
-            <motion.div
-              key={`who-particle-${i}`}
-              className="absolute rounded-full pointer-events-none"
-              style={{
-                width: `${2 + Math.random() * 3}px`,
-                height: `${2 + Math.random() * 3}px`,
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                background: ['#f4cc6f', '#EC4899', '#3B82F6', '#10B981', '#8B5CF6'][i % 5],
-              }}
-              animate={{
-                y: [0, -20 - Math.random() * 20, 0],
-                opacity: [0.15, 0.5, 0.15],
-                scale: [1, 1.3, 1],
-              }}
-              transition={{
-                duration: 3 + Math.random() * 3,
-                repeat: Infinity,
-                delay: Math.random() * 3,
-                ease: "easeInOut",
-              }}
-            />
-          ))}
-
-          {/* Decorative corner accents */}
-          <div className="absolute top-0 left-0 w-32 h-32 pointer-events-none opacity-20">
-            <div className="absolute top-6 left-6 w-16 h-px bg-gradient-to-r from-[#f4cc6f]/60 to-transparent" />
-            <div className="absolute top-6 left-6 w-px h-16 bg-gradient-to-b from-[#f4cc6f]/60 to-transparent" />
-          </div>
-          <div className="absolute bottom-0 right-0 w-32 h-32 pointer-events-none opacity-20">
-            <div className="absolute bottom-6 right-6 w-16 h-px bg-gradient-to-l from-[#8B5CF6]/60 to-transparent" />
-            <div className="absolute bottom-6 right-6 w-px h-16 bg-gradient-to-t from-[#8B5CF6]/60 to-transparent" />
-          </div>
-
-          <div className="max-w-5xl mx-auto relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={whoInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ duration: 0.6 }}
-              className="text-center mb-14 sm:mb-16"
-            >
-              <motion.h2
-                className={styles.sectionHeading}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.7, delay: 0.1 }}
-              >
-                Who This Service Is <span className="text-[#f4cc6f]">For</span>
-              </motion.h2>
-            </motion.div>
-
-            {/* Hexagon honeycomb layout */}
-            <div className="relative flex flex-col items-center">
-              {/* Connecting lines SVG - desktop only */}
-              <div className="hidden md:block absolute inset-0 pointer-events-none z-0">
-                <svg className="w-full h-full" viewBox="0 0 800 400" fill="none" preserveAspectRatio="xMidYMid meet">
-                  {/* Subtle connecting lines between hexagons */}
-                  <line x1="200" y1="120" x2="400" y2="120" stroke="url(#lineGrad)" strokeWidth="1" opacity="0.2" />
-                  <line x1="400" y1="120" x2="600" y2="120" stroke="url(#lineGrad)" strokeWidth="1" opacity="0.2" />
-                  <line x1="300" y1="280" x2="500" y2="280" stroke="url(#lineGrad)" strokeWidth="1" opacity="0.2" />
-                  <line x1="200" y1="120" x2="300" y2="280" stroke="url(#lineGrad)" strokeWidth="1" opacity="0.15" />
-                  <line x1="400" y1="120" x2="300" y2="280" stroke="url(#lineGrad)" strokeWidth="1" opacity="0.15" />
-                  <line x1="400" y1="120" x2="500" y2="280" stroke="url(#lineGrad)" strokeWidth="1" opacity="0.15" />
-                  <line x1="600" y1="120" x2="500" y2="280" stroke="url(#lineGrad)" strokeWidth="1" opacity="0.15" />
-                  <defs>
-                    <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="#f4cc6f" stopOpacity="0.4" />
-                      <stop offset="50%" stopColor="#EC4899" stopOpacity="0.3" />
-                      <stop offset="100%" stopColor="#3B82F6" stopOpacity="0.4" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-              </div>
-
-              {/* Top row - 3 hexagons */}
-              <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-0 relative z-10">
-                {whoIsItFor.slice(0, 3).map((item, index) => {
-                  const colors = ["#f4cc6f", "#EC4899", "#3B82F6"];
-                  const color = colors[index];
-
-                  return (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, scale: 0, rotate: -30 }}
-                      animate={whoInView ? { opacity: 1, scale: 1, rotate: 0 } : { opacity: 0, scale: 0, rotate: -30 }}
-                      transition={{ duration: 0.6, delay: index * 0.15, type: "spring", stiffness: 100 }}
-                      className="group relative"
-                    >
-                      {/* Hexagon shape */}
-                      <div className="relative w-52 h-52 sm:w-60 sm:h-60 md:w-64 md:h-64 lg:w-72 lg:h-72">
-                        {/* Outer glow ring */}
-                        <motion.div
-                          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                          style={{
-                            clipPath: "polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)",
-                            background: `radial-gradient(circle, ${color}20, transparent 70%)`,
-                          }}
-                        />
-
-                        {/* Hexagon border */}
-                        <div
-                          className="absolute inset-[3px] transition-all duration-500"
-                          style={{
-                            clipPath: "polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)",
-                            background: `linear-gradient(135deg, ${color}30, ${color}10)`,
-                          }}
-                        />
-
-                        {/* Hexagon inner */}
-                        <div
-                          className="absolute inset-[5px] flex flex-col items-center justify-center text-center p-5 transition-all duration-500 group-hover:bg-white/[0.06]"
-                          style={{
-                            clipPath: "polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)",
-                            background: "linear-gradient(145deg, rgba(6,22,48,0.95), rgba(1,11,34,0.95))",
-                          }}
-                        >
-                          {/* Icon */}
-                          <motion.div
-                            className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center mb-3"
-                            style={{ background: `${color}15`, border: `1px solid ${color}25` }}
-                            whileHover={{ scale: 1.15, rotate: 10 }}
-                            transition={{ duration: 0.3 }}
-                          >
-                            <item.icon className="w-7 h-7 sm:w-8 sm:h-8" style={{ color }} />
-                          </motion.div>
-
-                          {/* Text */}
-                          <p className="text-sm sm:text-base font-semibold text-white/80 group-hover:text-white transition-colors duration-300 leading-tight px-3">
-                            {item.text}
-                          </p>
-                        </div>
-
-                        {/* Pulse effect on hover */}
-                        <motion.div
-                          className="absolute inset-0 opacity-0 group-hover:opacity-100"
-                          style={{
-                            clipPath: "polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)",
-                            border: `2px solid ${color}`,
-                          }}
-                          animate={whoInView ? { scale: [1, 1.08, 1], opacity: [0, 0.3, 0] } : {}}
-                          transition={{ duration: 2.5, repeat: Infinity, delay: index * 0.5 }}
-                        />
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </div>
-
-              {/* Bottom row - 2 hexagons (offset for honeycomb) */}
-              <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-0 mt-2 md:-mt-10 relative z-10">
-                {whoIsItFor.slice(3, 5).map((item, index) => {
-                  const colors = ["#10B981", "#8B5CF6"];
-                  const color = colors[index];
-
-                  return (
-                    <motion.div
-                      key={index + 3}
-                      initial={{ opacity: 0, scale: 0, rotate: 30 }}
-                      animate={whoInView ? { opacity: 1, scale: 1, rotate: 0 } : { opacity: 0, scale: 0, rotate: 30 }}
-                      transition={{ duration: 0.6, delay: (index + 3) * 0.15, type: "spring", stiffness: 100 }}
-                      className="group relative"
-                    >
-                      <div className="relative w-52 h-52 sm:w-60 sm:h-60 md:w-64 md:h-64 lg:w-72 lg:h-72">
-                        {/* Outer glow ring */}
-                        <motion.div
-                          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                          style={{
-                            clipPath: "polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)",
-                            background: `radial-gradient(circle, ${color}20, transparent 70%)`,
-                          }}
-                        />
-
-                        {/* Hexagon border */}
-                        <div
-                          className="absolute inset-[3px] transition-all duration-500"
-                          style={{
-                            clipPath: "polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)",
-                            background: `linear-gradient(135deg, ${color}30, ${color}10)`,
-                          }}
-                        />
-
-                        {/* Hexagon inner */}
-                        <div
-                          className="absolute inset-[5px] flex flex-col items-center justify-center text-center p-5 transition-all duration-500 group-hover:bg-white/[0.06]"
-                          style={{
-                            clipPath: "polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)",
-                            background: "linear-gradient(145deg, rgba(6,22,48,0.95), rgba(1,11,34,0.95))",
-                          }}
-                        >
-                          <motion.div
-                            className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center mb-3"
-                            style={{ background: `${color}15`, border: `1px solid ${color}25` }}
-                            whileHover={{ scale: 1.15, rotate: 10 }}
-                            transition={{ duration: 0.3 }}
-                          >
-                            <item.icon className="w-7 h-7 sm:w-8 sm:h-8" style={{ color }} />
-                          </motion.div>
-
-                          <p className="text-sm sm:text-base font-semibold text-white/80 group-hover:text-white transition-colors duration-300 leading-tight px-3">
-                            {item.text}
-                          </p>
-                        </div>
-
-                        {/* Pulse effect on hover */}
-                        <motion.div
-                          className="absolute inset-0 opacity-0 group-hover:opacity-100"
-                          style={{
-                            clipPath: "polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)",
-                            border: `2px solid ${color}`,
-                          }}
-                          animate={whoInView ? { scale: [1, 1.08, 1], opacity: [0, 0.3, 0] } : {}}
-                          transition={{ duration: 2.5, repeat: Infinity, delay: (index + 3) * 0.5 }}
-                        />
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <section ref={ctaRef} className="py-16 sm:py-20 px-4 sm:px-6 md:px-8 lg:px-10">
-          <div className="max-w-5xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={ctaInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ duration: 0.6 }}
-              className="relative rounded-3xl overflow-hidden p-8 sm:p-12 md:p-16 text-center"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-900/90 via-blue-900/80 to-purple-900/90" />
-              <div className="absolute inset-0">
-                <div className="absolute top-0 left-1/4 w-64 h-64 bg-[#f4cc6f]/20 blur-[100px] rounded-full" />
-                <div className="absolute bottom-0 right-1/4 w-56 h-56 bg-[#EC4899]/15 blur-[80px] rounded-full" />
-              </div>
-
-              <div className="relative z-10">
-                <motion.h2
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={ctaInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6"
-                >
-                  Let&apos;s Build a Brand That{' '}
-                  <span className={styles.gradientText}>Resonates</span>
-                </motion.h2>
-
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={ctaInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                  className="text-base sm:text-lg md:text-xl text-white/80 mb-8 sm:mb-10 max-w-2xl mx-auto leading-relaxed"
-                >
-                  Great brands aren&apos;t accidental — they&apos;re intentional. Ready to clarify who you are, amplify what you do, and create memorable experiences your customers connect with?
-                </motion.p>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={ctaInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                  transition={{ duration: 0.6, delay: 0.6 }}
-                  className="flex flex-col sm:flex-row gap-4 justify-center"
-                >
-                  <Link
-                    href="/contact"
-                    className="group inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-[#f4cc6f] to-[#e6b85c] hover:from-[#e6b85c] hover:to-[#f4cc6f] text-[#010c22] font-semibold text-sm sm:text-base transition-all duration-300 shadow-lg shadow-[#f4cc6f]/25 hover:shadow-xl hover:shadow-[#f4cc6f]/40"
-                  >
-                    Start Your Branding Project
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                  <Link
-                    href="/contact"
-                    className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full border-2 border-white/30 hover:border-white/60 text-white font-semibold text-sm sm:text-base transition-all duration-300 hover:bg-white/10"
-                  >
-                    Get a Free Brand Strategy Call
-                  </Link>
-                </motion.div>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-      </main>
       <Footer />
+      <style jsx global>{`
+        @keyframes float {
+          0%,100%{ transform: translateY(0px) rotateX(0deg) rotateY(0deg); }
+          50%{ transform: translateY(-20px) rotateX(5deg) rotateY(5deg); }
+        }
+      `}</style>
     </div>
   );
 }
