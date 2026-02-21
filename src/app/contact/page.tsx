@@ -7,7 +7,6 @@ import Image from "next/image";
 import Header from "../../assets/Header";
 import Footer from "../../assets/Footer";
 import Link from "next/link";
-import EmailInputWithVerification from "../../components/EmailInputWithVerification";
 
 interface Country {
   name: string;
@@ -149,10 +148,7 @@ export default function ContactPage() {
 
   const [humanVerified, setHumanVerified] = useState(false);
 
-  // Email verification states
   const [email, setEmail] = useState("");
-  const [emailIsValid, setEmailIsValid] = useState(false);
-  const [emailHasBeenVerified, setEmailHasBeenVerified] = useState(false);
 
   // File upload states
   const [uploadedFiles, setUploadedFiles] = useState<Array<{
@@ -455,16 +451,6 @@ export default function ContactPage() {
       return;
     }
 
-    if (!emailHasBeenVerified) {
-      setError("Please wait for email verification to complete before submitting.");
-      return;
-    }
-
-    if (!emailIsValid) {
-      setError("Please enter a valid email address. The current email address is invalid or cannot be delivered to.");
-      return;
-    }
-
     if (!humanVerified) {
       setError("Please verify that you are human before submitting.");
       return;
@@ -555,8 +541,14 @@ export default function ContactPage() {
       });
 
       if (!dbResponse.ok) {
-        const errorData = await dbResponse.json();
-        throw new Error(errorData.error || 'Failed to save contact information');
+        let errorMessage = 'Failed to save contact information';
+        try {
+          const errorData = await dbResponse.json();
+          errorMessage = errorData.error || errorMessage;
+        } catch {
+          // Response wasn't JSON, use default message
+        }
+        throw new Error(errorMessage);
       }
 
       // Contact saved successfully - show success even if email fails
@@ -567,10 +559,7 @@ export default function ContactPage() {
       setCountrySearch("");
       setHumanVerified(false);
       setUploadedFiles([]);
-      // Reset email verification state
       setEmail("");
-      setEmailIsValid(false);
-      setEmailHasBeenVerified(false);
 
       setTimeout(() => setStatus("idle"), 5000);
 
@@ -701,17 +690,22 @@ export default function ContactPage() {
                       </div>
                     </div>
 
-                    {/* Email Field with Verification */}
-                    <EmailInputWithVerification
-                      value={email}
-                      onChange={setEmail}
-                      onValidationChange={(isValid, hasBeenVerified) => {
-                        setEmailIsValid(isValid);
-                        setEmailHasBeenVerified(hasBeenVerified);
-                      }}
-                      required={true}
-                      placeholder="john@company.com"
-                    />
+                    {/* Email Field */}
+                    <div className="space-y-2">
+                      <label htmlFor="email" className="block text-sm font-medium text-slate-300">
+                        Email<span className="text-red-400 ml-1">*</span>
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        required
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="w-full bg-slate-800/50 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all duration-200"
+                        placeholder="john@company.com"
+                      />
+                    </div>
 
                     {/* Phone Field */}
                     <div className="space-y-2">
@@ -1091,7 +1085,7 @@ export default function ContactPage() {
                     {/* Submit Button */}
                     <button
                       type="submit"
-                      disabled={status === "loading" || !humanVerified || !emailIsValid || !emailHasBeenVerified}
+                      disabled={status === "loading" || !humanVerified || !email.trim()}
                       className="w-full rounded-xl bg-gradient-to-r from-blue-600 via-purple-600 to-blue-700 px-8 py-4 font-bold text-white text-lg hover:from-blue-700 hover:via-purple-700 hover:to-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-500/50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-2xl hover:shadow-blue-500/25 transform hover:scale-[1.02] active:scale-[0.98] disabled:transform-none"
                     >
                       {status === "loading" ? (
@@ -1101,21 +1095,6 @@ export default function ContactPage() {
                             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                           </svg>
                           Sending Your Message...
-                        </span>
-                      ) : !emailHasBeenVerified ? (
-                        <span className="flex items-center justify-center gap-3">
-                          <svg className="w-6 h-6 animate-spin" fill="none" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                          </svg>
-                          Verifying Email...
-                        </span>
-                      ) : !emailIsValid ? (
-                        <span className="flex items-center justify-center gap-3">
-                          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z" />
-                          </svg>
-                          Invalid Email Address
                         </span>
                       ) : !humanVerified ? (
                         <span className="flex items-center justify-center gap-3">
@@ -1155,15 +1134,15 @@ export default function ContactPage() {
                           </svg>
                         </div>
                         <div>
-                          <h4 className="text-lg font-semibold text-white">Email Us</h4>
+                          <h4 className="text-lg font-semibold text-white">Email</h4>
                           <p className="text-sm text-slate-400">Quick response guaranteed</p>
                         </div>
                       </div>
                       <Link
-                        href="mailto:sales@altiorainfotech.com"
+                        href="mailto:sales@altiorainfotech.ca"
                         className="text-blue-300 hover:text-blue-200 font-medium transition-colors duration-200 break-all"
                       >
-                        sales@altiorainfotech.com
+                        sales@altiorainfotech.ca
                       </Link>
                       <p className="text-xs text-slate-500 mt-2">We typically respond within 24 hours</p>
                     </div>

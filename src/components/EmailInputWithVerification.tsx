@@ -191,7 +191,7 @@ const EmailInputWithVerification: React.FC<EmailInputWithVerificationProps> = ({
   return (
     <div className="space-y-2">
       <label htmlFor="email" className="block text-sm font-medium text-slate-300">
-        Work Email{required && <span className="text-red-400 ml-1">*</span>}
+        Email{required && <span className="text-red-400 ml-1">*</span>}
       </label>
       <div className="relative">
         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">

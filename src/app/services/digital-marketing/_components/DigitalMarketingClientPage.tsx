@@ -25,7 +25,10 @@ import {
   Palette,
   Video,
   Briefcase,
-  PenTool
+  PenTool,
+  Star,
+  Brain,
+  Smartphone
 } from "lucide-react";
 
 import Header from "@/assets/Header";
@@ -54,7 +57,10 @@ const iconMap: Record<string, ComponentType<{ className?: string; size?: string 
   Palette,
   Video,
   Briefcase,
-  PenTool
+  PenTool,
+  Star,
+  Brain,
+  Smartphone
 };
 
 // Default fallback data
@@ -92,6 +98,23 @@ const defaultDigitalMarketingServices = [
     icon: "Search",
     iconName: "SEO",
     color: "#10B981",
+  },
+  {
+    title: "Mobile App Development",
+    description: "Build powerful, high-performance mobile applications that deliver exceptional user experiences. From iOS and Android to cross-platform solutions, we develop apps that engage users and support your business growth.",
+    features: [
+      "iOS & Android app development",
+      "Cross-platform (Flutter/React Native)",
+      "UI/UX design & prototyping",
+      "App Store optimization & launch",
+      "Ongoing maintenance & support"
+    ],
+    link: "/services/mobile-app-development",
+    metric: "",
+    metricLabel: "",
+    icon: "Smartphone",
+    iconName: "APP",
+    color: "#14B8A6",
   },
   {
     title: "Website Development Services",
@@ -194,6 +217,40 @@ const defaultDigitalMarketingServices = [
     icon: "Briefcase",
     iconName: "BIZ",
     color: "#8B5CF6",
+  },
+  {
+    title: "Influencer & UGC Marketing",
+    description: "Harness the power of authentic creator content to build trust, expand reach, and drive conversions. We connect your brand with vetted influencers and UGC creators who produce real content that resonates with your target audience.",
+    features: [
+      "Micro & macro influencer campaigns",
+      "UGC content creation & licensing",
+      "TikTok, Instagram & YouTube creators",
+      "Campaign management & outreach",
+      "Performance tracking & ROI reporting"
+    ],
+    link: "/services/influencer-ugc-marketing",
+    metric: "",
+    metricLabel: "",
+    icon: "Star",
+    iconName: "UGC",
+    color: "#F97316",
+  },
+  {
+    title: "AEO & GEO",
+    description: "Future-proof your search visibility by optimizing for AI-powered answer engines and generative search platforms. Get your brand cited in ChatGPT, Google AI Overviews, Perplexity, voice search, and featured snippets.",
+    features: [
+      "Answer Engine Optimization (AEO)",
+      "Generative Engine Optimization (GEO)",
+      "Featured snippet & Position Zero capture",
+      "Schema markup & structured data",
+      "Voice search & AI visibility monitoring"
+    ],
+    link: "/services/aeo-geo",
+    metric: "",
+    metricLabel: "",
+    icon: "Brain",
+    iconName: "AEO",
+    color: "#06B6D4",
   },
 ];
 
@@ -333,7 +390,7 @@ export default function DigitalMarketingClientPage({ pageData }: DigitalMarketin
         {/* Hero Section */}
         <section
           ref={heroRef}
-          className="py-8 px-4 pt-24 sm:py-12 sm:px-6 md:py-16 md:px-8 lg:py-20 lg:px-10 xl:py-24 relative overflow-hidden h-screen"
+          className="py-8 px-4 pt-16 sm:py-12 sm:px-6 md:py-16 md:px-8 lg:py-20 lg:px-10 xl:py-24 relative h-screen"
         >
           {/* Background Video */}
           <div className="absolute inset-0 z-0">
@@ -342,7 +399,8 @@ export default function DigitalMarketingClientPage({ pageData }: DigitalMarketin
               muted
               loop
               playsInline
-              className="absolute inset-0 w-full h-full object-cover opacity-70"
+              className="absolute inset-0 w-full h-full object-cover"
+              style={{ transform: "translateZ(0)", willChange: "transform", backfaceVisibility: "hidden" }}
             >
               <source src="/images/homebg.mp4" type="video/mp4" />
             </video>
@@ -399,12 +457,7 @@ export default function DigitalMarketingClientPage({ pageData }: DigitalMarketin
                     Get Started
                     <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
                   </Link>
-                  <Link
-                    href="/case-studies"
-                    className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full border-2 border-[#f4cc6f]/50 hover:border-[#f4cc6f] text-[#f4cc6f] hover:text-white text-sm sm:text-base font-semibold transition-all duration-300 hover:bg-[#f4cc6f]/10"
-                  >
-                    View Case Studies
-                  </Link>
+
                 </motion.div>
               </motion.div>
 
@@ -588,7 +641,7 @@ export default function DigitalMarketingClientPage({ pageData }: DigitalMarketin
                       type: "spring",
                       stiffness: 100
                     }}
-                    className="h-full group"
+                    className={`h-full group${index === servicesSection.services.length - 1 && servicesSection.services.length % 2 !== 0 ? ' sm:col-span-2 sm:w-1/2 sm:mx-auto' : ''}`}
                   >
                     <Link href={service.link} className="block h-full">
                       <div className={`${styles.serviceCardEnhanced} h-full flex flex-col p-4 relative`}>
@@ -807,7 +860,7 @@ export default function DigitalMarketingClientPage({ pageData }: DigitalMarketin
                       {/* Timeline Node */}
                       <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
                         <motion.div
-                          className="w-14 h-14 rounded-full bg-gradient-to-br from-[#f4cc6f] to-[#e6b85c] flex items-center justify-center shadow-lg shadow-[#f4cc6f]/50"
+                          className="w-14 h-14 rounded-full bg-[#f2c96c] flex items-center justify-center shadow-lg shadow-[#f2c96c]/50"
                           whileHover={{ scale: 1.2 }}
                           transition={{ duration: 0.6 }}
                         >
@@ -867,7 +920,7 @@ export default function DigitalMarketingClientPage({ pageData }: DigitalMarketin
 
                     {/* Node */}
                     <motion.div
-                      className="relative z-10 flex-shrink-0 w-16 h-16 rounded-full bg-gradient-to-br from-[#f4cc6f] to-[#e6b85c] flex items-center justify-center shadow-lg shadow-[#f4cc6f]/50"
+                      className="relative z-10 flex-shrink-0 w-16 h-16 rounded-full bg-[#f2c96c] flex items-center justify-center shadow-lg shadow-[#f2c96c]/50"
                       whileHover={{ scale: 1.1 }}
                       transition={{ duration: 0.4 }}
                     >
@@ -894,81 +947,8 @@ export default function DigitalMarketingClientPage({ pageData }: DigitalMarketin
           </div>
         </section>
 
-        {/* Outcomes Section */}
-        <section ref={outcomesRef} className="px-4 sm:px-6 md:px-8 lg:px-10 bg-[#010b22]/50">
-          <div className="max-w-7xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={outcomesInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ duration: 0.6 }}
-              className="text-center mb-10 sm:mb-12 md:mb-16 lg:mb-20"
-            >
-              <motion.h2
-                className={`${styles.sectionHeading} max-w-4xl mx-auto mb-6`}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-              >
-                Why Choose <span className="text-[#f4cc6f]">Altiora Infotech?</span>
-              </motion.h2>
-              <motion.p
-                className={`${styles.sectionDescription} max-w-5xl mx-auto leading-relaxed`}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-              >
-                Choosing the right digital marketing partner can define your growth trajectory. At Altiora Infotech, we focus on results, transparency, and long-term success.
-              </motion.p>
-            </motion.div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6">
-              {defaultOutcomes.map((outcome: any, index: number) => {
-                const IconComponent = typeof outcome.icon === 'string'
-                  ? iconMap[outcome.icon] || CheckCircle
-                  : outcome.icon;
-
-                return (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={outcomesInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    className="relative group p-6 rounded-2xl bg-gradient-to-br from-gray-900/80 to-gray-800/60 border border-[#f4cc6f]/20 backdrop-blur-sm hover:border-[#f4cc6f]/40 transition-all duration-300"
-                  >
-                    {/* Step indicator */}
-                    <div className="absolute top-4 right-4 w-8 h-8 rounded-full bg-gradient-to-br from-[#f4cc6f] to-[#e6b85c] flex items-center justify-center text-[#010c22] text-sm font-bold">
-                      {String(index + 1).padStart(2, '0')}
-                    </div>
-
-                    {/* Title */}
-                    <h3
-                      className="text-xl font-bold mb-2 text-white"
-                      dangerouslySetInnerHTML={{ __html: outcome.title }}
-                    />
-
-                    {/* Subtitle */}
-                    <p className="text-sm font-medium text-purple-300 mb-3">
-                      {outcome.subtitle}
-                    </p>
-
-                    {/* Description */}
-                    <p className="text-sm text-gray-400 leading-relaxed">
-                      {outcome.description}
-                    </p>
-
-                    {/* Hover glow effect */}
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#f4cc6f]/10 to-[#e6b85c]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </motion.div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
         {/* CTA Section */}
-        <section ref={ctaRef} className="py-32 sm:py-40 md:py-48 lg:py-56 px-4 sm:px-6 md:px-8 lg:px-10">
+        <section ref={ctaRef} className="px-4 sm:px-6 md:px-8 lg:px-10">
           <div className="max-w-5xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -998,19 +978,13 @@ export default function DigitalMarketingClientPage({ pageData }: DigitalMarketin
                   📩 Contact us today to discuss your goals and discover how our <Link href="/services/digital-marketing-strategy" className="text-[#f4cc6f] hover:text-[#e6b85c] underline transition-colors">digital marketing services </Link> can help your business grow smarter and faster.
                 </p>
 
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <div className="flex justify-center">
                   <Link
                     href="/contact"
-                    className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-white text-purple-600 hover:bg-gray-100 text-sm sm:text-base font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
+                    className="group inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-white text-purple-600 hover:bg-gray-100 text-sm sm:text-base font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
                   >
                     Schedule a Consultation
                     <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                  <Link
-                    href="/portfolio"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full border-2 border-white text-white hover:bg-white/10 text-sm sm:text-base font-semibold transition-all duration-300"
-                  >
-                    View Our Work
                   </Link>
                 </div>
               </div>
