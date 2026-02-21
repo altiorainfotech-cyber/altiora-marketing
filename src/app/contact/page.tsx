@@ -576,20 +576,6 @@ export default function ContactPage() {
 
       // Try to send email notification (optional)
       try {
-        const templateParams = {
-          to_email: "sales@altiorainfotech.com",
-          from_name: `${firstName} ${lastName}`.trim(),
-          from_email: email,
-          company: company,
-          country: selectedCountry?.name || "Not provided",
-          phone_code: selectedCountry?.phone_code || "Not provided",
-          phone_number: phoneNumber || "Not provided",
-          services: services.join(", "),
-          budget: budget || "Not specified",
-          timeline: timeline || "Not specified",
-          message,
-        };
-
         // Send email notification via server-side API
         await fetch('/api/send-email', {
           method: 'POST',
